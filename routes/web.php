@@ -1,6 +1,6 @@
 <?php
 
-
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +16,34 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('test', function () {
 
-
-     dd(App\Models\Family::with('subFamily')->whereHas('subFamily', function($query) {
+ dd(App\Models\Family::with('subFamily')->whereHas('subFamily', function($query) {
           $query->where('ItemFamilyId', 'LIKE', '%C%');
   })->get());
   
 });
 
 Route::get('/boutique','ItemController@index')->name('product.index');
-
 Route::get('/boutique/Family/{Id}','ItemController@itembyCaption')->name('itembyCaption');
 Route::get('/boutique/SubFamily/{subFamily}','ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}','ItemController@show')->name('product.show');
 Route::post('/boutique/search','ItemController@search')->name('search');
 Route::post('/boutique/filter','ItemController@filter')->name('filter');
 
+//le panier
+Route::get('/panier','Shop\CartController@index')->name('cart.index');
+Route::post('/panier/ajouter','Shop\CartController@store')->name('cart.store');
+Route::delete('/panier/{rowId}','Shop\CartController@destroy')->name('cart.destroy');
+route::patch('/panier/{rowId}', 'Shop\CartController@update')->name('cart.update');
+
+//destroy
+Route::get('/destroy',function(){
+     Cart::destroy();
+});
+
+// Chekout routes
+Route::get('/paiement', 'Shop\ChekoutController@index')->name('checkout.index');
+
+
+
+//Customers
+Route::get('/customer','CustomerContoller@index')->name('Customer.index');

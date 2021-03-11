@@ -12,60 +12,27 @@ class Item extends Model
     use HasFactory;
     protected $table = 'Item';
 
-    protected $fillable = [
-        'id',
-        'Notes',
-        'ItemType',
-        'Caption',
-      'FamilyId',
-      'SubFamilyId',
-      'ItemType',
-      'CostPrice',
-      'StockVarianceAccount',
-      'BarCode',
-      'Quantity',
-      'xx_categorie1',
-      'localizableCaption_2',
-      'localizableCaption_3',
-      'localizableCaption_4',
-      'xx_categorie2',
-      'xx_categorie3',
-      'xx_categorie3',
-    ];
-    
     public $timestamps = false;
 
     protected $hidden = [
-      
+
         'sysCreatedDate',
         'SubjectToIRPF',
         'xx_Demat',
         'xx_id_presta',
         'sysCreatedUser',
         'sysDatabaseId',
-// ​​         'sysEditCounter',
-//             'sysModifiedDate',
-//             'sysModuleId',
-//             'sysRecordVersion',
-//             'sysRecordVersionId',
-//             'xx_Categorie1',
-//             'xx_Demat',
-//             'xx_Reference_constructeur',
-//             'xx_categorie2',
-//             'xx_categorie3',
-
-        
+        'xx_Demat',
+        'xx_Reference_constructeur',
     ];
 
     public function family()
     {
-        return $this->hasMany(Family::class ,'FamilyId','Id');
+        return $this->hasMany(Family::class, 'FamilyId', 'Id');
     }
 
-    
-
-    
-
-   
-
+    public function ScopeItemA($query)
+    {
+        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy("sysCreatedDate", 'desc');
+    }
 }
