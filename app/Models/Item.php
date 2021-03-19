@@ -15,15 +15,7 @@ class Item extends Model
     public $timestamps = false;
 
     protected $hidden = [
-
-        'sysCreatedDate',
-        'SubjectToIRPF',
-        'xx_Demat',
-        'xx_id_presta',
-        'sysCreatedUser',
-        'sysDatabaseId',
-        'xx_Demat',
-        'xx_Reference_constructeur',
+        'sysCreatedDate', 'SubjectToIRPF', 'xx_Demat', 'xx_id_presta', 'sysCreatedUser', 'sysDatabaseId', 'xx_Demat', 'xx_Reference_constructeur',
     ];
 
     public function family()
@@ -34,5 +26,16 @@ class Item extends Model
     public function ScopeItemA($query)
     {
         return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy("sysCreatedDate", 'desc');
+    }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()->where('Caption', 'like', '%' . $search . '%');
+    }
+
+    public function arrivage()
+    {
+        return $this->hasMany(Arrivage::class, 'ItemId', 'Id')->whereRaw('DeliveryDate > SYSDATETIME()');
     }
 }

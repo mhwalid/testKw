@@ -11,16 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $table = 'Customer';
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -28,8 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'MainDeliveryAddress_CityINSEE', 'MainInvoicingAddress_CodeINSEE', 'MainInvoicingAddress_CityINSEE', 'HeadOfficeAddress_CodeINSEE', 'HeadOfficeAddress_CityINSEE', 'NeotouchSendingType', 'NeotouchDuplicateSendingType', 'NeotouchContactsIdForDuplicate'
     ];
 
     /**
@@ -40,4 +31,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //stock between dilivered and real stock (RoundId)
 }

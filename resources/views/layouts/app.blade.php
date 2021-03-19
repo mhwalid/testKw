@@ -25,6 +25,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 
 </head>
 
@@ -32,8 +33,7 @@
 
 
 
-    @section('sidebar')
-    @show
+    @yield('sidebar')
 
     <div class="container">
         <main class="py-4">
@@ -55,11 +55,12 @@
     </div>
 
 
-
+    @livewireScripts
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @yield('jsbar')
     @yield('js')
+    @yield('extra-js')
 
 
 </body>

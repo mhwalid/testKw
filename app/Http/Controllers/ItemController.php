@@ -22,15 +22,14 @@ class ItemController extends Controller
     {
         $Families = Family::with('subFamily')->get();
         $items = Item::itemA()->paginate(20);
-
         return view('product.home', compact('items', 'Families'));
-        //  return response()->json(['items'=>$items , 'Families'=>$Families ]);
     }
 
     public function show($id)
     {
         $item = Item::where('Id', $id)->first();
-        return view('product.show')->with('item', $item);
+        $arrivage = DB::table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
+        return view('product.show', compact('item', 'arrivage'));
     }
 
 
@@ -56,7 +55,7 @@ class ItemController extends Controller
         $q = $request->value;
         $url = $request->ur;
         $pieces = explode("/", $url);
-        $wad = 's';
+
 
         if ($q == '') {
             $items = DB::table('Item')->paginate(20);
@@ -70,13 +69,13 @@ class ItemController extends Controller
                 $items = DB::table('Item')->where('Caption', 'like', "%$q%")
                     ->where('SubFamilyId', 'like', "%$con%")
                     ->paginate(180);
-                $dz = "sub";
+                // $dz = "sub";
             } elseif ($pieces[1] == "Family") {
                 $con = $pieces[2];
                 $items = DB::table('Item')->where('Caption', 'like', "%$q%")
                     ->where('FamilyId', 'like', "%$con%")
                     ->paginate(170);
-                $dz = "fam";
+                // $dz = "fam";
             }
         }
         return $items;
@@ -333,54 +332,6 @@ class ItemController extends Controller
             }
         }
     }
-
-
-
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-
-
-
-
-
-
-
 
 
     //     if(isset($_POST["action"]))

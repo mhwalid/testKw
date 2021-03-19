@@ -178,6 +178,40 @@
         </div>
     </div>
 
+    {{-- <div class="">
+        <div class="w-full flex justify-center">
+            <div class="flex flex-col md:flex-wrap md:flex-row p-5">
+                @foreach ($itemsComponen as $itemC)
+
+                    <div class="w-full md:w-1/2 lg:w-1/3 md:px-2 py-2">
+                        <div class="bg-white rounded shadow p-5 h-full relative">
+                            <h5 class="font-black uppercase text-2xl mb-4">
+                                {{ $itemC->Id }}
+                            </h5>
+                            <h6 class="font-bold text-gray-700 text-xl mb-3">U$S {{ $itemC->CostPrice }}</h6>
+                            <p class="text-gray-900 font-normal mb-12">
+                                {{ $itemC->CostPrice }}
+                            </p>
+                            <div class="flex justify-end mt-5 absolute w-full bottom-0 left-0 pb-5">
+                                <button wire:click="addToCart({{ $itemC->CostPrice }})"
+                                    class="block uppercase font-bold text-green-600 hover:text-green-500 mr-4">
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                @endforeach
+            </div>
+        </div>
+
+        <div class="w-full flex justify-center pb-6">
+            {{ $products->links('layouts.pagination') }}
+        </div>
+    </div> --}}
+
+
+
     <div class="row mb-2 mt-4">
 
         <div id="results" style="width: 1147px;">
@@ -226,14 +260,15 @@
                     type="text">Search</button>
             </form>
 
+
+
         </div>
-        <!-- Collapsible content -->
 
     </nav>
+    {{-- @livewire('search') --}}
     @include('include.navbar')
 
 @endsection
-
 
 @section('js')
     <script>
