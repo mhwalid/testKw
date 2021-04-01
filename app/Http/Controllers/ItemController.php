@@ -31,7 +31,10 @@ class ItemController extends Controller
         $arrivage = DB::table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
         return view('product.show', compact('item', 'arrivage'));
     }
-
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
     public function itembyCaption($Id)
     {

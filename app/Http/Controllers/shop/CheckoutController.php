@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Stmt\TryCatch;
+use Throwable;
 
 class CheckoutController extends Controller
 {
@@ -23,7 +27,7 @@ class CheckoutController extends Controller
             $total = Cart::total();
             return view('Checkout.index', compact('total'));
         }
-        return redirect()->route('Shop.store');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -51,10 +55,15 @@ class CheckoutController extends Controller
             return response()->json(['success' => false], 400);
         }
         $data = $rq->json()->all();
+
         $this->updatestock();
-        Cart::destroy();
-        Session::flash('success', 'Votre commande a été traitée avec succès');
-        return response()->json(['success' => 'Payment Intent Succeeded']);
+        if ($this->updatestock()) {
+            Cart::destroy();
+            Session::flash('success', 'Votre commande a été traitée avec succès');
+            return view('Checkout.thankyou');
+        } else {
+            return view('Checkout.index');
+        }
     }
 
 
@@ -66,15 +75,30 @@ class CheckoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function thankyou()
     {
+        return Session::has('success') ? view('Checkout.thankyou') : redirect()->route('Cart.index');
     }
 
     private function updatestock()
     {
         foreach (Cart::content() as $item) {
-            $product = Item::find($item->model->id);
-            $product->update(['in_stock' => $product->RealStock - $item->qty]);
+            $product = Item::find($item->model->Id);
+            // $product->RealStock = $product->RealStock - $item->qty;
+            // $product->update();
+
+            $updated = DB::table('item')
+                ->where('id', $item->model->Id)
+                ->update([
+                    'RealStock' => $product->RealStock - $item->qty,
+                ]);
+
+            if ($updated) {
+                return true;
+            } else {
+                return false;
+            }
+            // $product->update(['RealStock' => ($product->RealStock - $item->qty)]);
         }
     }
 
@@ -82,12 +106,17 @@ class CheckoutController extends Controller
     private function notvalibel()
     {
         foreach (Cart::content() as $item) {
-            $product = Item::find($item->model->id);
+            $product = Item::find($item->model->Id);
 
-            if ($product->in_stock < $item->qty) {
+            if ($product->RealStock < $item->qty) {
                 return true;
             }
         }
         return false;
+    }
+
+    public function thanks()
+    {
+        return view('Checkout.thankyou');
     }
 }

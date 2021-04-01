@@ -13,10 +13,11 @@ class Item extends Model
     protected $table = 'Item';
 
     public $timestamps = false;
+    protected $fillable = ['RealStock', 'Id'];
 
-    protected $hidden = [
-        'sysCreatedDate', 'SubjectToIRPF', 'xx_Demat', 'xx_id_presta', 'sysCreatedUser', 'sysDatabaseId', 'xx_Demat', 'xx_Reference_constructeur',
-    ];
+    // protected $hidden = [
+    //     'sysCreatedDate', 'SubjectToIRPF', 'xx_Demat', 'xx_id_presta', 'sysCreatedUser', 'sysDatabaseId', 'xx_Demat', 'xx_Reference_constructeur',
+    // ];
 
     public function family()
     {
@@ -36,6 +37,6 @@ class Item extends Model
 
     public function arrivage()
     {
-        return $this->hasMany(Arrivage::class, 'ItemId', 'Id')->whereRaw('DeliveryDate > SYSDATETIME()');
+        return $this->hasMany(Arrivage::class, 'ItemId', 'Id')->whereRaw('DeliveryDate > DATEADD(month, -1, SYSDATETIME())');
     }
 }

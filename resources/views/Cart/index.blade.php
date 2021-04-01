@@ -58,9 +58,7 @@
                                                 data-id="{{ $item->rowId }}"
                                                 data-stock="{{ intval($item->model->RealStock) }}"
                                                 data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
-
-                                                {{ is_null($item->model->arrivage->first()) ? ($limit = $item->model->RealStock) : ($limit = $item->model->arrivage->first()->Quantity + $item->model->RealStock) }}
-                                                @for ($i = 1; $i <= $limit; $i++)
+                                                @for ($i = 1; $i <= $item->model->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
                                                         {{ $i }}
@@ -118,7 +116,6 @@
                         <ul class="list-unstyled mb-4">
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">
                                     Subtotal </strong><strong>{{ Cart::subtotal() }}</strong></li>
-                            {{-- <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li> --}}
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong
                                     class="text-muted">Tax</strong><strong>{{ Cart::tax() }}</strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong
@@ -144,7 +141,6 @@
             element.addEventListener('change', function() {
                 var rowId = element.getAttribute('data-id');
                 var stock = element.getAttribute('data-stock');
-                var arrivage = element.getAttribute('data-arrivage');
                 var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 fetch(`/panier/${rowId}`, {
                     headers: {
@@ -156,8 +152,7 @@
                     method: 'PATCH',
                     body: JSON.stringify({
                         qty: this.value,
-                        stock: stock,
-                        arrivage: arrivage
+                        stock: stock
                     })
                 }).then((data) => {
                     console.log(data);

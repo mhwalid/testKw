@@ -4,6 +4,8 @@
 @section('content')
 
 
+
+
     <div class="container  align-items-center mt-4">
         <div class="col-md-12 my-auto">
             <div
@@ -21,17 +23,28 @@
                         @if (!is_null($item->arrivage->first()))
                             <div class="mt-4">
                                 <h5>Arrivage</h5>
-                                <p> Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p>
-                                <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
+                                @if (count($item->arrivage->take(5)) > 1)
+                                    @foreach ($item->arrivage->take(5) as $arriv)
+
+                                        <p> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p>
+                                        <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
+                                    @endforeach
+                                @else
+                                    <p> Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p>
+                                    <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
+                                @endif
+
+
+
+
                             </div>
                         @endif
                         <form action="{{ route('cart.store') }}" method="POST">
                             @csrf
 
                             <input type="text" name="item_id" value="{{ $item->Id }}">
-                            <input type="number" name="quantity"
-                                max="{{ is_null($item->arrivage->first()) ? number_format($item->RealStock, 0) : $item->arrivage->first()->Quantity + number_format($item->RealStock, 0) }}"
-                                min="1" value="1">
+                            <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
+                                value="1">
 
                             <button type="submit" class="btn btn-success"> Ajouter au panier</button>
 

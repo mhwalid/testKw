@@ -42,6 +42,7 @@ Route::get('/destroy', function () {
 // Checkout routes
 Route::get('/paiement', 'Shop\CheckoutController@index')->name('checkout.index');
 Route::post('/checkout', 'Shop\CheckoutController@store')->name('checkout.store');
+Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 
 
 
