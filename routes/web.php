@@ -48,3 +48,11 @@ Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 
 //Customers
 Route::get('/customer', 'CustomerContoller@index')->name('Customer.index');
+
+
+//############ methode to writhe in folder ############################# 
+
+
+Route::get('/file','CustomerContoller@file');
+Route::get('/generate','Shop\CheckoutController@GenerateCommande');
+Route::get('/image','ItemController@generateHtml');

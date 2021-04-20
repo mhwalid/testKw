@@ -41,7 +41,7 @@ class ItemController extends Controller
         $data = [];
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
-        return view('product.home', compact('items', 'Families'));
+        return view('product.home', compact('items', 'Families')); 
     }
     public function itembysubFamily($Id)
     {
@@ -59,30 +59,32 @@ class ItemController extends Controller
         $url = $request->ur;
         $pieces = explode("/", $url);
 
-
-        if ($q == '') {
-            $items = DB::table('Item')->paginate(20);
-        }
-
         if (count($pieces) == 1) {
-            $items = DB::table('Item')->where('Caption', 'like', "%$q%")->paginate(200);
+            $items = Item::itemA()->where('Caption', 'like', "%$q%")->orWhere('BarCode ','like' ,"%$q%")->paginate(100);
+            return $items;
         } else {
             if ($pieces[1] == "SubFamily") {
                 $con = $pieces[2];
-                $items = DB::table('Item')->where('Caption', 'like', "%$q%")
+                $items = Item::itemA()->where('Caption', 'like', "%$q%")
                     ->where('SubFamilyId', 'like', "%$con%")
+                    ->orWhere('BarCode ','like' ,"%$q%")
                     ->paginate(180);
+                    return $items;
                 // $dz = "sub";
             } elseif ($pieces[1] == "Family") {
                 $con = $pieces[2];
-                $items = DB::table('Item')->where('Caption', 'like', "%$q%")
+                $items = Item::itemA()->where('Caption', 'like', "%$q%")
                     ->where('FamilyId', 'like', "%$con%")
+                    ->orWhere('BarCode ','like' ,"%$q%")
                     ->paginate(170);
+                    return $items;
                 // $dz = "fam";
             }
         }
-        return $items;
+       
     }
+
+  
 
     public function filter(Request $request)
     {

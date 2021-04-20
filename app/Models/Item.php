@@ -31,8 +31,8 @@ class Item extends Model
 
     public static function search($search)
     {
-        return empty($search) ? static::query()
-            : static::query()->where('Caption', 'like', '%' . $search . '%');
+        return empty($search) ? static::query()->ItemA()
+            : static::query()->where('Caption', 'like', '%' . $search . '%')->orWhere('BarCode ','like' ,'%'.$search.'%'); 
     }
 
     public function arrivage()

@@ -178,40 +178,6 @@
         </div>
     </div>
 
-    {{-- <div class="">
-        <div class="w-full flex justify-center">
-            <div class="flex flex-col md:flex-wrap md:flex-row p-5">
-                @foreach ($itemsComponen as $itemC)
-
-                    <div class="w-full md:w-1/2 lg:w-1/3 md:px-2 py-2">
-                        <div class="bg-white rounded shadow p-5 h-full relative">
-                            <h5 class="font-black uppercase text-2xl mb-4">
-                                {{ $itemC->Id }}
-                            </h5>
-                            <h6 class="font-bold text-gray-700 text-xl mb-3">U$S {{ $itemC->CostPrice }}</h6>
-                            <p class="text-gray-900 font-normal mb-12">
-                                {{ $itemC->CostPrice }}
-                            </p>
-                            <div class="flex justify-end mt-5 absolute w-full bottom-0 left-0 pb-5">
-                                <button wire:click="addToCart({{ $itemC->CostPrice }})"
-                                    class="block uppercase font-bold text-green-600 hover:text-green-500 mr-4">
-                                    Add to cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                @endforeach
-            </div>
-        </div>
-
-        <div class="w-full flex justify-center pb-6">
-            {{ $products->links('layouts.pagination') }}
-        </div>
-    </div> --}}
-
-
-
     <div class="row mb-2 mt-4">
 
         <div id="results" style="width: 1147px;">
@@ -222,6 +188,15 @@
                     <h5 style="position: absolute; margin-left:991px" class="mb-0">
                         {{ number_format($item->CostPrice, 2) }}
                         €</h5>
+                        @if ($item->RealStock>0)
+                        <form action="{{ route('cart.store') }}" method="POST" style="position: absolute; margin-left:921px">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $item->Id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-success"> <i class="fa fa-shopping-cart mr-2"></i></button>
+
+                        </form>
+                        @endif
                 </div>
             @endforeach
             <p> {{ $items->links('pagination::bootstrap-4') }}</p>
@@ -265,167 +240,14 @@
         </div>
 
     </nav>
-    {{-- @livewire('search') --}}
+    
     @include('include.navbar')
 
 @endsection
 
-@section('js')
-    <script>
-        function showOld(event) {
 
-            event.preventDefault()
-        }
-
-
-        $(document).on('keyup', '#search', function() {
-            var $value = $(this).val();
-            const url = document.querySelector('#SearchFrom').getAttribute('action');
-            var ur = document.querySelector('#url').innerText;
-            console.log(url + "sds");
-            axios.post(`${url}`, {
-                    value: $value,
-                    ur: ur,
-                    items: []
-                })
-                .then(function(response) {
-                    console.log(response.data.data)
-                    const ret = response.data.data
-                    let results = document.querySelector('#results')
-                    results.innerHTML = ''
-                    for (let i = 0; i < ret.length; i++) {
-                        let Card = document.createElement('div')
-                        Card.classList.add('p-4', 'd-flex', 'border', 'rounded', 'overflow-hidden',
-                            'flex-md-row', 'mb-4', 'shadow-sm')
-                        let titile = document.createElement('a')
-                        titile.innerHTML = ret[i].Caption
-                        titile.href = "http://localhost:8000/boutique/" + ret[i].Id
-                        let price = document.createElement('h5')
-                        price.style.position = 'absolute'
-                        price.style.marginLeft = '991px'
-                        let n = parseFloat(ret[i].CostPrice)
-                        price.innerHTML = n.toFixed(2) + " €"
-                        Card.appendChild(titile)
-                        Card.appendChild(price)
-                        results.appendChild(Card)
-                    }
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-        });
-
-
-        $('.filter_all').on('click', function() {
-            let ucan = false
-
-            filter_data();
-
-            function filter_data() {
-                $('.filter_data');
-                var action = 'fetch_data';
-                var minimum_price = $('#min_price_hide').val();
-                var maximum_price = $('#max_price_hide').val();
-                var Stockage = get_filter('Stockage');
-                var proc = get_filter('proc');
-                var ram = get_filter('ram');
-                var disque = get_filter('disque');
-                var mrq = get_filter('mrq');
-                var CGType = get_filter('CGType');
-                var size = get_filter('size');
-                const url = document.querySelector('#filter').getAttribute('action');
-                var search = document.getElementById("search")
-                var ur = document.querySelector('#url').innerText;
-                console.log(url);
-                axios.post(`${url}`, {
-                        action: action,
-                        minimum_price: minimum_price,
-                        maximum_price: maximum_price,
-                        Stockage: Stockage,
-                        proc: proc,
-                        disque: disque,
-                        url: ur,
-                        mrq: mrq,
-                        search: search,
-                        ram: ram,
-                        CGType: CGType,
-                        size: size,
-                    })
-                    .then(function(response) {
-                        console.log(response.data.data)
-                        const ret = response.data.data
-                        let results = document.querySelector('#results')
-                        console.log(ret)
-                        if (ret) {
-                            ucan = true
-                            results.innerHTML = ''
-                            for (let i = 0; i < ret.length; i++) {
-                                let Card = document.createElement('div')
-                                Card.classList.add('p-4', 'd-flex', 'border', 'rounded', 'overflow-hidden',
-                                    'flex-md-row', 'mb-4', 'shadow-sm')
-                                let titile = document.createElement('a')
-                                titile.innerHTML = ret[i].Caption
-                                titile.href = "http://localhost:8000/boutique/" + ret[i].Id
-                                let price = document.createElement('h5')
-                                price.style.position = 'absolute'
-                                price.style.marginLeft = '991px'
-                                let n = parseFloat(ret[i].CostPrice)
-                                price.innerHTML = n.toFixed(2) + " €"
-                                Card.appendChild(titile)
-                                Card.appendChild(price)
-                                results.appendChild(Card)
-                            }
-
-                            if (response.data.total == 0) {
-                                let Card = document.createElement('div')
-                                Card.classList.add('p-4', 'd-flex', 'border', 'rounded', 'overflow-hidden',
-                                    'flex-md-row', 'mb-4', 'shadow-sm', 'bg-danger', 'text-white')
-                                let vide = document.createElement('h5')
-                                vide.innerHTML = "    Il exite pas dans le Stock  Pour l'instant"
-                                Card.appendChild(vide)
-                                results.appendChild(Card)
-                            }
-                        } else {
-                            if (ucan) {
-                                // location.reload(true)
-                            }
-                        }
-
-                    })
-                    .catch(function(error) {
-                        console.log(error.data);
-                    });
-
-            };
-
-            function get_filter(class_name) {
-                var filter = [];
-                $('.' + class_name + ':checked').each(function() {
-                    filter.push($(this).val());
-                });
-                return filter;
-            }
-
-            $('.filter_all').click(function() {
-                filter_data();
-            });
-
-            // $('#price_range').slider({
-            //     range: true,
-            //     min: 10,
-            //     max: 300,
-            //     values: [10, 300],
-            //     step: 10,
-            //     stop: function(event, ui) {
-            //         $('#price_show').html(ui.values[0] + ' - ' + ui.values[1]);
-            //         $('#min_price_hide').val(ui.values[0]);
-            //         $('#max_price_hide').val(ui.values[1]);
-            //         filter_data();
-            //     }
-            // });
-
-        });
-
-    </script>
-
-@stop
+{{-- le scripte js de Searchbar et filter  --}}
+@section('extra-js')
+@include('include.SearchItem')
+@include('include.filter')
+@endsection
