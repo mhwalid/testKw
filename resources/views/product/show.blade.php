@@ -2,10 +2,6 @@
 
 
 @section('content')
-
-
-
-
     <div class="container  align-items-center mt-4">
         <div class="col-md-12 my-auto">
             <div
