@@ -25,7 +25,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @livewireStyles
+    
 
 </head>
 
@@ -58,9 +58,10 @@
     @livewireScripts
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    @yield('extra-js')
+    
     @yield('jsbar')
     @yield('js')
-    @yield('extra-js')
 
 
 </body>

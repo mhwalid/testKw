@@ -26,17 +26,13 @@
                                 @if (count($item->arrivage->take(5)) > 1)
                                     @foreach ($item->arrivage->take(5) as $arriv)
 
-                                        <p> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p>
+                                    <em class="text-info"> <p class="text-info"> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p></em>
                                         <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
                                     @endforeach
                                 @else
-                                    <p> Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p>
-                                    <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
+                                   <em class="text-info"> <p > Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p></em>
+                                    <p >Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
                                 @endif
-
-
-
-
                             </div>
                         @endif
                         <form action="{{ route('cart.store') }}" method="POST">
