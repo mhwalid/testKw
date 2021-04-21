@@ -3,7 +3,25 @@
 
 @section('content')
 
-
+    <div class="input-group mb-3">
+        <div  class="" id="navbarSupportedContent">
+            
+            <form action="{{ route('search') }}" method="POST" class="form-inline ml-auto" onsubmit="traitForm(a)"
+                id="SearchFrom">
+                @csrf
+                <div class="md-form my-0">
+                    <input class="form-control" type="text" placeholder="Search" id="search" name="q"
+                        value="{{ request()->q ?? '' }}">
+                        
+                </div>
+                <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'
+                    type="text"></button>
+            </form>
+            <p id="url" style=""> {{ Request::path() }} </p>
+            <div class="container" id="results">
+            </div>
+        </div>
+    </div>
 
     <div class="pb-5">
         <div class="container">
@@ -58,6 +76,7 @@
                                                 data-id="{{ $item->rowId }}"
                                                 data-stock="{{ intval($item->model->RealStock) }}"
                                                 data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
+                                               
                                                 @for ($i = 1; $i <= $item->model->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
@@ -67,7 +86,6 @@
 
                                                 @endfor
                                             </select>
-
                                         </td>
                                         <td class="border-0 align-middle">
                                             <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
@@ -164,4 +182,5 @@
         });
 
     </script>
+    @include('include.Searchitem')
 @endsection
