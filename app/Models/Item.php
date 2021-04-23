@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
+    
     use HasFactory;
+    protected $connection = 'sqlsrv';
     protected $table = 'Item';
+    
 
     public $timestamps = false;
     protected $fillable = ['RealStock', 'Id'];
@@ -22,6 +25,10 @@ class Item extends Model
     public function family()
     {
         return $this->hasMany(Family::class, 'FamilyId', 'Id');
+    }
+    public function caracteristiques()
+    {
+        return $this->hasMany(Caracteristique::class,'IdItem', 'Id');
     }
 
     public function ScopeItemA($query)

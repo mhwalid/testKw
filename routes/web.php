@@ -1,6 +1,7 @@
 <?php
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,3 +57,11 @@ Route::get('/customer', 'CustomerContoller@index')->name('Customer.index');
 Route::get('/file','CustomerContoller@file');
 Route::get('/generate','Shop\CheckoutController@GenerateCommande');
 Route::get('/image','ItemController@generateHtml');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+###################### test the connection #############
+
+Route::get('/conn', 'CustomerContoller@conn');

@@ -10,6 +10,7 @@ class Arrivage extends Model
     use HasFactory;
 
     protected $table = 'PurchaseDocumentLine';
+    protected $connection = 'sqlsrv';
 
     protected $fillable = ['Quantity', 'DeliveryDate', 'ItemId'];
 }

@@ -1,40 +1,24 @@
-<aside class="sidebar">
-    <div id="leftside-navigation" class="nano">
-        <ul class="nano-content">
-            <li>
-                <a href="index.html"><i class="fa fa-dashboard"></i><span>Categories</span></a>
-            </li>
-            @foreach ($Families as $Familie)
-                <li class="sub-menu">
-                    @if (count($Familie->subFamily)) <a
-                            href="{{ route('itembyCaption', $Familie->Id) }}"
-                        class="tag">{{ count($Familie->subFamily) }}</a> @else <a
-                            href="{{ route('itembyCaption', $Familie->Id) }}" class="tag">GO</a> @endif
-                    <a href="javascipt:void(0);"><span class="icon">{{ $Familie->Caption ?? 'ds' }}</span></a>
-                    <ul>
-                        @if (count($Familie->subFamily))
-
-                            @foreach ($Familie->subFamily as $subcategory)
-
-                                <li><a
-                                        href="{{ route('itembysubFamily', $subcategory->Id) }}">{{ $subcategory->Caption ?? 'ds' }}</a>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
-            @endforeach
-        </ul>
+<nav id="Nav" class="navbar navbar-expand-lg navbar-dark indigo mb-4">
+    <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px" src="{{asset('asset/img/kw-distribution.jpg')}}" alt=""></a>
+    <div class="col-4pt-1">
+        <a href="{{ route('cart.index') }}"> Panier <span
+                class="badge badge-light badge-pill">{{ Cart::content()->count() }} </span></a>
     </div>
-</aside>
+    <!-- Collapsible content -->
+       
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-
-@section('js')
-    <script>
-        $("#leftside-navigation .sub-menu > a").click(function(e) {
-            $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-                e.stopPropagation()
-        })
-
-    </script>
-@stop
+        <form action="{{ route('search') }}" method="POST" class="form-inline ml-auto" onsubmit="traitForm(a)"
+            id="SearchFrom">
+            @csrf
+            <div class="md-form my-0">
+                <input class="form-control" type="text" placeholder="Search" id="search" name="q"
+                    value="{{ request()->q ?? '' }}">
+            </div>
+            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'
+                type="text"></button>
+        </form>
+    </div>
+    @include('include.login')
+</nav>

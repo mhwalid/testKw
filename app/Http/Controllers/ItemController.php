@@ -27,9 +27,9 @@ class ItemController extends Controller
 
     public function show($id)
     {
-        $item = Item::where('Id', $id)->first();
-        $arrivage = DB::table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
-        return view('product.show', compact('item', 'arrivage'));
+         $item = Item::find($id);
+        $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
+       return view('product.show', compact('item', 'arrivage'));
     }
     
 

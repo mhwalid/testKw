@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SubFamily extends Model
-{
+{  
+    protected $connection = 'sqlsrv';
     use HasFactory;
 
     public $incrementing = false;
     protected $table = 'ItemSubFamily';
     protected $keyType = 'string';
+  
 
     protected $fillable = [
         'Caption' ,'ItemFamilyId' ,'Id' 

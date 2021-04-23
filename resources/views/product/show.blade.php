@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-
+@include('include.navbar')
 @section('content')
     <div class="container  align-items-center mt-4">
+    
         <div class="col-md-12 my-auto">
             <div
                 class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -53,6 +54,27 @@
 
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <table class="table ">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Valeur</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @if (count($item->caracteristiques)> 1)
+                    @foreach ($item->caracteristiques as $caracteristiques)
+                  <tr>
+                    <th scope="row">{{$caracteristiques->Libelle}}</th>
+                    <td>{{$caracteristiques->Value}}</td>
+                  </tr>
+                  @endforeach
+                    @endif
+                </tbody>
+              </table>
         </div>
 
     </div>
