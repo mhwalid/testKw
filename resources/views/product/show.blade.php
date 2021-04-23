@@ -3,7 +3,7 @@
 @include('include.navbar')
 @section('content')
     <div class="container  align-items-center mt-4">
-    
+
         <div class="col-md-12 my-auto">
             <div
                 class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -48,13 +48,28 @@
                     @endif
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img style="width:200px;height:250px"
-                        src="https://inishop.com/img/gallery_mediums/67488779_1160213557.jpg" alt=" "
+                    <img
+                        src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" alt=" "
                         class="bd-placeholder-img">
 
                 </div>
             </div>
         </div>
+ <div class="container-fluid mt-5">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-0">
+                        Fiche Produit
+                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success float-right"> Génerer PDF</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+ </div>
+
 
         <div class="container">
             <table class="table ">

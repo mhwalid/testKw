@@ -5,7 +5,7 @@
                 class="badge badge-light badge-pill">{{ Cart::content()->count() }} </span></a>
     </div>
     <!-- Collapsible content -->
-       
+
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -13,7 +13,7 @@
             id="SearchFrom">
             @csrf
             <div class="md-form my-0">
-                <input class="form-control" type="text" placeholder="Search" id="search" name="q"
+                <input class="form-control" type="text" placeholder="Recherche" id="search" name="q"
                     value="{{ request()->q ?? '' }}">
             </div>
             <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'

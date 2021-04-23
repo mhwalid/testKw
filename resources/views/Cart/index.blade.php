@@ -5,14 +5,14 @@
 
     <div class="input-group mb-3">
         <div  class="" id="navbarSupportedContent">
-            
+
             <form action="{{ route('search') }}" method="POST" class="form-inline ml-auto" onsubmit="traitForm(a)"
                 id="SearchFrom">
                 @csrf
                 <div class="md-form my-0">
                     <input class="form-control" type="text" placeholder="Search" id="search" name="q"
                         value="{{ request()->q ?? '' }}">
-                        
+
                 </div>
                 <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'
                     type="text"></button>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-     
+
 
     <div class="pb-5">
         <div class="container">
@@ -59,7 +59,7 @@
                                     <tr>
                                         <th scope="row" class="border-0">
                                             <div class="p-2">
-                                                <img src="https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg"
+                                                <img src="{{asset('asset/item/images/'.$item->id.'/Cart1.jpg')}}"
                                                     alt="" width="70" class="img-fluid rounded shadow-sm">
                                                 <div class="ml-3 d-inline-block align-middle">
                                                     <h6 class="mb-0"> <a href="{{ route('product.show', $item->id) }}"
@@ -78,7 +78,7 @@
                                                 data-id="{{ $item->rowId }}"
                                                 data-stock="{{ intval($item->model->RealStock) }}"
                                                 data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
-                                               
+
                                                 @for ($i = 1; $i <= $item->model->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
