@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -34,9 +36,9 @@ class CartController extends Controller
   public function index()
   {
 
-    
+
       return view('Cart.index');
-    
+
   }
 
   public function destroy($rowId)
@@ -61,9 +63,24 @@ class CartController extends Controller
       Session::flash('error', 'Il n\'y a plus assez de stock.');
       return response()->json(['error' => 'Not Enought Product Quantity']);
     }
-    
+
     Session::flash('success', 'La quantité du produit est passée à ' . $data['qty'] . '.');
     Cart::update($rowId, $data['qty']);
     return response()->json(['success' => 'Cart Quantity Has Been Updated']);
   }
+
+  public function invoice(){
+
+    // $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
+    // $data = [
+    //     'item' => $item,
+    //     'arrivage' => $arrivage,
+
+    // ];
+    $pdf = PDF::loadView('cart.invoicepdf')->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
+
+    return $pdf->stream('Facture.pdf');
+//    return view('cart.invoicepdf');
+
+}
 }

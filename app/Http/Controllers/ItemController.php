@@ -12,6 +12,7 @@ use phpDocumentor\Reflection\Location;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
+use Dompdf\Options;
 
 class ItemController extends Controller
 {
@@ -379,10 +380,12 @@ class ItemController extends Controller
             'arrivage' => $arrivage,
 
         ];
+        // require_once 'dompdf/autoload.inc.php';
+$options = new Options();
+$options->set('isRemoteEnabled', TRUE);
+        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
 
-        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif']);
-
-        return $pdf->download($id.'.pdf');
+        return $pdf->stream($id.'.pdf');
         // return view('product.itempdf', compact('item', 'arrivage'));
     }
 }

@@ -1,4 +1,4 @@
-<nav id="Nav" class="navbar navbar-expand-lg navbar-dark indigo mb-4">
+<nav id="Nav" class="navbar navbar-expand-lg navbar-light indigo mb-4" style="background-color: #d8b908;" >
     <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px" src="{{asset('asset/img/kw-distribution.jpg')}}" alt=""></a>
     <div class="col-4pt-1">
         <a href="{{ route('cart.index') }}"> Panier <span

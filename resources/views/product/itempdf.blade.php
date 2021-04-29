@@ -5,26 +5,45 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></head>
     <div class="container  align-items-center mt-4">
+        {{-- <figure>
+        <img class="logo" src="{{asset('asset/img/kw-distribution.jpg')}}">
+    </figure> --}}
+    <div class="container">
 
-        <div class="col-md-12 my-auto">
+        <div class="brand-section">
+            <div class="">
+                <div class="">
+                    <h1 class="text-white">KW-DISTRIBUTION</h1>
+                    <p class="text-white">12T Avenue Eugène Hénaff </p>
+                    <p class="text-white">69120 Vaulx-en-Velin, France</p>
+                    <p class="text-white">04 86 80 08 00</p>
+                </div>
+                <div class="">
+                    <div class="company-details">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="body-section">
             <div
-                class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong>
-                    <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }}</h5>
-                    <div class="mb-1 text-muted">{{ $item->DesComClear }}</div>
-                    <p class="card-text "> real stock : <em>{{ number_format($item->RealStock, 0) }} </em>
+                class="">
+                <div class="">
+                    <strong class="heading">{{ $item->Caption }}</strong>
+                    <p class="sub-heading"> {{ number_format($item->CostPrice, 2) }} €</p>
+                    <p class="sub-heading">{{ $item->DesComClear }}</p>
+                    <p class="sub-heading "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>
                         pièces
                     </p>
-                    <p class="card-text mb-auto"> BarCode : {{ $item->BarCode }}</p>
+                    <p class="sub-heading"> Code Bar : {{ $item->BarCode }}</p>
 
                     @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
                         @if (!is_null($item->arrivage->first()))
-                            <div class="mt-4">
+                            <div class="sub-heading">
                                 <h5>Arrivage</h5>
                                 @if (count($item->arrivage->take(5)) > 1)
                                     @foreach ($item->arrivage->take(5) as $arriv)
-
                                     <em class="text-info"> <p class="text-info"> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p></em>
                                         <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
                                     @endforeach
@@ -35,16 +54,10 @@
                             </div>
                         @endif
                     @else
-                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour l'instant
+                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
                         </button>
                     @endif
                 </div>
-                {{-- <div class="col-auto d-none d-lg-block">
-                    <img style="width:200px;height:250px"
-                        src="https://inishop.com/img/gallery_mediums/67488779_1160213557.jpg" alt=" "
-                        class="bd-placeholder-img">
-
-                </div> --}}
             </div>
         </div>
 
@@ -70,7 +83,7 @@
             margin-left: auto;
         }
         .brand-section{
-           background-color: #0d1033;
+           background-color: #d8b908;
            padding: 10px 40px;
         }
         .logo{

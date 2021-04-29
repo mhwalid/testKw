@@ -68,3 +68,6 @@ Route::get('/conn', 'CustomerContoller@conn');
 
 //Item
 Route::get('generate-feature/{Id}','ItemController@feature');
+
+//Invoice
+Route::get('generate-invoice/','Shop\CartController@invoice');

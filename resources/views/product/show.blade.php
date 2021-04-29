@@ -9,12 +9,12 @@
                 class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong>
-                    <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }}</h5>
+                    <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }} €</h5>
                     <div class="mb-1 text-muted">{{ $item->DesComClear }}</div>
-                    <p class="card-text "> real stock : <em>{{ number_format($item->RealStock, 0) }} </em>
+                    <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>
                         pièces
                     </p>
-                    <p class="card-text mb-auto"> BarCode : {{ $item->BarCode }}</p>
+                    <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
 
                     @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
                         @if (!is_null($item->arrivage->first()))
@@ -43,7 +43,7 @@
 
                         </form>
                     @else
-                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour l'instant
+                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
                         </button>
                     @endif
                 </div>
@@ -62,8 +62,8 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="mb-0">
-                        Fiche Produit
-                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success float-right"> Génerer PDF</a>
+                        Télécharger la fiche Produit
+                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success float-right"> Téléchargez</a>
                     </h6>
                 </div>
             </div>
@@ -72,8 +72,8 @@
 
 
         <div class="container">
-            <table class="table ">
-                <thead class="thead-dark">
+            <table class="table table-hover ">
+                <thead class="thead-info" style="background-color: #d8b908;">
                   <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Valeur</th>
