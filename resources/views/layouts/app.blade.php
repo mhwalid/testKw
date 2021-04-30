@@ -16,7 +16,7 @@
 
     <!-- Scripts -->
 
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -48,15 +48,12 @@
 
 
     </div>
-
-
-    @livewireScripts
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @yield('extra-js')
-    
     @yield('jsbar')
     @yield('js')
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
 
 </body>

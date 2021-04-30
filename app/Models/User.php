@@ -10,27 +10,19 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    protected $connection = 'mysql';
+    protected $table = 'users';
+    
+    protected $fillable = [ 'email', 'remember_token','password','Id'];
 
-    protected $table = 'Customer';
-
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'MainDeliveryAddress_CityINSEE', 'MainInvoicingAddress_CodeINSEE', 'MainInvoicingAddress_CityINSEE', 'HeadOfficeAddress_CodeINSEE', 'HeadOfficeAddress_CityINSEE', 'NeotouchSendingType', 'NeotouchDuplicateSendingType', 'NeotouchContactsIdForDuplicate'
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
-
-    //stock between dilivered and real stock (RoundId)
+    ];   
+    
+    public function contact()
+    {   
+        return $this->belongsTo(Contact::class ,'IdUser','Id');
+    }
+    
 }

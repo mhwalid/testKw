@@ -10,7 +10,7 @@
                             href="{{ route('itembyCaption', $Familie->Id) }}"
                         class="tag">{{ count($Familie->subFamily) }}</a> @else <a
                             href="{{ route('itembyCaption', $Familie->Id) }}" class="tag">GO</a> @endif
-                    <a href="javascipt:void(0);"><span class="icon">{{ $Familie->Caption ?? 'ds' }}</span></a>
+                    <a  href="javascipt:void(0);" onclick="callPrintFunction()"><span class="icon">{{ $Familie->Caption ?? 'ds' }}</span></a>
                     <ul>
                         @if (count($Familie->subFamily))
 
@@ -31,7 +31,7 @@
 
 @section('js')
     <script>
-        $("#leftside-navigation .sub-menu > a").click(function(e) {
+        $("#leftside-navigation .sub-menu > a").click( Function callPrint()function(e) {
             $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
                 e.stopPropagation()
         })

@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
+use App\Models\Password;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -37,4 +44,23 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
+
+    public function login(Request $request)
+    {
+
+       $data=$request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+            $user = Contact::where('ContactFields_Email' ,$data['email'])->first();
+            
+            if(!is_null($user)){
+                Auth::attempt(['email' => $request->email, 'password' =>$request->password]);
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+            return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect " ]);
+    }
+
 }
