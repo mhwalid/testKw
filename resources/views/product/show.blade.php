@@ -80,7 +80,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if (count($item->caracteristiques)> 1)
+                    @if (count($item->caracteristiques)>0)
+
                     @foreach ($item->caracteristiques as $caracteristiques)
                   <tr>
                     <th scope="row">{{$caracteristiques->Libelle}}</th>
