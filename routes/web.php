@@ -51,7 +51,7 @@ Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 Route::get('/customer', 'CustomerContoller@index')->name('Customer.index');
 
 
-//############ methode to writhe in folder ############################# 
+//############ methode to writhe in folder #############################
 
 
 Route::get('/file','CustomerContoller@file');
@@ -65,3 +65,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 ###################### test the connection #############
 
 Route::get('/conn', 'CustomerContoller@conn');
+
+//Item
+Route::get('generate-feature/{Id}','ItemController@feature');
+
+//Invoice
+Route::get('generate-invoice/','Shop\CartController@invoice');

@@ -5,15 +5,16 @@
 
     <div class="input-group mb-3">
         <div  class="" id="navbarSupportedContent">
-            
+
             <form action="{{ route('search') }}" method="POST" class="form-inline ml-auto" onsubmit="traitForm(a)"
                 id="SearchFrom">
                 @csrf
                 <div class="md-form my-0">
-                    <input class="form-control" type="text" placeholder="Search" id="search" name="q"
+                    <input class="form-control" type="text" placeholder="Recherche" id="search" name="q"
                         value="{{ request()->q ?? '' }}">
-                        
+
                 </div>
+
                 <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'
                     type="text"></button>
             </form>
@@ -22,8 +23,8 @@
             </div>
         </div>
     </div>
+    <a href="{{ route('product.index') }}" class="btn btn-sm btn-success mt-3">Revenir à la boutique</a>
 
-     
 
     <div class="pb-5">
         <div class="container">
@@ -36,19 +37,19 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="border-0 bg-light">
-                                        <div class="p-2  text-uppercase">Product</div>
+                                        <div class="p-2  text-uppercase">Produit</div>
                                     </th>
                                     <th scope="col" class="border-0 bg-light">
-                                        <div class="py-2 text-uppercase">Price</div>
+                                        <div class="py-2 text-uppercase">Prix</div>
                                     </th>
                                     <th scope="col" class="border-0 bg-light">
-                                        <div class="py-2 text-uppercase">subTotal</div>
+                                        <div class="py-2 text-uppercase">Sous-Total</div>
                                     </th>
                                     <th scope="col" class="border-0 bg-light">
-                                        <div class="py-2 text-uppercase">Quantity</div>
+                                        <div class="py-2 text-uppercase">Quantité</div>
                                     </th>
                                     <th scope="col" class="border-0 bg-light">
-                                        <div class="py-2 text-uppercase">Remove</div>
+                                        <div class="py-2 text-uppercase">Supprimer</div>
                                     </th>
                                 </tr>
                             </thead>
@@ -56,29 +57,31 @@
 
                                 @foreach (Cart::content() as $item)
                                     {{ $arrivage = false }}
+
                                     <tr>
                                         <th scope="row" class="border-0">
                                             <div class="p-2">
-                                                <img src="https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg"
+                                                <img src="{{asset('asset/item/images/'.$item->id.'/Cart1.jpg')}}"
                                                     alt="" width="70" class="img-fluid rounded shadow-sm">
                                                 <div class="ml-3 d-inline-block align-middle">
                                                     <h6 class="mb-0"> <a href="{{ route('product.show', $item->id) }}"
                                                             class="text-dark d-inline-block align-middle">{{ $item->name }}</a>
                                                     </h6>
                                                     <span
-                                                        class="text-muted font-weight-normal font-italic d-block">Category:
+                                                        class="text-muted font-weight-normal font-italic d-block">Catégorie:
                                                         Watches</span>
                                                 </div>
                                             </div>
                                         </th>
 
-                                        <td class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
+
                                         <td class="border-0 align-middle">{{ $item->price }}<strong></strong></td>
+                                        <td class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
                                         <td class="border-0 align-middle"> <select class="custom-select" name="qty" id="qty"
                                                 data-id="{{ $item->rowId }}"
                                                 data-stock="{{ intval($item->model->RealStock) }}"
                                                 data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
-                                               
+
                                                 @for ($i = 1; $i <= $item->model->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
@@ -101,6 +104,7 @@
 
                             </tbody>
                         </table>
+
                     </div>
                     <!-- End -->
                 </div>

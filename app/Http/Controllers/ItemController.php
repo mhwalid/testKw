@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Location;
 use Symfony\Component\Console\Logger\ConsoleLogger;
+use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF;
+use Dompdf\Options;
 
 class ItemController extends Controller
 {
@@ -31,14 +34,14 @@ class ItemController extends Controller
         $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
        return view('product.show', compact('item', 'arrivage'));
     }
-    
+
 
     public function itembyCaption($Id)
     {
         $data = [];
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
-        return view('product.home', compact('items', 'Families')); 
+        return view('product.home', compact('items', 'Families'));
     }
     public function itembysubFamily($Id)
     {
@@ -78,10 +81,10 @@ class ItemController extends Controller
                 // $dz = "fam";
             }
         }
-       
+
     }
 
-  
+
 
     public function filter(Request $request)
     {
@@ -119,7 +122,7 @@ class ItemController extends Controller
         //                                                 ->orWhere('xx_categorie1',$q2);
 
         //             }
-        //         }  
+        //         }
         //         if(isset($request->proc)){
         //             if(count($request->Stockage)==1){
         //                 $q=$request->Stockage[0];
@@ -140,7 +143,7 @@ class ItemController extends Controller
         //                                                 ->orWhere('xx_categorie2',$q1)
         //                                                 ->orWhere('xx_categorie2',$q2);
         //             }
-        //          }  
+        //          }
         //         if(isset($request->proc)){
         //             if(count($request->proc)==1){
         //                 $q=$request->proc[0];
@@ -161,7 +164,7 @@ class ItemController extends Controller
         //                                                 ->orWhere('localizableCaption_2',$q)
         //                                                 ->orWhere('localizableCaption_2',$q);
         //             }
-        //          }  
+        //          }
 
         //     return $items->paginate(300);
 
@@ -368,4 +371,21 @@ class ItemController extends Controller
     // AND product_storage IN('".$storage_filter."')
     // ";
     // }
+
+    public function feature($id){
+        $item = Item::find($id);
+        $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
+        $data = [
+            'item' => $item,
+            'arrivage' => $arrivage,
+
+        ];
+        // require_once 'dompdf/autoload.inc.php';
+$options = new Options();
+$options->set('isRemoteEnabled', TRUE);
+        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
+
+        return $pdf->stream($id.'.pdf');
+        // return view('product.itempdf', compact('item', 'arrivage'));
+    }
 }

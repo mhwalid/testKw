@@ -3,18 +3,18 @@
 @include('include.navbar')
 @section('content')
     <div class="container  align-items-center mt-4">
-    
+
         <div class="col-md-12 my-auto">
             <div
                 class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong>
-                    <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }}</h5>
+                    <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }} €</h5>
                     <div class="mb-1 text-muted">{{ $item->DesComClear }}</div>
-                    <p class="card-text "> real stock : <em>{{ number_format($item->RealStock, 0) }} </em>
+                    <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>
                         pièces
                     </p>
-                    <p class="card-text mb-auto"> BarCode : {{ $item->BarCode }}</p>
+                    <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
 
                     @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
                         @if (!is_null($item->arrivage->first()))
@@ -43,22 +43,37 @@
 
                         </form>
                     @else
-                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour l'instant
+                        <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
                         </button>
                     @endif
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img style="width:200px;height:250px"
-                        src="https://inishop.com/img/gallery_mediums/67488779_1160213557.jpg" alt=" "
-                        class="bd-placeholder-img">
+                    <img class="img-responsive" alt="Cinque Terre"
+                        src="{{asset('asset/item/images/'.$item->Id.'/Cart.jpg')}}" alt=" "
+                       >
 
                 </div>
             </div>
         </div>
+ <div class="container-fluid mt-5">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-0">
+                        Télécharger la fiche Produit
+                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success float-right"> Téléchargez</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+ </div>
+
 
         <div class="container">
-            <table class="table ">
-                <thead class="thead-dark">
+            <table class="table table-hover ">
+                <thead class="thead-info" style="background-color: #d8b908;">
                   <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Valeur</th>
