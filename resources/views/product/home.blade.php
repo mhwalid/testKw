@@ -76,14 +76,14 @@
         <div id="results" style="width: 1147px;">
             @foreach ($items as $item)
                 <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">
+                    <img
+                        src="{{asset('asset/item/images/'.$item->Id.'/Small1.jpg')}}" alt=" "
+                        class="bd-placeholder-img" style="float:right;">
                     <a href="{{ route('product.show', $item->Id) }}"> <strong
                             class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong> </a>
                     <h5 style="position: absolute; margin-left:991px" class="mb-0">
                         {{ number_format($item->CostPrice, 2) }}
                         €</h5>
-                        <img
-                        src="{{asset('asset/item/images/'.$item->Id.'/Small1.jpg')}}" alt=" "
-                        class="bd-placeholder-img" style="float:right;">
                         @if ($item->RealStock>0)
                         <form action="{{ route('cart.store') }}" method="POST" style="position: absolute; margin-left:921px">
                             @csrf
@@ -110,4 +110,5 @@
 @section('extra-js')
 @include('include.SearchItem')
 @include('include.filter')
+@include('include.footer')
 @endsection
