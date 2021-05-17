@@ -1,0 +1,118 @@
+
+/* Footer */
+
+footer {
+    text-align:center;
+    margin-top: 50px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 50px;
+    font-size: 12px;
+
+}
+
+/* a{
+    color:white;
+    text-decoration: none;
+} */
+
+
+footer .social-media{
+
+    display:flex;
+}
+footer .social-media p {
+
+    margin-right: 20px;
+    /* border: 1px solid white;
+    border-radius: 100%; */
+    padding: 10px;
+    text-align: center;
+    cursor:pointer;
+
+}
+
+.fa-facebook-f{
+    color:white;
+    font-size: 20px;
+
+}
+
+.fa-linkedin-in{
+ color:white;
+    font-size: 20px;
+}
+
+
+.fas{
+    color:white;
+    font-size: 20px;
+}
+.adresse{
+    /* margin-top: 15px;
+    margin-left: 20px;
+    font-size: 13px;
+    display:flex;
+    flex-direction: column;
+    line-height: 0.3em; */
+    display: flex;
+
+}
+
+ul {
+    list-style:none;
+}
+
+/*Fin Footer */
+
+/* Navbar */
+
+/* #Nav{
+    padding: 20px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+
+} */
+
+
+
+.fa-shopping-cart{
+
+    color:black;
+
+}
+.fa-user-circle{
+    color:black;
+}
+
+#search{
+    /* float:left; */
+    margin-left: 150px;
+    width: 600px;;
+    margin-top:7px;
+    border-color: #f0ad4e;
+    border-radius: 30px;
+
+}
+
+/* Fin Navbar */
+
+/* show */
+
+.mb-show{
+    text-align:center;
+
+
+    margin-top : 5px;
+    /* padding: 10px;
+    padding-top:20px; */
+}
+
+/* fin show */
+
+
+

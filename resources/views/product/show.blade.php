@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @include('include.navbar')
+<head>
+    <script src="{{ asset('js/jquery-1.8.3.min.js') }}"></script>
+</head>
 @section('content')
     <div class="container  align-items-center mt-4">
 
@@ -46,29 +49,68 @@
                         <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
                         </button>
                     @endif
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img
-                        src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" alt=" "
-                        class="bd-placeholder-img">
+                    <h6 class="mb-show">
 
-                </div>
-            </div>
-        </div>
- <div class="container-fluid mt-5">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="mb-0">
-                        Télécharger la fiche Produit
-                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success float-right"> Téléchargez</a>
+                        <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success"> Téléchargez la fiche produit</a>
                     </h6>
                 </div>
+
+
+                <div class="col-auto d-none d-lg-block">
+                    {{-- <div id="zoom" style="width: 100px; height: 100px"> --}}
+                        <img class="" alt=""
+                             src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" data-zoom-image="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" id="image">
+                            {{-- </div> --}}
+                    <div class="mt-2">
+                          <img class="img-thumbnail" alt=""
+                        src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" data-zoom-image="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" width="50" alt=" ">
+                        <img class="img-thumbnail" alt=""
+                        src="{{asset('asset/item/images/'.$item->Id.'/Cart2.jpg')}}" data-zoom-image="{{asset('asset/item/images/'.$item->Id.'/Medium2.jpg')}}" width="50" alt=" ">
+                        <img class="img-thumbnail" alt=""
+                        src="{{asset('asset/item/images/'.$item->Id.'/Cart3.jpg')}}" data-zoom-image="{{asset('asset/item/images/'.$item->Id.'/Medium3.jpg')}}" width="50" alt=" ">
+                        <img class="img-thumbnail" alt=""
+                        src="{{asset('asset/item/images/'.$item->Id.'/Cart4.jpg')}}" data-zoom-image="{{asset('asset/item/images/'.$item->Id.'/Medium4.jpg')}}" width="50" alt=" ">
+
+
+                        </div>
+                </div>
+
+                <script>
+
+                    $('#image').elevateZoom({
+
+                        imageCrossfade: true,
+                        cursor: 'pointer',
+
+                    });
+
+
+                    var thumbImage =document.querySelectorAll('.img-thumbnail');
+
+
+                  thumbImage.forEach((element) => element.addEventListener('click', changeImage));
+
+
+                function changeImage(element){
+                        var data = $(this).find('img').data('zoom-image');
+                        var image = document.getElementsByTagName("img").item(1);
+                        image.setAttribute("src", this.src);
+                        // image.data('zoom-image')= this.data('zoom-image');
+                        // $('#image').data('zoom-image', data).elevateZoom();
+
+
+                  }
+
+
+                    </script>
+
+
+                </div>
+
+
             </div>
-        </div>
- </div>
+
+
 
 
         <div class="container">
@@ -80,7 +122,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if (count($item->caracteristiques)> 1)
+                    @if (count($item->caracteristiques)>0)
+
                     @foreach ($item->caracteristiques as $caracteristiques)
                   <tr>
                     <th scope="row">{{$caracteristiques->Libelle}}</th>
@@ -94,4 +137,7 @@
 
     </div>
 
+@endsection
+@section('footer')
+@include('include.footer')
 @endsection

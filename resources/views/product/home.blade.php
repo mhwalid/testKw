@@ -44,4 +44,5 @@
 @section('extra-js')
 @include('include.SearchItem')
 @include('include.filter')
+@include('include.footer')
 @endsection
