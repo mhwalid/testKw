@@ -15,19 +15,19 @@
         @foreach ($Arrivages as $item)
             @if ($item == $Arrivages[0])
                 <div class="carousel-item active" id="testArrivage">
-                    <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="testArrivage">
-                        <a href="{{ route('product.show', $Arrivages[0]->ItemId) }}"> <strong
-                                class="d-inline-block mb-2 text-primary">{{ $Arrivages[0]->Caption }}</strong> </a>
-                        <h5 style="position: absolute; margin-left:991px" class="mb-0">
-                            {{ number_format($Arrivages[0]->CostPrice, 2) }}
-                            €</h5>
-                            <img
-                            src="{{asset('asset/item/images/'.$Arrivages[0]->ItemId.'/Small1.jpg')}}" alt=" "
+                    <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">
+                        <img
+                            src="{{asset('asset/item/images/'.$item->ItemId.'/Small1.jpg')}}" alt=" "
                             class="bd-placeholder-img" style="float:right;">
-                            @if ($Arrivages[0]->RealStock>0)
+                        <a href="{{ route('product.show', $item->ItemId) }}"> <strong
+                                class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong> </a>
+                        <h5 style="position: absolute; margin-left:991px" class="mb-0">
+                            {{ number_format($item->CostPrice, 2) }}
+                            €</h5>
+                            @if ($item->RealStock>0)
                             <form action="{{ route('cart.store') }}" method="POST" style="position: absolute; margin-left:921px">
                                 @csrf
-                                <input type="hidden" name="item_id" value="{{ $Arrivages[0]->ItemId }}">
+                                <input type="hidden" name="item_id" value="{{ $item->ItemId }}">
                                 <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="btn btn-success"> <i class="fa fa-shopping-cart mr-2"></i></button>
                             </form>
@@ -36,15 +36,15 @@
                 </div>
             @else
                 <div class="carousel-item" id="testArrivage">
-                    <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="testArrivage">
+                    <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">
+                        <img
+                            src="{{asset('asset/item/images/'.$item->ItemId.'/Small1.jpg')}}" alt=" "
+                            class="bd-placeholder-img" style="float:right;">
                         <a href="{{ route('product.show', $item->ItemId) }}"> <strong
                                 class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong> </a>
                         <h5 style="position: absolute; margin-left:991px" class="mb-0">
                             {{ number_format($item->CostPrice, 2) }}
                             €</h5>
-                            <img
-                            src="{{asset('asset/item/images/'.$item->ItemId.'/Small1.jpg')}}" alt=" "
-                            class="bd-placeholder-img" style="float:right;">
                             @if ($item->RealStock>0)
                             <form action="{{ route('cart.store') }}" method="POST" style="position: absolute; margin-left:921px">
                                 @csrf
