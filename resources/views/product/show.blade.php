@@ -48,9 +48,9 @@
                     @endif
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img class="img-responsive" alt="Cinque Terre"
-                        src="{{asset('asset/item/images/'.$item->Id.'/Cart.jpg')}}" alt=" "
-                       >
+                    <img
+                        src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" alt=" "
+                        class="bd-placeholder-img">
 
                 </div>
             </div>

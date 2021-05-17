@@ -22,7 +22,4 @@
     </div>
     @include('include.login')
 </nav>
-<<<<<<< HEAD
 
-=======
->>>>>>> 814c9aa49d37dd5681d76ff0f6dddc5555a98d47

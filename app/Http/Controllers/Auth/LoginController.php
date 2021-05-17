@@ -57,8 +57,9 @@ class LoginController extends Controller
             $user = Contact::where('ContactFields_Email' ,$data['email'])->first();
             
             if(!is_null($user)){
-                Auth::attempt(['email' => $request->email, 'password' =>$request->password]);
-                return redirect()->intended(RouteServiceProvider::HOME);
+               $login= Auth::attempt(['email' => $request->email, 'password' =>$request->password]);
+                    if($login) {return redirect()->intended(RouteServiceProvider::HOME);}
+                    else{ return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect " ]);}
             }
             return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect " ]);
     }
