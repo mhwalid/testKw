@@ -171,3 +171,14 @@ ul {
 
 
 
+/*************** Plus de détails************************************/
+
+#datalist tr:nth-child(n+6) {
+    display:none;
+}
+#datalist tr {
+    border: 1px solid #aaa;
+}
+
+
+

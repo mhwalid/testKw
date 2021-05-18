@@ -1,4 +1,5 @@
-<aside class="sidebar">
+@if (isset($Families))
+<nav class="sidebar">
     <div id="leftside-navigation" class="nano">
         <ul class="nano-content">
             <li>
@@ -15,26 +16,27 @@
                         @if (count($Familie->subFamily))
 
                             @foreach ($Familie->subFamily as $subcategory)
-
-                                <li><a
-                                        href="{{ route('itembysubFamily', $subcategory->Id) }}">{{ $subcategory->Caption ?? 'ds' }}</a>
-                                </li>
+                                <li><a href="{{ route('itembysubFamily', $subcategory->Id) }}">{{ $subcategory->Caption ?? 'ds' }}</a> </li>
                             @endforeach
                         @endif
                     </ul>
             @endforeach
         </ul>
     </div>
-</aside>
+</nav>
+@endif
 
 
 
-@section('js')
+
+
+
+@section('extra-js')
     <script>
-        $("#leftside-navigation .sub-menu > a").click( Function callPrint()function(e) {
-            $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-                e.stopPropagation()
-        })
+        // $("#leftside-navigation .sub-menu > a").click( Function callPrint() function(e) {
+        //     $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
+        //         e.stopPropagation()
+        // });
 
     </script>
-@stop
+@endsection

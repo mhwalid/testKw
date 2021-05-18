@@ -18,9 +18,10 @@
             id="SearchFrom">
             @csrf
 
-            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)'
-                type="text"></button>
+            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" onclick='showOld(event)' type="text"></button>
         </form>
     </div>
     @include('include.login')
 </nav>
+
+@include('include.navbarSlide')

@@ -1,13 +1,9 @@
 @extends('layouts.app')
-
-@include('include.navbar')
-
 @section('content')
     <div class="container  align-items-center mt-4">
-
         <div class="col-md-12 my-auto">
-            <div
-                class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            {{-- {{ddd($item)}} --}}
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong>
                     <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }} €</h5>
@@ -55,40 +51,16 @@
 
 
                 <div class="col-auto d-none d-lg-block">
-
-                        <img class="" alt=""
-                             src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" id="image">
-
-                    <div class="mt-2">
-                          <img class="img-thumbnail" alt=""
-                        src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt=""
-                        src="{{asset('asset/item/images/'.$item->Id.'/Cart2.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt=""
-                        src="{{asset('asset/item/images/'.$item->Id.'/Cart3.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt=""
-                        src="{{asset('asset/item/images/'.$item->Id.'/Cart4.jpg')}}" width="50" alt=" ">
-
-
-                        </div>
+                    <img class="" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" id="image">
+                        <div class="mt-2">
+                            <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" width="50" alt=" ">
+                            <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart2.jpg')}}" width="50" alt=" ">
+                            <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart3.jpg')}}" width="50" alt=" ">
+                            <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart4.jpg')}}" width="50" alt=" ">
+                       </div>
                 </div>
-
-                <script>
-                    var thumbImage =document.querySelectorAll('.img-thumbnail');
-
-                  thumbImage.forEach((element) => element.addEventListener('click', changeImage));
-
-                function changeImage(element){
-                        var data = $(this).find('img').data('zoom-image');
-                        var image = document.getElementsByTagName("img").item(1);
-                        image.setAttribute("src", this.src);
-                  }
-                    </script>
                 </div>
             </div>
-
-
-
 
         <div class="container">
             <table class="table table-hover ">
@@ -98,23 +70,45 @@
                     <th scope="col">Valeur</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="datalist">
                     @if (count($item->caracteristiques)>0)
-
-                    @foreach ($item->caracteristiques as $caracteristiques)
-                  <tr>
-                    <th scope="row">{{$caracteristiques->Libelle}}</th>
-                    <td>{{$caracteristiques->Value}}</td>
-                  </tr>
-                  @endforeach
+                        @foreach ($item->caracteristiques as $caracteristique)
+                        <tr >
+                            <td>{{$caracteristique->Libelle}}</td>
+                            <td>{{$caracteristique->Value}}</td>
+                        </tr>
+                         @endforeach
+                         
                     @endif
                 </tbody>
               </table>
+              <button  id="plusinfo" class=" btn btn-primary">Plus de détails</button>
         </div>
-
     </div>
 
+
+
+
+    <script>
+        var thumbImage =document.querySelectorAll('.img-thumbnail');
+                  thumbImage.forEach((element) => element.addEventListener('mouseenter', changeImage));
+                function changeImage(element){
+                        var data = $(this).find('img').data('zoom-image');
+                        var image = document.getElementById('image');
+                        image.setAttribute("src", this.src);
+                  }
+
+                  $(function () {
+                    $('#plusinfo').click(function () {
+                        $('#datalist tr:hidden').slice(0, 60).show();
+                        if ($('#datalist tr').length == $('#datalist tr:visible').length) {
+                            $('#plusinfo').hide();
+                        }
+                    });
+                });  
+                  
+    </script>
+
 @endsection
-@section('footer')
-@include('include.footer')
-@endsection
+
+
