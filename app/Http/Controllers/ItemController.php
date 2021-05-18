@@ -30,7 +30,7 @@ class ItemController extends Controller
 
     public function show($id)
     {
-         $item = Item::find($id);
+        $item = Item::itemA()->find($id);
         $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
        return view('product.show', compact('item', 'arrivage'));
     }
@@ -38,7 +38,7 @@ class ItemController extends Controller
 
     public function itembyCaption($Id)
     {
-        $data = [];
+        
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         return view('product.home', compact('items', 'Families'));

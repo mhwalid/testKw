@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
+
+
 @section('content')
-
-@include('include.filterPHP')
     <div class="row mb-2 mt-4">
-
         <div id="results" style="width: 1147px;">
             @foreach ($items as $item)
                 <div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">
@@ -37,12 +36,11 @@
 
 @endsection
 
-    @include('include.navbar')
-    @include('include.navbarSlide')
+    
+   
 
 {{-- le scripte js de Searchbar et filter  --}}
 @section('extra-js')
-@include('include.SearchItem')
-@include('include.filter')
-@include('include.footer')
+{{-- @include('include.SearchItem') --}}
+{{-- @include('include.filter') --}}
 @endsection
