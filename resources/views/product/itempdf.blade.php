@@ -1,24 +1,12 @@
-
 @extends('layouts.app')
-
-@section('content')
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    {{-- <link rel="stylesheet" href="../../testKw/public/css/pdf.css" media="all" /> --}}
-  </head>
-  <style>
-      .clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
+<style>
   a {
-    color: #5D6975;
+    color: blue;
     text-decoration: underline;
   }
+ul,li{
+    list-style-type: none;
+}
 
   body {
     position: relative;
@@ -32,10 +20,7 @@
     font-family: Arial;
   }
 
-  header {
-    padding: 10px 0;
-    margin-bottom: 30px;
-  }
+
 
   #logo {
     display: flex;
@@ -49,7 +34,7 @@
     width: 150px;
   }
 
-  h1 {
+  h1,h2 {
     border-top: 1px solid  #8f7631;
     border-bottom: 1px solid  #8f7631;
     color: #8f7631;
@@ -66,71 +51,20 @@
 }
   .desc img{
     float:right;
+    margin-bottom: 14%;
     padding-right:8%;
-    top:5;
+    bottom:5%;
 
 }
 
   #company {
-
     position:absolute;
     top: 3%;
-
-
   }
 
-  #desc div,
-  #company div {
-    white-space: nowrap;
-  }
-
-  table {
-
-    width: 90%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-top:50px;
-    margin-bottom: 20px;
-  }
-
-  table tr:nth-child(2n-1) td {
-    background: #ecc9695e;
-  }
-
-  table th,
-  table td {
-    text-align: center;
-  }
-
-  table th {
-    padding: 5px 20px;
-    color: #5D6975;
-    border-bottom: 1px solid #8f7631;
-    white-space: nowrap;
-    font-weight: normal;
-  }
-
-  table td {
-    padding: 20px;
-    text-align: center;
-  }
-
-  table td.produit,
-  table td.desc {
-    vertical-align: top;
-  }
-
-  table td.unit,
-  table td.qty,
-  table td.total {
-    font-size: 1.2em;
-  }
-
-  table td.grand {
-    border-top: 1px solid #5D6975;;
-  }
-
-
+.carac{
+    margin-top:100px;
+}
 
   footer {
     color: #5D6975;
@@ -142,13 +76,14 @@
     padding: 8px 0;
     text-align: center;
   }
+
 </style>
-<header class="clearfix">
+@section('content')
     <div id="logo">
-      <img src="../../testKw/public/asset/img/kw-distribution.jpg">
+      <img src={{public_path('asset/img/kw-distribution.jpg')}}>
     </div>
     <h1>Fiche Produit : {{$item->Id}}</h1>
-    <div id="company" class="clearfix">
+    <div id="company">
       <div>KW-DISTRIBUTION</div>
       <div>12T Avenue Eugène Hénaff,<br /> 69120 Vaulx-en-Velin, France</div>
       <div>04 86 80 08 00</div>
@@ -189,25 +124,18 @@
                 </div>
 
 
-        <div>
-            <table >
-                <thead>
-                  <tr>
-                    <th>Nom</th>
-                    <th>Caractéristique</th>
-                  </tr>
-                </thead>
-                <tbody>
+        <div class="carac">
+            <h2 >Caractéristiques</h2>
+                <ul>
                     @if (count($item->caracteristiques)> 1)
                     @foreach ($item->caracteristiques as $caracteristiques)
-                  <tr>
-                    <th>{{$caracteristiques->Libelle}}</th>
-                    <td>{{$caracteristiques->Value}}</td>
-                  </tr>
+
+                  <li>{{$caracteristiques->Libelle}}:
+                  {{$caracteristiques->Value}}<li>
+
                   @endforeach
                     @endif
-                </tbody>
-              </table>
+                </ul>
         </div>
         <footer>
             <p>&copy; Copyright 2021 - KW-DISTRIBUTION. All rights reserved.
