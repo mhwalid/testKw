@@ -47,5 +47,20 @@
     @include('include.footer')
     
     @yield('extra-js')
+<<<<<<< HEAD
 </body>
+=======
+    @yield('jsbar')
+    @yield('js')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+
+
+
+</body>
+
+
+
+
+>>>>>>> bceda370c5e4d4081a7c3cc69f7edffed2305d58
 </html>
