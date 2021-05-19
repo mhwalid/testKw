@@ -16,4 +16,6 @@ class Caracteristique extends Model
     public function Item(){
         return $this->belongsTo(Item::class);
     }
+
+
 }
