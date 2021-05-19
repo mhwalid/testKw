@@ -12,17 +12,18 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     protected $connection = 'mysql';
     protected $table = 'users';
-    
-    protected $fillable = [ 'email', 'remember_token','password','Id'];
 
-    
+    public $timestamps = false;
+    protected $fillable = [ 'email', 'remember_token','password','Id','name'];
+
+
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];   
-    
+    ];
+
     public function contact()
-    {   
+    {
         return $this->belongsTo(Contact::class ,'IdUser','Id');
     }
-    
+
 }
