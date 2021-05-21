@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class ItemController extends Controller
 
     public function itembyCaption($Id)
     {
-        
+
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         return view('product.home', compact('items', 'Families'));
