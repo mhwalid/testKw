@@ -41,6 +41,6 @@
 
 {{-- le scripte js de Searchbar et filter  --}}
 @section('extra-js')
-{{-- @include('include.SearchItem') --}}
+@include('include.SearchItem')
 {{-- @include('include.filter') --}}
 @endsection

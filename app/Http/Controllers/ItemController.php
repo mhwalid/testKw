@@ -23,7 +23,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
         return view('product.home', compact('items', 'Families'));
     }
@@ -39,13 +39,13 @@ class ItemController extends Controller
     public function itembyCaption($Id)
     {
         
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         return view('product.home', compact('items', 'Families'));
     }
     public function itembysubFamily($Id)
     {
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
         return view('product.home', compact('items', 'Families'));
         // return response()->json($items);
