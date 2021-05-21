@@ -52,6 +52,10 @@ class ItemController extends Controller
         // return response()->json($items);
     }
 
+    public function contact()
+    {
+        return view('product.contact');
+    }
 
 
     public function search(Request $request)

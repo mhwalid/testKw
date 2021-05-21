@@ -7,7 +7,9 @@
     </div>
 
     <div class="adresse">
+        <a href="{{route('contact')}}">
         <h2> Contactez-nous</h2>
+        </a>
         <ul>
         <li>12T Avenue Eugène Hénaff, 69120 Vaulx-en-Velin, France</li>
         <li>Du lundi au vendredi de 9h à 18h</li>
