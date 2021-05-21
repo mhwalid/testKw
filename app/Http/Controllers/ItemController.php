@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,6 +52,10 @@ class ItemController extends Controller
         // return response()->json($items);
     }
 
+    public function contact()
+    {
+        return view('product.contact');
+    }
 
 
     public function search(Request $request)

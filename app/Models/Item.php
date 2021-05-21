@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
-    
+
     use HasFactory;
     protected $connection = 'sqlsrv';
     protected $table = 'Item';
-    
+
 
     public $timestamps = false;
     protected $fillable = ['RealStock', 'Id'];
@@ -39,11 +39,15 @@ class Item extends Model
     public static function search($search)
     {
         return empty($search) ? static::query()->ItemA()
-            : static::query()->where('Caption', 'like', '%' . $search . '%')->orWhere('BarCode ','like' ,'%'.$search.'%'); 
+            : static::query()->where('Caption', 'like', '%' . $search . '%')->orWhere('BarCode ','like' ,'%'.$search.'%');
     }
 
     public function arrivage()
     {
         return $this->hasMany(Arrivage::class, 'ItemId', 'Id')->whereRaw('DeliveryDate > DATEADD(month, -1, SYSDATETIME())');
+    }
+    public function maincarac()
+    {
+        return $this->hasOne(MainCarac::class,'id_item', 'Id');
     }
 }

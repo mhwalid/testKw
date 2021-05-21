@@ -71,3 +71,9 @@ Route::get('generate-feature/{Id}','ItemController@feature');
 
 //Invoice
 Route::get('generate-invoice/','Shop\CartController@invoice');
+
+//Invoice
+Route::get('/contact','ItemController@contact')->name('contact');
+
+
+

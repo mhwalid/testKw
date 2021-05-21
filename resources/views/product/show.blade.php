@@ -2,57 +2,53 @@
 @section('content')
 
 
-
-
-  
-
 <section class="mb-5">
 
     <div class="row">
       <div class="col-md-6 mb-4 mb-md-0">
-  
+
         <div id="mdb-lightbox-ui"></div>
-  
+
         <div class="mdb-lightbox">
-  
+
           <div class="row product-gallery mx-1">
-  
+
             <div class="col-12 mb-0">
-              <figure class="view overlay rounded z-depth-1 main-img">
-                <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
+              <figure class="view overlay rounded z-depth-1 main-img" >
+                <a href="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                   data-size="210x623">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" 
-                    class="img-fluid z-depth-1">
+                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    class="img-fluid z-depth-1" id="image">
                 </a>
               </figure>
-          
+
             </div>
             <div class="col-12">
               <div class="row">
                 <div class="col-3">
                   <div class="view overlay rounded z-depth-1 gallery-item">
-                    <img src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" 
+                    <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                       class="img-fluid">
                     <div class="mask rgba-white-slight"></div>
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="view overlay rounded z-depth-1 gallery-item">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
+                    <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium2.jpg')}}"
                       class="img-fluid">
                     <div class="mask rgba-white-slight"></div>
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="view overlay rounded z-depth-1 gallery-item">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
+                    <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium3.jpg')}}"
                       class="img-fluid">
                     <div class="mask rgba-white-slight"></div>
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="view overlay rounded z-depth-1 gallery-item">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
+                    <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium4.jpg')}}"
                       class="img-fluid">
                     <div class="mask rgba-white-slight"></div>
                   </div>
@@ -60,216 +56,207 @@
               </div>
             </div>
           </div>
-  
+
         </div>
-  
+
+
       </div>
+ 
+
       <div class="col-md-6">
-  
-        <h5>Fantasy T-shirt</h5>
-        <p class="mb-2 text-muted text-uppercase small">Shirts</p>
-        <ul class="rating">
-          <li>
-            <i class="fas fa-star fa-sm text-primary"></i>
-          </li>
-          <li>
-            <i class="fas fa-star fa-sm text-primary"></i>
-          </li>
-          <li>
-            <i class="fas fa-star fa-sm text-primary"></i>
-          </li>
-          <li>
-            <i class="fas fa-star fa-sm text-primary"></i>
-          </li>
-          <li>
-            <i class="far fa-star fa-sm text-primary"></i>
-          </li>
-        </ul>
-        <p><span class="mr-1"><strong>$12.99</strong></span></p>
-        <p class="pt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sapiente illo. Sit
-          error voluptas repellat rerum quidem, soluta enim perferendis voluptates laboriosam. Distinctio,
-          officia quis dolore quos sapiente tempore alias.</p>
+
+        <h5>{{ $item->FamilyId }}</h5>
+        <p class="mb-2 text-muted text-uppercase small">{{ $item->DesComClear }}</p>
+        <p><span class="mr-1"><strong>{{ number_format($item->CostPrice, 2) }} €</strong></span></p>
+        <p class="pt-1">{{ $item->maincarac->description }}</p>
         <div class="table-responsive">
           <table class="table table-sm table-borderless mb-0">
             <tbody>
+                @if ($item->maincarac->marque!='')
               <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
-                <td>Shirt 5407X</td>
+                <th class="pl-0 w-25" scope="row"><strong>Marque</strong></th>
+                <td>{{ $item->maincarac->marque }}</td>
               </tr>
+              @endif
+              @if ($item->maincarac->taille_ecran!='')
               <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-                <td>Black</td>
+                <th class="pl-0 w-25" scope="row"><strong>Taille écran en cm</strong></th>
+                <td>{{ $item->maincarac->taille_ecran }}</td>
               </tr>
+              @endif
+              @if ($item->maincarac->fam_proc!='')
               <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-                <td>USA, Europe</td>
+                <th class="pl-0 w-25" scope="row"><strong>Famille de processeur</strong></th>
+                <td>{{ $item->maincarac->fam_proc }}</td>
               </tr>
+              @endif
+              @if ($item->maincarac->mod_proc!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Modèle de processeur</strong></th>
+                <td>{{ $item->maincarac->mod_proc }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->sock_proc!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Socket processeur</strong></th>
+                <td>{{ $item->maincarac->sock_proc }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->syst_exploitation!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Système d'exploitation</strong></th>
+                <td>{{ $item->maincarac->syst_exploitation }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->ssd!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>SSD</strong></th>
+                <td>{{ $item->maincarac->ssd }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->stockage!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Stockage</strong></th>
+                <td>{{ $item->maincarac->stockage }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->memoire!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Mémoire</strong></th>
+                <td>{{ $item->maincarac->memoire }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->puissance!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Puissance</strong></th>
+                <td>{{ $item->maincarac->puissance }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->frequ_memoire!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Fréquence mémoire</strong></th>
+                <td>{{ $item->maincarac->frequ_memoire }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->cg!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Carte Graphique</strong></th>
+                <td>{{ $item->maincarac->cg }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->chipset!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Chipset</strong></th>
+                <td>{{ $item->maincarac->chipset }}</td>
+              </tr>
+              @endif
+              @if ($item->maincarac->ram!='')
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>RAM</strong></th>
+                <td>{{ $item->maincarac->ram }}</td>
+              </tr>
+              @endif
             </tbody>
           </table>
         </div>
         <hr>
-        <div class="table-responsive mb-2">
-          <table class="table table-sm table-borderless">
-            <tbody>
-              <tr>
-                <td class="pl-0 pb-0 w-25">Quantity</td>
-                <td class="pb-0">Select size</td>
-              </tr>
-              <tr>
-                <td class="pl-0">
-                  <div class="def-number-input number-input safari_only mb-0">
-                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                      class="minus"></button>
-                    <input class="quantity" min="0" name="quantity" value="1" type="number">
-                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                      class="plus"></button>
-                  </div>
-                </td>
-                <td>
-                  <div class="mt-1">
-                    <div class="form-check form-check-inline pl-0">
-                      <input type="radio" class="form-check-input" id="small" name="materialExampleRadios"
-                        checked>
-                      <label class="form-check-label small text-uppercase card-link-secondary"
-                        for="small">Small</label>
-                    </div>
-                    <div class="form-check form-check-inline pl-0">
-                      <input type="radio" class="form-check-input" id="medium" name="materialExampleRadios">
-                      <label class="form-check-label small text-uppercase card-link-secondary"
-                        for="medium">Medium</label>
-                    </div>
-                    <div class="form-check form-check-inline pl-0">
-                      <input type="radio" class="form-check-input" id="large" name="materialExampleRadios">
-                      <label class="form-check-label small text-uppercase card-link-secondary"
-                        for="large">Large</label>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
-        <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
-            class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
-      </div>
-    </div>
-  
-  </section>
 
+            <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>
+                pièces
+            </p>
+            <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
+            @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
+            @if (!is_null($item->arrivage->first()))
+                <div class="mt-4">
+                    <h5>Arrivage</h5>
+                    @if (count($item->arrivage->take(5)) > 1)
+                        @foreach ($item->arrivage->take(5) as $arriv)
 
-
-
-
-<div class="container  align-items-center mt-4">
-    <div class="col-md-12 my-auto">
-        {{-- {{ddd($item)}} --}}
-        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">{{ $item->Caption }}</strong>
-                <h5 class="mb-0"> {{ number_format($item->CostPrice, 2) }} €</h5>
-                <div class="mb-1 text-muted">{{ $item->DesComClear }}</div>
-                <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>
-                    pièces
-                </p>
-                <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
-
-                @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
-                    @if (!is_null($item->arrivage->first()))
-                        <div class="mt-4">
-                            <h5>Arrivage</h5>
-                            @if (count($item->arrivage->take(5)) > 1)
-                                @foreach ($item->arrivage->take(5) as $arriv)
-
-                                <em class="text-info"> <p class="text-info"> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p></em>
-                                    <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
-                                @endforeach
-                            @else
-                               <em class="text-info"> <p > Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p></em>
-                                <p >Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
-                            @endif
-                        </div>
+                        <em class="text-info"> <p class="text-info"> Quantité : {{ number_format($arriv->Quantity, 0) }} pièces</p></em>
+                            <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
+                        @endforeach
+                    @else
+                       <em class="text-info"> <p > Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p></em>
+                        <p >Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
                     @endif
-                    <form action="{{ route('cart.store') }}" method="POST">
-                        @csrf
+                </div>
+            @endif
 
-                        <input type="text" name="item_id" value="{{ $item->Id }}">
-                        <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
-                            value="1">
+            <form action="{{ route('cart.store') }}" method="POST">
+                @csrf
 
-                        <button type="submit" class="btn btn-success"> Ajouter au panier</button>
+                <input type="text" name="item_id" value="{{ $item->Id }}">
+                <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
+                    value="1">
 
-                    </form>
-                @else
+                <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i
+                    class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
+
+            </form>
+            @else
                     <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
                     </button>
                 @endif
-                <h6 class="mb-show">
+                <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
+      </div>
+    </div>
 
-                    <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-success"> Téléchargez la fiche produit</a>
-                </h6>
-            </div>
+  </section>
 
-
-            <div class="col-auto d-none d-lg-block">
-                <img class="" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" id="image">
-                    <div class="mt-2">
-                        <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart2.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart3.jpg')}}" width="50" alt=" ">
-                        <img class="img-thumbnail" alt="" src="{{asset('asset/item/images/'.$item->Id.'/Cart4.jpg')}}" width="50" alt=" ">
-                   </div>
-            </div>
-            </div>
-        </div>
-
-    <div class="container">
-        <table class="table table-hover ">
-            <thead class="thead-info" style="background-color: #d8b908;">
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Valeur</th>
-              </tr>
-            </thead>
-            <tbody id="datalist">
+  <div class="container">
+    <table class="table table-hover ">
+        <thead class="thead-info" style="background-color: #d8b908;">
+            <th scope="col">Nom</th>
+            <th scope="col">Valeur</th>
+          </tr>
+        </thead>
+        <tbody id="datalist">
                 @if (count($item->caracteristiques)>0)
                     @foreach ($item->caracteristiques as $caracteristique)
                     <tr >
-                        <td>{{$caracteristique->Libelle}}</td>
-                        <td>{{$caracteristique->Value}}</td>
-                    </tr>
-                     @endforeach
-                     
+                      <td>{{$caracteristique->Libelle}}</td>
+                      <td>{{$caracteristique->Value}}</td>
+                  </tr>
+                @endforeach
+
                 @endif
-            </tbody>
-          </table>
-          <button  id="plusinfo" class=" btn btn-primary">Plus de détails</button>
-    </div>
-</div>
+              </tbody>
+            </table>
+            <button  id="plusinfo" class=" btn btn-primary">Plus de détails</button>
+            <button  id="moinsinfo" class=" btn btn-primary">moins de détails</button>
+      </div>
+  </div>
 
 
-
-    <script>
+<script>
+  $('#moinsinfo').hide();
         var thumbImage =document.querySelectorAll('.img-thumbnail');
                   thumbImage.forEach((element) => element.addEventListener('mouseenter', changeImage));
-                function changeImage(element){
-                        var data = $(this).find('img').data('zoom-image');
-                        var image = document.getElementById('image');
-                        image.setAttribute("src", this.src);
-                  }
-
+                 function changeImage(element){
+                         var data = $(this).find('img').data('zoom-image');
+                         var image = document.getElementById('image');
+                         image.setAttribute("src", this.src);
+                   }
                   $(function () {
-                    $('#plusinfo').click(function () {
-                        $('#datalist tr:hidden').slice(0, 60).show();
-                        if ($('#datalist tr').length == $('#datalist tr:visible').length) {
-                            $('#plusinfo').hide();
-                        }
+                     $('#plusinfo').click(function () {
+                         $('#datalist tr:hidden').slice(0, 60).show();
+                         if ($('#datalist tr').length == $('#datalist tr:visible').length) {
+                             $('#plusinfo').hide();
+                             $('#moinsinfo').show();
+                         }
+                     });
+                 });
+                 $(function () {
+                     $('#moinsinfo').click(function () {
+                         $('#datalist tr:visible ').slice(5, 150).hide();
+                         if ($('#datalist tr').length !== $('#datalist tr:visible').length) {
+                             $('#plusinfo').show();
+                             $('#moinsinfo').hide();
+                         }
                     });
-                });  
-
-              
-                  
-    </script>
+                 });
+        
+</script>
 
 @endsection
 
