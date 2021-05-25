@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
         return view('product.home', compact('items', 'Families'));
     }
@@ -39,13 +40,13 @@ class ItemController extends Controller
     public function itembyCaption($Id)
     {
         
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         return view('product.home', compact('items', 'Families'));
     }
     public function itembysubFamily($Id)
     {
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
         return view('product.home', compact('items', 'Families'));
         // return response()->json($items);

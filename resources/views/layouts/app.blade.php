@@ -23,6 +23,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet"> --}}
+
+
 
 </head>
 
@@ -47,20 +50,5 @@
     @include('include.footer')
     
     @yield('extra-js')
-<<<<<<< HEAD
 </body>
-=======
-    @yield('jsbar')
-    @yield('js')
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-
-
-
-</body>
-
-
-
-
->>>>>>> bceda370c5e4d4081a7c3cc69f7edffed2305d58
 </html>

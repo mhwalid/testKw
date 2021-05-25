@@ -90,19 +90,12 @@ footer .social-media p {
 
 }
 
-.fa-facebook-f{
+.fab{
     color:white;
     font-size: 20px;
-
 }
 
-.fa-linkedin-in{
- color:white;
-    font-size: 20px;
-}
-
-
-.fas{
+.fa-envelope{
     color:white;
     font-size: 20px;
 }
@@ -180,5 +173,26 @@ ul {
     border: 1px solid #aaa;
 }
 
+/*************** NavBar************************************/
+
+.dropdown-header{
+    color: blue;
+
+}
+.row1{
+display: flex;
+justify-content: center;
+/* color: red; */
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Avenir, sans-serif;
+}
+/*menu horizontale */
+.row ul {
+    list-style-type: none;
+}
 
 

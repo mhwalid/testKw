@@ -4,8 +4,7 @@
         <a href="{{ route('cart.index') }}"> <i class="fas fa-shopping-cart"></i> <span
                 class="badge badge-pill badge-warning">{{ Cart::content()->count() }} </span></a>
     </div>
-    <!-- Collapsible content -->
-
+   
 
     <div class="md-form my-0">
         <input class="form-control" type="text" placeholder="Recherche" id="search" name="q"

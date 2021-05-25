@@ -13,12 +13,12 @@ class Family extends Model
     protected $table = 'ItemFamily';
   
 
-    protected $hidden = [];
+    // protected $hidden = [];
     
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'Caption' ,'ItemFamilyId' ,'Id' 
+        'Caption' ,'ItemFamilyId' ,'Id' ,'MainIntervener'
     ];
     
     public function item()
