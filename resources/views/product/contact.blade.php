@@ -27,6 +27,12 @@
                     <textarea name="txtMsg" class="form-control" placeholder="Votre Message *" style="width: 100%; height: 150px;"></textarea>
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col-md-6 offset-md-4">
+                    <div class="g-recaptcha" data-sitekey="6LfS_NsaAAAAAF-GcBVZ8RU_h03K92ezFbsLgFFC"></div>
+                </div>
+
+            </div>
         </div>
     </form>
 </div>
