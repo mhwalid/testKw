@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
 use App\Models\SubFamily;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Logger\ConsoleLogger;
 use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -23,47 +25,59 @@ class ItemController extends Controller
      */
     public function index()
     {
+
         $Families = Family::with('subFamily')->get();
         $items = Item::itemA()->paginate(20);
-        $Arrivages = [];
+        $id_customer = '';
+        if (!is_null( Auth::user())) {
+            $id_customer = Auth::user()->Contact->Customer->Id;
+            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
+            $prices = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId','=','INF009')
+                ->where('inclusionType','128')
+                ->orWhere(function($query) {
+                    $query->where('StartElementId', '004')
+                          ->where('inclusionType', '=', '32');
+                });
+            })
+            ->get();
 
-        $Arrivages = Db::connection('sqlsrv')->table('Item')->join('PurchaseDocumentLine','Item.id','=','PurchaseDocumentLine.ItemId')->whereRaw('PurchaseDocumentLine.DeliveryDate > DATEADD(month, -1, SYSDATETIME())')->get() ;
+            foreach ($prices as $price) {
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
 
-        //arrivage du jour a tester
-        // $Arrivages = Db::connection('sqlsrv')->table('Item')->join('PurchaseDocumentLine','Item.id','=','PurchaseDocumentLine.ItemId')->whereRaw('DATEDIFF(day, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) = 0 ')->whereRaw('DATEDIFF(month, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) = 0 ')->whereRaw('DATEDIFF(year, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) = 0 ')->get() ;
-
-        //arrivage du mois a tester
-        // $Arrivages = Db::connection('sqlsrv')->table('Item')->join('PurchaseDocumentLine','Item.id','=','PurchaseDocumentLine.ItemId')->whereRaw('DATEDIFF(month, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) = 0 ')->whereRaw('DATEDIFF(year, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) = 0 ')->get() ;
-
-        //arrivage de la semaine a tester
-        // $Arrivages = Db::connection('sqlsrv')->table('Item')->join('PurchaseDocumentLine','Item.id','=','PurchaseDocumentLine.ItemId')->whereRaw('DATEDIFF(day, PurchaseDocumentLine.DeliveryDate, SYSDATETIME()) BETWEEN 0 AND 7 ')->get() ;
+                print_r($tmp_value->DiscountValue);
+            }
 
 
-        return view('product.home', compact('items', 'Families', 'Arrivages'));
+        }
+
+        return view('product.home', compact('items', 'Families'));
     }
 
     public function show($id)
     {
         $item = Item::itemA()->find($id);
-        $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
-       return view('product.show', compact('item', 'arrivage'));
+       return view('product.show', compact('item'));
     }
 
 
     public function itembyCaption($Id)
     {
-        
+
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
-        $Arrivages = [];
-        return view('product.home', compact('items', 'Families', 'Arrivages'));
+        return view('product.home', compact('items', 'Families'));
     }
     public function itembysubFamily($Id)
     {
         $Families = Family::with('subFamily')->get();
         $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
-        $Arrivages = [];
-        return view('product.home', compact('items', 'Families', 'Arrivages'));
+        return view('product.home', compact('items', 'Families'));
         // return response()->json($items);
     }
 

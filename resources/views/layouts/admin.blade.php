@@ -17,21 +17,17 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
 
 </head>
 
 <body>
-    @include('include.navbar')
+    @include('include.admin_navbar')
 
     <div class="container">
         <main class="py-4">
@@ -48,19 +44,11 @@
             @yield('content')
         </main>
     </div>
-    @include('include.footer')
 
     @yield('extra-js')
     @yield('jsbar')
     @yield('js')
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-
-
-
 
 </body>
-
-
-
 
 </html>
