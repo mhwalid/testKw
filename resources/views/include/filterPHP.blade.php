@@ -1,61 +1,58 @@
-<div class="d-flex justify-content-center">
-    <div class="col-md-2">
-        <form style="" action="{{ route('filter') }}" method="POST" class="form-inline ml-auto"
-            onsubmit="traitForm(a)" id="filter">
+<div class="d-flex ml-4">
+    <div class="">
+        <form  action="{{ route('filter') }}" method="post" class="form-inline ml-auto"  id="filter">
+            {{ csrf_field() }}
             <div class="list-group">
                 @php
                     
                     $re = explode('_', last(request()->segments()));
                     
                 @endphp
-
-                @if (($re[0] == 'PORT' || $re[0] == 'MON') && !isset($re[1]))
+               
+               
                     <h3>Marque</h3>
                     <div class="list-group-item checkbox">
-                        <select>
-                            <option selected class="" value="_ASUS"></option>
-                            @if ($re[0] == 'MON')
-                                <option class="filter_all mrq" value="_LG">LG</option>
-                                <option class="filter_all mrq" value="_AOC">AOC</option>
-                            @endif
-                            @if ($re[0] == 'PORT')
-                                <option class="filter_all mrq" value="_LENOV">LENOVO</option>
-                            @endif
+                        <select name="marque_id" >
+                            <option  class=""></option>
+                            <option class="filter_all mrq" value="_LG">LG</option>
+                            <option class="filter_all mrq" value="_AOC">AOC</option>
+                            <option class="filter_all mrq" value="_LENOV">LENOVO</option>
                             <option class="filter_all mrq" value="_ASUS">Asus</option>
                             <option class="filter_all mrq" value="_MSI">Msi</option>
                         </select>
                     </div>
-                @endif
-
-
-                @if ($re[0] == 'PORT')
+              
                     <h3>Disque</h3>
                     <div class="list-group-item checkbox">
                         <label>
+                            
+                            <input name="SSD" type="checkbox" class="filter_all disque" value="SSD">
                             SSD
-                            <input type="checkbox" class="filter_all disque" value="SSD">
                         </label>
                     </div>
                     <h3>Processeur</h3>
-                    <div class="list-group-item checkbox">
+                  
+                    <div  class="list-group-item checkbox">
                         <label>
-                            I9
-                            <input type="checkbox" class="filter_all proc" value="9">
+                            <input name="proc[]"  type="checkbox"  value="Pentium">Pentium
                         </label>
                         <label>
-                            I7
-                            <input type="checkbox" class="filter_all proc" value="7">
+                            <input name="proc[]"  type="checkbox"  value="i9"> AMD
                         </label>
                         <label>
-                            i5
-                            <input type="checkbox" class="filter_all proc" value="5">
+                            <input name="proc[]"  type="checkbox"  value="i9"> I9
                         </label>
                         <label>
-                            i3
-                            <input type="checkbox" class="filter_all proc" value="3">
+                            <input name="proc[]"  type="checkbox"  value="i7">  I7
+                        </label>
+                        <label>
+                            <input name="proc[]"  type="checkbox"  value="i5">i5
+                        </label>
+                        <label>
+                            <input name="proc[]"  type="checkbox"  value="i3">i3
                         </label>
                     </div>
-                    <h3>RAM</h3>
+                    {{-- <h3>RAM</h3>
                     <div class="list-group-item checkbox">
                         <label>
                             4 Go
@@ -69,8 +66,8 @@
                             16 Go
                             <input type="checkbox" class="filter_all ram" value="16">
                         </label>
-                    </div>
-                    <h3>Stockage</h3>
+                    </div> --}}
+                    {{-- <h3>Stockage</h3>
                     <div class="list-group-item checkbox">
                         <label>
                             256 Go
@@ -88,11 +85,10 @@
                             1T
                             <input type="checkbox" class="filter_all Stockage" value="1">
                         </label>
-                    </div>
-                @endif
+                    </div> --}}
+        
 
-                @if ($re[0] == 'MON')
-                    <h3>taille d'écran</h3>
+                    {{-- <h3>taille d'écran</h3>
                     <div class="list-group-item checkbox">
                         <label>
                             21"
@@ -118,11 +114,9 @@
                             32
                             <input type="checkbox" class="filter_all size" value="32">
                         </label>
-                    </div>
-                @endif
-
-                @if ($re[0] == 'CG')
-                    <h3>RAM</h3>
+                    </div> --}}
+                
+                    {{-- <h3>RAM</h3>
                     <div class="list-group-item checkbox">
                         <label>
                             4 Go
@@ -136,8 +130,8 @@
                             16 Go
                             <input type="checkbox" class="filter_all ram" value="16">
                         </label>
-                    </div>
-                    <h3>Type</h3>
+                    </div> --}}
+                    {{-- <h3>Type</h3>
                     <div class="list-group-item checkbox">
                         <select>
                             <option selected class="" value="">choose</option>
@@ -145,10 +139,9 @@
                             <option class="filter_all CGType" value="GT">GT</option>
                             <option class="filter_all CGType" value="RTX">RTX</option>
                         </select>
-                    </div>
-                @endif
-                @if ($re[0] == 'PROC')
-                    <h3>Processeur</h3>
+                    </div> --}}
+             
+                    {{-- <h3>Processeur</h3>
                     <div class="list-group-item checkbox">
                         <label>
                             I9
@@ -166,11 +159,8 @@
                             i3
                             <input type="checkbox" class="filter_all proc" value="3">
                         </label>
-                    </div>
-                @endif
-
-                <button class="btn btn-outline-white btn-md my-0 ml-sm-2" style="display: none" onclick='showOld(event)'
-                    type="text">Search</button>
+                    </div> --}}
+            <button class="btn btn-success btn-md my-0 ml-sm-2" type="submit">Search</button>
         </form>
     </div>
 </div>

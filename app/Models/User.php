@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Order\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ class User extends Authenticatable
     protected $connection = 'mysql';
     protected $table = 'users';
     
-    protected $fillable = [ 'email', 'remember_token','password','Id'];
+    protected $fillable = [ 'email', 'remember_token','password','Id','IdUser','name'];
 
     
     protected $casts = [
@@ -24,5 +25,10 @@ class User extends Authenticatable
     {   
         return $this->belongsTo(Contact::class ,'IdUser','Id');
     }
+    
+    public function Orders(){
+        return $this->hasMany(Order::class ,'InvoicingContactId','IdUser')->where('DocumentType','=', 2);   
+    }
+
     
 }

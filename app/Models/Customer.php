@@ -10,8 +10,6 @@ class Customer extends Model
     use HasFactory;
 
     protected $table = 'Customer';
-
-    
-
     protected $hidden = ['LoyaltyCardId'];
+    
 }

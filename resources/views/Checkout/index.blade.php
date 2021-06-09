@@ -9,6 +9,8 @@
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <h4 class="text-center pt-5">Procéder au paiement</h4>
+                   
+                    @if (isset($total))
                     <form action="{{ route('checkout.store') }}" method="POST" class="my-4" id="payment-form">
                         @csrf
                         <div id="card-element">
@@ -22,6 +24,10 @@
                             <i class="fa fa-credit-card" aria-hidden="true"></i> Payer maintenant ({{ $total }}) $
                         </button>
                     </form>
+                    @else
+                      <h6> {{$message }}</h6>
+                    @endif
+                        
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ class Family extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'Caption' ,'ItemFamilyId' ,'Id' ,'MainIntervener'
+        'Caption','Id' ,'MainIntervener'
     ];
     
     public function item()

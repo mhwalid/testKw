@@ -31,7 +31,6 @@
 
 <body>
     @include('include.navbar')
-   
     <div class="container">
         <main class="py-4">
             @if (session('success'))

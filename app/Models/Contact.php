@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contact extends Model
 {
@@ -14,5 +15,8 @@ class Contact extends Model
     public $timestamps = false; 
     // ContactFields_Name
     protected $hidden = [''];
-
+    
+    public function Custommer(){
+        return $this->belongsTo(Customer::class ,'AssociatedCustomerId','Id');
+    }
 }

@@ -9,11 +9,8 @@ use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Location;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Barryvdh\DomPDF\Facade as PDF;
-use Barryvdh\DomPDF;
-use Dompdf\Options;
+
 
 class ItemController extends Controller
 {
@@ -24,7 +21,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $Families = Family::all()->groupBy('MainIntervener');
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
         return view('product.home', compact('items', 'Families'));
     }
@@ -89,6 +86,15 @@ class ItemController extends Controller
 
     }
 
+    public function filters(Request $rq){
+            
+        $items=Item::itemA();
+        if($rq->marque_id) $items->where('');
+       
+       
+       
+        return $rq;
+    }
 
 
     public function filter(Request $request)
@@ -385,12 +391,10 @@ class ItemController extends Controller
             'arrivage' => $arrivage,
 
         ];
-        // require_once 'dompdf/autoload.inc.php';
-$options = new Options();
-$options->set('isRemoteEnabled', TRUE);
-        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
 
+        $pdf = PDF::loadView('product.itempdf', $data);
+       
         return $pdf->stream($id.'.pdf');
-        // return view('product.itempdf', compact('item', 'arrivage'));
+
     }
 }

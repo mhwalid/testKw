@@ -184,11 +184,15 @@ display: flex;
 justify-content: center;
 /* color: red; */
 }
+/* .row1:hover .dropdown-menu{
+    display:block;
+} */
 
-*{
+body{
     margin: 0px;
     padding: 0px;
     font-family: Avenir, sans-serif;
+    background-color: #fff;
 }
 /*menu horizontale */
 .row ul {
@@ -196,3 +200,12 @@ justify-content: center;
 }
 
 
+
+/*************************/
+.scroller {
+    width: 500px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow: auto;
+ 
+  }

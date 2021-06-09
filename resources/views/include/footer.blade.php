@@ -14,7 +14,7 @@
         <li>12T Avenue Eugène Hénaff, 69120 Vaulx-en-Velin, France</li>
         <li>Du lundi au vendredi de 9h à 18h</li>
         <li>Mail: vente@kw-distribution.com</li>
-        <li>Tel: 04 86 80 08 00</li>
+        <a href=tel:0486800800><li>Tel: 04 86 80 08 00</li></a>
     </ul>
     </div>
 
