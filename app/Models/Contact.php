@@ -12,11 +12,24 @@ class Contact extends Model
 
     protected $connection = 'sqlsrv';
     protected $table = 'Contact';
-    public $timestamps = false; 
+    public $timestamps = false;
     // ContactFields_Name
+    protected $fillable = [
+        'Id',
+        'ContactFields_civility',
+        'ContactFields_Name',
+        'ContactFields_FirstName',
+        'ContactFields_Phone',
+        'ContactFields_Email',
+        'AssociatedCustomerId',
+        'OtherAddressFields_Civility',
+        'OtherAddressFields_ThirdName',
+        'xx_passwd',
+        'xx_birthday',
+    ];
     protected $hidden = [''];
-    
-    public function Custommer(){
-        return $this->belongsTo(Customer::class ,'AssociatedCustomerId','Id');
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'AssociatedCustomerId','Id');
     }
 }
