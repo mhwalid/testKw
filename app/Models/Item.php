@@ -9,22 +9,18 @@ use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
-    
+
     use HasFactory;
     protected $connection = 'sqlsrv';
     protected $table = 'Item';
-    
+
 
     public $timestamps = false;
-    protected $fillable = ['RealStock', 'Id'];
-
-    // protected $hidden = [
-    //     'sysCreatedDate', 'SubjectToIRPF', 'xx_Demat', 'xx_id_presta', 'sysCreatedUser', 'sysDatabaseId', 'xx_Demat', 'xx_Reference_constructeur',
-    // ];
+    protected $fillable = ['RealStock', 'Id','FamilyId'];
 
     public function family()
     {
-        return $this->hasMany(Family::class, 'FamilyId', 'Id');
+        return $this->belongsTo(Family::class, 'FamilyId', 'Id');
     }
     public function caracteristiques()
     {
@@ -39,11 +35,15 @@ class Item extends Model
     public static function search($search)
     {
         return empty($search) ? static::query()->ItemA()
-            : static::query()->where('Caption', 'like', '%' . $search . '%')->orWhere('BarCode ','like' ,'%'.$search.'%'); 
+            : static::query()->where('Caption', 'like', '%' . $search . '%')->orWhere('BarCode ','like' ,'%'.$search.'%');
     }
 
     public function arrivage()
     {
         return $this->hasMany(Arrivage::class, 'ItemId', 'Id')->whereRaw('DeliveryDate > DATEADD(month, -1, SYSDATETIME())');
+    }
+    public function maincarac()
+    {
+        return $this->hasOne(MainCarac::class,'id_item', 'Id');
     }
 }

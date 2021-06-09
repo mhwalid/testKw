@@ -11,6 +11,7 @@ class Customer extends Model
 
     protected $connection = 'sqlsrv';
     protected $table = 'Customer';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -57,4 +58,5 @@ class Customer extends Model
     {
         return $this->hasMany(Contact::class,'Id','AssociatedCustomerId');
     }
+
 }

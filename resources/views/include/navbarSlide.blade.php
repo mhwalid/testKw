@@ -1,42 +1,22 @@
-@if (isset($Families))
-<nav class="sidebar">
-    <div id="leftside-navigation" class="nano">
-        <ul class="nano-content">
-            <li>
-                <a href="index.html"><i class="fa fa-dashboard"></i><span>Categories</span></a>
-            </li>
-            @foreach ($Families as $Familie)
-                <li class="sub-menu">
-                    @if (count($Familie->subFamily)) <a
-                            href="{{ route('itembyCaption', $Familie->Id) }}"
-                        class="tag">{{ count($Familie->subFamily) }}</a> @else <a
-                            href="{{ route('itembyCaption', $Familie->Id) }}" class="tag">GO</a> @endif
-                    <a  href="javascipt:void(0);" onclick="callPrintFunction()"><span class="icon">{{ $Familie->Caption ?? 'ds' }}</span></a>
-                    <ul>
-                        @if (count($Familie->subFamily))
-
-                            @foreach ($Familie->subFamily as $subcategory)
-                                <li><a href="{{ route('itembysubFamily', $subcategory->Id) }}">{{ $subcategory->Caption ?? 'ds' }}</a> </li>
-                            @endforeach
-                        @endif
-                    </ul>
-            @endforeach
-        </ul>
-    </div>
-</nav>
+@if(isset($Families))
+<div  class="row1 align-items-center">
+    @foreach ($Families as $key => $Familie)
+    <li class="nav-item dropdown" style="list-style-type: none;">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$key}}</a>
+        <div class="dropdown-menu pt-0" aria-labelledby="navbarDropdown">
+            <div class="d-flex  flex-column  flex-sm-row p-3">
+                @foreach ($Familie as $item) 
+                <div class="row">
+                    <div class="dropdown-header" > <a
+                        href="{{ route('itembyCaption', $item->Id) }}" >{{$item->Caption}} </a></div>
+                    @foreach ($item->subFamily as $items) 
+                    <a class="dropdown-item" href="{{ route('itembysubFamily', $items->Id) }}" >{{$items->Caption}}</a>
+                     @endforeach
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </li>
+    @endforeach
+</div>
 @endif
-
-
-
-
-
-
-@section('extra-js')
-    <script>
-        // $("#leftside-navigation .sub-menu > a").click( Function callPrint() function(e) {
-        //     $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-        //         e.stopPropagation()
-        // });
-
-    </script>
-@endsection

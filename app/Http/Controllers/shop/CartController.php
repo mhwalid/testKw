@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade as PDF;
+use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
@@ -35,10 +36,8 @@ class CartController extends Controller
 
   public function index()
   {
-
-
+    
       return view('Cart.index');
-
   }
 
   public function destroy($rowId)

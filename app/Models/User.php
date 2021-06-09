@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\VerifyEmailNotification;
+use App\Models\Order\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
     protected $connection = 'mysql';
     protected $table = 'users';
-
     public $timestamps = true;
     protected $fillable = [
         'email',
@@ -72,4 +72,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailNotification());
     }
 
+    public function Orders(){
+        return $this->hasMany(Order::class ,'InvoicingContactId','IdUser')->where('DocumentType','=', 2);   
+    }
+
+    
 }

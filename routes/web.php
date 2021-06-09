@@ -27,10 +27,11 @@ Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itemb
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}', 'ItemController@show')->middleware('verified')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
-Route::post('/boutique/filter', 'ItemController@filter')->name('filter');
+Route::post('/Boutique', 'ItemController@filters')->name('filter');
 
 //le panier
 Route::get('/panier', 'Shop\CartController@index')->middleware('verified')->name('cart.index');
+Route::get('/panier', 'Shop\CartController@index')->name('cart.index')->middleware('auth');
 Route::post('/panier/ajouter', 'Shop\CartController@store')->name('cart.store');
 Route::delete('/panier/{rowId}', 'Shop\CartController@destroy')->name('cart.destroy');
 route::patch('/panier/{rowId}', 'Shop\CartController@update')->name('cart.update');
@@ -41,7 +42,7 @@ Route::get('/destroy', function () {
 });
 
 // Checkout routes
-Route::get('/paiement', 'Shop\CheckoutController@index')->name('checkout.index');
+Route::post('/paiement', 'Shop\CheckoutController@index')->name('checkout.index');
 Route::post('/checkout', 'Shop\CheckoutController@store')->name('checkout.store');
 Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 
@@ -61,6 +62,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 
 //Customers
 Route::get('/customer', 'CustomerContoller@index')->name('Customer.index');
+Route::get('/customer/{DocumentNumber}', 'CustomerContoller@show')->name('Customer.show');
 
 
 //############ methode to writhe in folder #############################
@@ -71,9 +73,7 @@ Route::get('/generate','Shop\CheckoutController@GenerateCommande');
 Route::get('/image','ItemController@generateHtml');
 
 Auth::routes(['verify' => true]);
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 ###################### test the connection #############
 
 Route::get('/conn', 'CustomerContoller@conn');
@@ -83,3 +83,9 @@ Route::get('generate-feature/{Id}','ItemController@feature');
 
 //Invoice
 Route::get('generate-invoice/','Shop\CartController@invoice');
+
+//Invoice
+Route::get('/contact','ItemController@contact')->name('contact');
+
+
+

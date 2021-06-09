@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Location;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Auth;
+
 
 class ItemController extends Controller
 {
@@ -26,7 +26,7 @@ class ItemController extends Controller
     public function index()
     {
 
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
         $id_customer = '';
         if (!is_null( Auth::user())) {
@@ -68,19 +68,22 @@ class ItemController extends Controller
 
     public function itembyCaption($Id)
     {
-
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         return view('product.home', compact('items', 'Families'));
     }
     public function itembysubFamily($Id)
     {
-        $Families = Family::with('subFamily')->get();
+        $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
         return view('product.home', compact('items', 'Families'));
         // return response()->json($items);
     }
 
+    public function contact()
+    {
+        return view('product.contact');
+    }
 
 
     public function search(Request $request)
@@ -114,6 +117,15 @@ class ItemController extends Controller
 
     }
 
+    public function filters(Request $rq){
+            
+        $items=Item::itemA();
+        if($rq->marque_id) $items->where('');
+       
+       
+       
+        return $rq;
+    }
 
 
     public function filter(Request $request)
@@ -410,12 +422,10 @@ class ItemController extends Controller
             'arrivage' => $arrivage,
 
         ];
-        // require_once 'dompdf/autoload.inc.php';
-$options = new Options();
-$options->set('isRemoteEnabled', TRUE);
-        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
 
+        $pdf = PDF::loadView('product.itempdf', $data);
+       
         return $pdf->stream($id.'.pdf');
-        // return view('product.itempdf', compact('item', 'arrivage'));
+
     }
 }

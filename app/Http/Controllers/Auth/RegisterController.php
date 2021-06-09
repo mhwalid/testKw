@@ -79,6 +79,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         $id_contact = Str::uuid();
         $id_contact = strtoupper($id_contact);
 
@@ -203,5 +204,6 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
                         ?: redirect()->route('verification.notice');
+
     }
 }

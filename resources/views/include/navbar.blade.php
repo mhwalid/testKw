@@ -1,11 +1,10 @@
 <nav id="Nav" class="navbar navbar-expand-lg navbar-light indigo mb-4" style="background-color: white;" >
-    <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px" src="{{asset('asset/img/kw.png')}}" alt=""></a>
+    <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px" src="{{asset('asset/img/kw.jpg')}}" alt=""></a>
     <div class="col-4pt-1">
         <a href="{{ route('cart.index') }}"> <i class="fas fa-shopping-cart"></i> <span
                 class="badge badge-pill badge-warning">{{ Cart::content()->count() }} </span></a>
     </div>
-    <!-- Collapsible content -->
-
+   
 
     <div class="md-form my-0">
         <input class="form-control" type="text" placeholder="Recherche" id="search" name="q"
