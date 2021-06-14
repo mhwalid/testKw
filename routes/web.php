@@ -22,12 +22,13 @@ Route::get('test', function () {
      })->get());
 });
 
+Route::get('/', 'ItemController@home')->name('product.home');
 Route::get('/boutique', 'ItemController@index')->name('product.index');
 Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itembyCaption');
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
-Route::post('/boutique/filter', 'ItemController@filter')->name('filter');
+// Route::post('/boutique/filter', 'ItemController@filter')->name('filter');
 
 //le panier
 Route::get('/panier', 'Shop\CartController@index')->name('cart.index');
@@ -72,8 +73,12 @@ Route::get('generate-feature/{Id}','ItemController@feature');
 //Invoice
 Route::get('generate-invoice/','Shop\CartController@invoice');
 
-//Invoice
+//Contact
 Route::get('/contact','ItemController@contact')->name('contact');
+//Index
+Route::get('/index','ItemController@index')->name('index');
+//payement
+Route::get('/payement','ItemController@payement')->name('payement');
 
 
 

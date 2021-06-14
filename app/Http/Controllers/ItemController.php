@@ -24,13 +24,18 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $Families = Family::all()->groupBy('MainIntervener');
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
         return view('product.home', compact('items', 'Families'));
     }
+     public function home(){
+        $Families = Family::all()->groupBy('MainIntervener');
+         return view('product.index' ,compact('Families'));
+     }
 
     public function show($id)
     {
+
         $item = Item::itemA()->find($id);
         $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
        return view('product.show', compact('item', 'arrivage'));
@@ -39,10 +44,84 @@ class ItemController extends Controller
 
     public function itembyCaption($Id)
     {
-        
+        $marques = Db::connection('mysql')->table('main_carac')
+        ->select('marque')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $memoire= Db::connection('mysql')->table('main_carac')
+        ->select('memoire')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $taille_ecran= Db::connection('mysql')->table('main_carac')
+        ->select('taille_ecran')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $ssd= Db::connection('mysql')->table('main_carac')
+        ->select('ssd')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $os= Db::connection('mysql')->table('main_carac')
+        ->select('os')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $chipset= Db::connection('mysql')->table('main_carac')
+        ->select('chipset')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $fam_proc= Db::connection('mysql')->table('main_carac')
+        ->select('fam_proc')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $sock_proc= Db::connection('mysql')->table('main_carac')
+        ->select('sock_proc')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $gpu= Db::connection('mysql')->table('main_carac')
+        ->select('gpu')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $puissance= Db::connection('mysql')->table('main_carac')
+        ->select('puissance')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $frequ_mem= Db::connection('mysql')->table('main_carac')
+        ->select('frequ_memoire')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $nb_barrette= Db::connection('mysql')->table('main_carac')
+        ->select('nb_barrette')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+
+
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
-        return view('product.home', compact('items', 'Families'));
+        // dd($items);
+        return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
     }
     public function itembysubFamily($Id)
     {
@@ -55,6 +134,10 @@ class ItemController extends Controller
     public function contact()
     {
         return view('product.contact');
+    }
+    public function payement()
+    {
+        return view('product.payement');
     }
 
 

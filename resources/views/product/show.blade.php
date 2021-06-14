@@ -4,7 +4,7 @@
 
 <section class="mb-5">
 
-    <div class="row">
+    <div id="show" class="row">
       <div class="col-md-6 mb-4 mb-md-0">
 
         <div id="mdb-lightbox-ui"></div>
@@ -15,8 +15,7 @@
 
             <div class="col-12 mb-0">
               <figure class="view overlay rounded z-depth-1 main-img" >
-                <a href="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
-                  data-size="210x623">
+                <a href="#" id="pop">
                   <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
                 </a>
@@ -61,7 +60,7 @@
 
 
       </div>
- 
+
 
       <div class="col-md-6">
 
@@ -189,43 +188,127 @@
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
 
-                <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i
+                <button type="submit" class="btn  boutton "><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
 
             </form>
             @else
-                    <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
+                    <button type="submit" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
                     </button>
                 @endif
-                <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
+                <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
       </div>
     </div>
 
   </section>
 
   <div class="container">
-    <table class="table table-hover ">
-        <thead class="thead-info" style="background-color: #d8b908;">
-            <th scope="col">Nom</th>
-            <th scope="col">Valeur</th>
-          </tr>
-        </thead>
-        <tbody id="datalist">
-                @if (count($item->caracteristiques)>0)
-                    @foreach ($item->caracteristiques as $caracteristique)
-                    <tr >
-                      <td>{{$caracteristique->Libelle}}</td>
-                      <td>{{$caracteristique->Value}}</td>
-                  </tr>
-                @endforeach
+    <ul id="datalist">
+            @if (count($item->caracteristiques)>0)
+                @foreach ($item->caracteristiques as $caracteristique)
 
-                @endif
-              </tbody>
-            </table>
-            <button  id="plusinfo" class=" btn btn-primary">Plus de détails</button>
-            <button  id="moinsinfo" class=" btn btn-primary">moins de détails</button>
-      </div>
+                  <li><strong>{{$caracteristique->Libelle}} </strong>: {{$caracteristique->Value}}</li>
+
+            @endforeach
+
+            @endif
+            </ul>
+        <button  id="plusinfo" class=" btn btn-dark btn-md mr-1 mb-2">Plus de détails</button>
+        <button  id="moinsinfo" class=" btn btn-dark btn-md mr-1 mb-2">Moins de détails</button>
   </div>
+</div>
+
+
+   <!-- Creates the bootstrap modal where the image will appear -->
+   <div class="modal fade " id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
+
+
+
+
+
+
+    <div class="contents">
+        <div class="modal-dialog" style="position: absolute; top: 13%; left: 30%;  ">
+            <div class="modal-content" style="background-color:transparent;" >
+              <div class="modal-header" style="margin-bottom: -100px;
+              margin-top: -100px; border-bottom:none; ">
+
+
+        <div class="divCarousel" style="" >
+            <div class="divCarousel" >
+
+                <div id="carouselExampleCaptions" class="carousel divCarousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators " style=" bottom: 95%;">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="li"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class="activeli"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2" class="activeli1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3" class="activeli2"></li>
+                    </ol>
+                    <div class="carousel-inner"style="width:1000px;  height: 1000px;">
+                        <div class="carousel-item">
+                            <img class="d-block w-100" style="width: auto; height:750px;"    data-src="" alt="First slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" data-holder-rendered="true" >
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" style="width: auto; height:750px;"    alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium2.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active1">
+                            <img class="d-block w-100" style="width: auto; height:750px;"   alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium3.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active2">
+                            <img class="d-block w-100" style="width: auto; height:750px;"  alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium4.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev" style="opacity: 1; ">
+                        <i class="fas fa-arrow-circle-left"></i>
+
+                        {{-- <span class="carousel-control-prev-icon" aria-hidden="true" style="opacity: 1; ";></span> --}}
+
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                        <i class="fas fa-arrow-circle-right"></i>
+
+                    </a>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+        </div>
+
+
+    </div>
+            </div>
+
+
+
+    </div>
+
+    <script>
+    $("#pop").on("click", function() {
+         $('#imagepreview').attr('src', $('#imagezoom').attr('src')); // here asign the image to the modal when the user click the enlarge link
+         $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+      });
+
+
+
+     </script>
 
 
 <script>
@@ -239,23 +322,26 @@
                    }
                   $(function () {
                      $('#plusinfo').click(function () {
-                         $('#datalist tr:hidden').slice(0, 60).show();
-                         if ($('#datalist tr').length == $('#datalist tr:visible').length) {
+                         $('#datalist li:hidden').slice(0,60).show();
+                         if ($('#datalist li').length == $('#datalist li:visible').length) {
                              $('#plusinfo').hide();
+                             $('#moinsinfo').show();
+                         }
+                         if ($('#datalist li').length !== $('#datalist li:visible').length) {
+                             $('#plusinfo').show();
                              $('#moinsinfo').show();
                          }
                      });
                  });
                  $(function () {
                      $('#moinsinfo').click(function () {
-                         $('#datalist tr:visible ').slice(5, 150).hide();
-                         if ($('#datalist tr').length !== $('#datalist tr:visible').length) {
+                         $('#datalist li:visible ').slice(5, 150).hide();
+                         if ($('#datalist li').length !== $('#datalist li:visible').length) {
                              $('#plusinfo').show();
                              $('#moinsinfo').hide();
                          }
                     });
                  });
-        
 </script>
 
 @endsection
