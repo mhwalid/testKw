@@ -20,11 +20,11 @@
         <li style="list-style: none"s class="nav-item dropdown">
 
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->Contact->ContactFields_Name }} <span class="caret"></span>
+                {{ Auth::user()->name }} <span class="caret"></span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                {{-- <a class="dropdown-item" href="{{ route('Customer.orders') }}">Mes commandes</a> --}}
+                <a class="dropdown-item" href="{{ route('Customer.index') }}">Mes commandes</a>
 
                 <a  class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();

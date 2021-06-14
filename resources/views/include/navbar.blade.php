@@ -1,3 +1,4 @@
+
 <div id="haut">
     <nav id="Nav" class="navbar navbar-expand-lg navbar-light indigo mb-4 " style="background-color: white;" >
         <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px" src="{{asset('asset/img/kw.png')}}" alt=""></a>
@@ -5,6 +6,7 @@
             <a href="{{ route('cart.index') }}"> <i class="fas fa-shopping-cart"></i> <span
                     class="badge badge-pill badge-warning">{{ Cart::content()->count() }} </span></a>
         </div>
+
 
 
         <div class="md-form my-0">

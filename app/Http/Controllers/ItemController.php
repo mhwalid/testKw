@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
 use App\Models\MainCarac;
@@ -9,11 +10,11 @@ use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Location;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
 use Dompdf\Options;
+use Illuminate\Support\Facades\Auth;
+
 
 class ItemController extends Controller
 {
@@ -24,8 +25,37 @@ class ItemController extends Controller
      */
     public function index()
     {
+
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
+        $id_customer = '';
+        if (!is_null( Auth::user())) {
+            $id_customer = Auth::user()->Contact->Customer->Id;
+            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
+            $prices = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId','=','INF009')
+                ->where('inclusionType','128')
+                ->orWhere(function($query) {
+                    $query->where('StartElementId', '004')
+                          ->where('inclusionType', '=', '32');
+                });
+            })
+            ->get();
+
+            foreach ($prices as $price) {
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+
+                print_r($tmp_value->DiscountValue);
+            }
+
+
+        }
+
         return view('product.home', compact('items', 'Families'));
     }
      public function home(){
@@ -37,13 +67,13 @@ class ItemController extends Controller
     {
 
         $item = Item::itemA()->find($id);
-        $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
-       return view('product.show', compact('item', 'arrivage'));
+       return view('product.show', compact('item'));
     }
 
 
     public function itembyCaption($Id)
     {
+
         $marques = Db::connection('mysql')->table('main_carac')
         ->select('marque')
         ->distinct()
@@ -115,9 +145,7 @@ class ItemController extends Controller
         ->distinct()
         ->where('family', $Id)
         ->get();
-
-
-
+      
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
         // dd($items);
@@ -172,6 +200,15 @@ class ItemController extends Controller
 
     }
 
+    public function filters(Request $rq){
+            
+        $items=Item::itemA();
+        if($rq->marque_id) $items->where('');
+       
+       
+       
+        return $rq;
+    }
 
 
     public function filter(Request $request)
@@ -468,12 +505,10 @@ class ItemController extends Controller
             'arrivage' => $arrivage,
 
         ];
-        // require_once 'dompdf/autoload.inc.php';
-$options = new Options();
-$options->set('isRemoteEnabled', TRUE);
-        $pdf = PDF::loadView('product.itempdf', $data)->setOptions(['defaultFont' => 'sans-serif'], ['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true] );
 
+        $pdf = PDF::loadView('product.itempdf', $data);
+       
         return $pdf->stream($id.'.pdf');
-        // return view('product.itempdf', compact('item', 'arrivage'));
+
     }
 }

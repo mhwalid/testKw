@@ -190,14 +190,18 @@ height: 50px;
 
 
 }
+/* .row1:hover .dropdown-menu{
+    display:block;
+} */
 
 body{
     margin: 0px;
     padding: 0px;
     font-family: Avenir, sans-serif;
+
     background-color: white;
 
-}
+
 /*menu horizontale pour enlever puce */
 .row ul {
     list-style-type: none;
@@ -852,9 +856,19 @@ body{
 
 
 
+
 a[aria-label="« Previous"] {
     color:red;
   }
   a[aria-label="Next »"] {
     color:red;
+
+
+/*************************/
+.scroller {
+    width: 500px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow: auto;
+
   }

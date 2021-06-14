@@ -1,16 +1,12 @@
-<div   id="filter"  >
 
+<div   id="filter"  >
     <div  style="width: 250px;   min-height:2000px; ">
         {{-- <form style="" action="{{ route('filter') }}" method="POST" class="form-inline ml-auto"
             onsubmit="traitForm(a)" id="filter"> --}}
             <div style=" background-color: #D6D1C1; border-radius: 20px;" class="list-group"   >
                 @php
-
-
                     $re = explode('_', last(request()->segments()));
-
                 @endphp
-
                     <div  id="accordion" style="  display:flex; flex-direction:column;"  >
                         <ul  style="background-color: #D6D1C1;  border-radius: 20px;"  id=datalist>
                         {{-- Titre --}}
@@ -379,7 +375,6 @@
 <script>
     $('#moinsinfo').hide();
 
-
                     $(function () {
                        $('#plusinfo').click(function () {
                            $('#datalist li:hidden').slice(0, 9).show();
@@ -398,7 +393,6 @@
                            }
                       });
                    });
-
   </script>
     </div>
 </div>

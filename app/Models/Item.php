@@ -16,15 +16,11 @@ class Item extends Model
 
 
     public $timestamps = false;
-    protected $fillable = ['RealStock', 'Id'];
-
-    // protected $hidden = [
-    //     'sysCreatedDate', 'SubjectToIRPF', 'xx_Demat', 'xx_id_presta', 'sysCreatedUser', 'sysDatabaseId', 'xx_Demat', 'xx_Reference_constructeur',
-    // ];
+    protected $fillable = ['RealStock', 'Id','FamilyId'];
 
     public function family()
     {
-        return $this->hasMany(Family::class, 'FamilyId', 'Id');
+        return $this->belongsTo(Family::class, 'FamilyId', 'Id');
     }
     public function caracteristiques()
     {

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 
+
 @section('content')
 
 <div class="container-fluid">
@@ -63,6 +64,7 @@
                 <div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">
                     <div>
                     <img style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"
+
                     src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" alt=" "
                     class="bd-placeholder-img"  >
                     @if ($item->RealStock>0)
@@ -81,9 +83,6 @@
                     <a id="Catégorie" href="{{ route('product.show', $item->Id) }}"> <strong
                             class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
 
-
-
-
                         @if ($item->RealStock>0)
                         <form action="{{ route('cart.store') }}" method="POST" style="">
                             @csrf
@@ -92,6 +91,7 @@
                                 alt="Certification"></button>
                         </form>
                         @endif
+                        @endguest
                 </div>
             @endforeach
             <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
@@ -106,6 +106,7 @@
 </div>
 
 @endsection
+
 
 
 <script>
@@ -124,8 +125,8 @@
     });
     </script>
 
+
 {{-- le scripte js de Searchbar et filter  --}}
 @section('extra-js')
 @include('include.SearchItem')
-{{-- @include('include.filter') --}}
 @endsection
