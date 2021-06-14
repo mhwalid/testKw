@@ -3,14 +3,16 @@
 @section('content')
 <section class="mb-5 ">
 
-    <div class="row">
+    <div id="show" class="row">
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
             <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
               <figure class="view overlay rounded z-depth-1 main-img" >
-                <a href="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"class="img-fluid z-depth-1" id="image" >
+
+                <a href="#" id="pop">
+                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    class="img-fluid z-depth-1" id="image">
                 </a>
               </figure>
             </div>
@@ -32,7 +34,7 @@
           </div>
         </div>
       </div>
- 
+
 
       <div class="col-md-6 " >
 
@@ -145,15 +147,15 @@
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
 
-                <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i
+                <button type="submit" class="btn  boutton "><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
 
             </form>
             @else
-                    <button type="submit" class="btn btn-warning" disabled="disabled"> Pas disponible pour le moment
+                    <button type="submit" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
                     </button>
                 @endif
-                <a href="{{ url('generate-feature', $item->Id) }}" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
+                <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
       </div>
     </div>
     <p class="pt-4 mt-4">{{ $item->maincarac->description ?? "" }}</p>
@@ -207,7 +209,6 @@ $('#moinsinfo').hide();
                      }
                 });
              });
-
 </script>
 
 @endsection

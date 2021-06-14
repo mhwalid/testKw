@@ -1,16 +1,19 @@
-<div class="item">
+
     <!-- Authentication Links -->
     <ul class="d-flex" style="padding: 0px; margin: 0px; ">
-    @guest
+    @guest<div class="item">
         <li style="list-style: none;" class="nav-item">
+
             <a class="nav-link" href="{{ route('login') }}" style="color:black;"><i class="fas fa-user-circle"></i>  {{ __('Login') }}</a>
-        </li>
+        </li></div>
 
 
         @if (Route::has('register'))
+        <div class="item">
             <li style="list-style: none" class="nav-item">
                 <a class="nav-link" href="{{ route('register') }}" style="color:black;">{{ __('Register') }}</a>
             </li>
+        </div>
         @endif
     @else
 
@@ -39,4 +42,4 @@
     @endguest
 
     </ul>
-    </div>
+
