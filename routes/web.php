@@ -29,7 +29,7 @@ Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')-
 Route::get('/boutique/{Id}', 'ItemController@show')->middleware('verified')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
 
-Route::post('/Boutique', 'ItemController@filters')->name('filter');
+Route::post('/Boutique/Family/{Id}', 'ItemController@filters')->name('filter');
 
 
 //le panier

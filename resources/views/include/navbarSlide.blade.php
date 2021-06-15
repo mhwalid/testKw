@@ -10,7 +10,6 @@
                     <div id="grid">
                     <div id="mot" style="font-size: 17px;   " class="dropdown-header " >
                         <a id="lien" style="text-decoration: none;" href="{{ route('itembyCaption', $item->Id) }}" >{{$item->Caption}}</a></div>
-
                     </div>
                 </div>
                 @endforeach

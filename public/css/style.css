@@ -1,5 +1,4 @@
-
-/* Footer */
+Footer /
 
 /* footer {
     text-align:center;
@@ -118,7 +117,7 @@ ul {
 
 /*Fin Footer */
 
-/* Navbar */
+/ Navbar /
 
 /* #Nav{
     padding: 20px;
@@ -140,7 +139,7 @@ ul {
 }
 
 #search{
-    /* float:left; */
+    / float:left; /
     margin-left: 150px;
     width: 600px;;
     margin-top:7px;
@@ -149,9 +148,9 @@ ul {
 
 }
 
-/* Fin Navbar */
+/ Fin Navbar /
 
-/* show */
+/ show /
 
 .mb-show{
     text-align:center;
@@ -162,7 +161,7 @@ ul {
     padding-top:20px; */
 }
 
-/* fin show */
+/ fin show /
 
 
 
@@ -190,24 +189,20 @@ height: 50px;
 
 
 }
-/* .row1:hover .dropdown-menu{
-    display:block;
-} */
 
 body{
     margin: 0px;
     padding: 0px;
     font-family: Avenir, sans-serif;
-
     background-color: white;
 
-
+}
 /*menu horizontale pour enlever puce */
 .row ul {
     list-style-type: none;
 }
 
-/* Carousel couleur fleche du zoom */
+/ Carousel couleur fleche du zoom /
 .carousel-control-next {
     filter: invert(100%);
     }
@@ -438,7 +433,7 @@ body{
       input[type=number] {
         border: 1px solid #ddd;
         text-align: center;
-        /* font-size: 1.6em; */
+        / font-size: 1.6em; /
         -moz-appearance: textfield;
       }
       input[type=number]::-webkit-outer-spin-button,
@@ -568,7 +563,7 @@ body{
 
   }
 
-   /* The Transformation */
+   / The Transformation /
   .item:hover  {
 
     transform: scale(1.1);
@@ -816,7 +811,7 @@ body{
     text-decoration: none;
 }
 
-/************ BACK-TO-TOP ************/
+/*********** BACK-TO-TOP ***********/
 
 .back-to-top {
     position: fixed;
@@ -856,15 +851,13 @@ body{
 
 
 
-
 a[aria-label="« Previous"] {
     color:red;
   }
   a[aria-label="Next »"] {
     color:red;
+  }
 
-
-/*************************/
 .scroller {
     width: 500px;
     height: 200px;
@@ -872,3 +865,5 @@ a[aria-label="« Previous"] {
     overflow: auto;
 
   }
+
+
