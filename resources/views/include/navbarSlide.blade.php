@@ -1,17 +1,16 @@
 @if(isset($Families))
-<div  class="row1 align-items-center">
+<div    class="row1 align-items-center">
     @foreach ($Families as $key => $Familie)
-    <li class="nav-item dropdown" style="list-style-type: none;">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$key}}</a>
-        <div class="dropdown-menu pt-0" aria-labelledby="navbarDropdown">
-            <div class="d-flex  flex-column  flex-sm-row p-3">
-                @foreach ($Familie as $item) 
-                <div class="row">
-                    <div class="dropdown-header" > <a
-                        href="{{ route('itembyCaption', $item->Id) }}" >{{$item->Caption}} </a></div>
-                    @foreach ($item->subFamily as $items) 
-                    <a class="dropdown-item" href="{{ route('itembysubFamily', $items->Id) }}" >{{$items->Caption}}</a>
-                     @endforeach
+    <li   class="nav-item dropdown" style="list-style-type: none;">
+        <a style="font-size: 21px;" id="catégorie"class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$key}}</a>
+        <div  id="tr" class="dropdown-menu    pt-0 " aria-labelledby="navbarDropdown">
+            <div  id="frf"   >
+                @foreach ($Familie as $item)
+                <div   class="row ">
+                    <div id="grid">
+                    <div id="mot" style="font-size: 17px;   " class="dropdown-header " >
+                        <a id="lien" style="text-decoration: none;" href="{{ route('itembyCaption', $item->Id) }}" >{{$item->Caption}}</a></div>
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -20,3 +19,6 @@
     @endforeach
 </div>
 @endif
+
+
+
