@@ -20,7 +20,7 @@
               <div class="row mt-4  pt-4  ">
                 @for ($i = 1; $i < 5; $i++)
                   @if (File::exists('asset/item/images/'.$item->Id.'/Medium'.$i.'.jpg'))
-                
+
                   <div class="col-3 ">
                     <div class="view overlay rounded z-depth-1 gallery-item">
                       <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium'.$i.'.jpg')}}" class="img-fluid">
@@ -115,10 +115,10 @@
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
-    
+
   </div>
         @endif
-        
+
         <hr>
 
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
@@ -146,6 +146,7 @@
                 <input type="text" name="item_id" value="{{ $item->Id }}">
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
+                <input type="hidden" name="price" value={{ $item->CostPrice }}>
 
                 <button type="submit" class="btn  boutton "><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>

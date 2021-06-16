@@ -18,6 +18,157 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+    private function getPrice($items)
+    {
+        $price_item_client = [];
+        $price_item_famy = [];
+        $hidden_item = [];
+        if (!is_null( Auth::user())) {
+            $id_customer = Auth::user()->Contact->Customer->Id;
+            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
+            $prices_client = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) use ($id_customer) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId','=',$id_customer)
+                ->where('inclusionType','128');
+            })
+            ->get();
+
+            $prices_famy = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) use ($id_customer_family) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId', $id_customer_family)
+                ->where('inclusionType', '=', '32');
+            })
+            ->get();
+
+            foreach ($prices_client as $price) {
+                $type_discount = DB::connection('sqlsrv')->table('PriceList')->select('Type')->where('Id',$price->PriceListId)->first();
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+                if ($tmp_value->DiscountValue == -1 && $type_discount->Type == 1) {
+                    $hidden_item[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 1) {
+                    $price_item_client[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 2) {
+                    $discount_item_client[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+
+            }
+            foreach ($prices_famy as $price) {
+                $type_discount = DB::connection('sqlsrv')->table('PriceList')->select('Type')->where('Id',$price->PriceListId)->first();
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+                if ($tmp_value->DiscountValue == -1 && $type_discount->Type == 1) {
+                    $hidden_item[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 1) {
+                    $price_item_famy[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 2) {
+                    $discount_item_famy[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+            }
+
+            foreach ($items as $key =>$item ) {
+                if (array_key_exists($item->Id,$hidden_item) || array_key_exists($item->FamilyId,$hidden_item) || array_key_exists($item->SubFamilyId,$hidden_item))
+                    $items->forget($key);
+                elseif (array_key_exists($item->Id,$price_item_client))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->Id])/100);
+                elseif (array_key_exists($item->FamilyId,$price_item_client))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->FamilyId])/100);
+                elseif (array_key_exists($item->SubFamilyId,$price_item_client))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->SubFamilyId])/100);
+                elseif (array_key_exists($item->Id,$price_item_famy))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->Id])/100);
+                elseif (array_key_exists($item->FamilyId,$price_item_famy))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->FamilyId])/100);
+                elseif (array_key_exists($item->SubFamilyId,$price_item_famy))
+                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->SubFamilyId])/100);
+            }
+        }
+        return $items;
+    }
+
+    private function getPriceOneitem($item)
+    {
+        $price_item_client = [];
+        $price_item_famy = [];
+        $hidden_item = [];
+        if (!is_null( Auth::user())) {
+            $id_customer = Auth::user()->Contact->Customer->Id;
+            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
+            $prices_client = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) use ($id_customer) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId','=',$id_customer)
+                ->where('inclusionType','128');
+            })
+            ->get();
+            $prices_famy = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) use ($id_customer_family) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId', $id_customer_family)
+                ->where('inclusionType', '=', '32');
+            })
+            ->get();
+
+            foreach ($prices_client as $price) {
+                $type_discount = DB::connection('sqlsrv')->table('PriceList')->select('Type')->where('Id',$price->PriceListId)->first();
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+                if ($tmp_value->DiscountValue == -1 && $type_discount->Type == 1) {
+                    $hidden_item[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 1) {
+                    $price_item_client[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 2) {
+                    $discount_item_client[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+
+            }
+            foreach ($prices_famy as $price) {
+                $type_discount = DB::connection('sqlsrv')->table('PriceList')->select('Type')->where('Id',$price->PriceListId)->first();
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+                if ($tmp_value->DiscountValue == -1 && $type_discount->Type == 1) {
+                    $hidden_item[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 1) {
+                    $price_item_famy[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+                elseif ($type_discount->Type == 2) {
+                    $discount_item_famy[$price->StartElementId] = $tmp_value->DiscountValue;
+                }
+            }
+
+            if (array_key_exists($item->Id,$price_item_client))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->Id])/100);
+            elseif (array_key_exists($item->FamilyId,$price_item_client))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->FamilyId])/100);
+            elseif (array_key_exists($item->SubFamilyId,$price_item_client))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->SubFamilyId])/100);
+            elseif (array_key_exists($item->Id,$price_item_famy))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->Id])/100);
+            elseif (array_key_exists($item->FamilyId,$price_item_famy))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->FamilyId])/100);
+            elseif (array_key_exists($item->SubFamilyId,$price_item_famy))
+                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->SubFamilyId])/100);
+
+            return $item;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,33 +179,8 @@ class ItemController extends Controller
 
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
-        $id_customer = '';
-        if (!is_null( Auth::user())) {
-            $id_customer = Auth::user()->Contact->Customer->Id;
-            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
-            $prices = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
-            ->where('InclusionType','<>','128')
-            ->where('InclusionType','<>','32')
-            ->whereIn('PriceListId',function ($query) {
-                $query->select('PriceListId')
-                ->from('PriceListInclusionLine')
-                ->where('StartElementId','=','INF009')
-                ->where('inclusionType','128')
-                ->orWhere(function($query) {
-                    $query->where('StartElementId', '004')
-                          ->where('inclusionType', '=', '32');
-                });
-            })
-            ->get();
 
-            foreach ($prices as $price) {
-                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
-
-                print_r($tmp_value->DiscountValue);
-            }
-
-
-        }
+        $items = $this->getPrice($items);
 
         return view('product.home', compact('items', 'Families'));
     }
@@ -67,7 +193,8 @@ class ItemController extends Controller
     {
 
         $item = Item::itemA()->find($id);
-       return view('product.show', compact('item'));
+        $item = $this->getPriceOneitem($item);
+        return view('product.show', compact('item'));
     }
 
 
@@ -148,13 +275,20 @@ class ItemController extends Controller
       
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
+
+        $items = $this->getPrice($items);
+
+
         // dd($items);
         return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+
     }
     public function itembysubFamily($Id)
     {
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
+        $items = $this->getPrice($items);;
+
         return view('product.home', compact('items', 'Families'));
         // return response()->json($items);
     }
@@ -176,37 +310,34 @@ class ItemController extends Controller
         $pieces = explode("/", $url);
 
         if (count($pieces) == 1) {
-            $items = Item::itemA()->where('Caption', 'like', "%$q%")->orWhere('BarCode ','like' ,"%$q%")->paginate(100);
+            $items = Item::itemA()->where(function($query) use ($q) {
+                $query->where('Caption', 'like', "%$q%")
+                ->orWhere('BarCode ','like' ,"%$q%");
+            })->paginate(100);
+            $items = $this->getPrice($items);
             return $items;
         } else {
-            if ($pieces[1] == "SubFamily") {
+            if ($pieces[1] == "Family") {
                 $con = $pieces[2];
-                $items = Item::itemA()->where('Caption', 'like', "%$q%")
-                    ->where('SubFamilyId', 'like', "%$con%")
-                    ->orWhere('BarCode ','like' ,"%$q%")
-                    ->paginate(180);
-                    return $items;
-                // $dz = "sub";
-            } elseif ($pieces[1] == "Family") {
-                $con = $pieces[2];
-                $items = Item::itemA()->where('Caption', 'like', "%$q%")
-                    ->where('FamilyId', 'like', "%$con%")
-                    ->orWhere('BarCode ','like' ,"%$q%")
-                    ->paginate(170);
-                    return $items;
+                $items = Item::itemA()
+                ->where('FamilyId',$con)
+                ->where(function($query) use ($q) {
+                    $query->where('Caption', 'like', "%$q%")
+                    ->orWhere('BarCode ','like' ,"%$q%");
+                })->paginate(100);
+                $items = $this->getPrice($items);
+
+                return $items;
                 // $dz = "fam";
             }
         }
-
     }
 
     public function filters(Request $rq){
-            
+
         $items=Item::itemA();
         if($rq->marque_id) $items->where('');
-       
-       
-       
+
         return $rq;
     }
 
@@ -507,8 +638,10 @@ class ItemController extends Controller
         ];
 
         $pdf = PDF::loadView('product.itempdf', $data);
-       
+
         return $pdf->stream($id.'.pdf');
 
     }
+
+
 }

@@ -51,6 +51,7 @@
     <div class="row"  id="row">
         <div id="results" style="width: 1147px; margin-left: 100px;">
             @foreach ($items as $item)
+
                 <div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">
                     <div>
                     <img style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"
@@ -71,6 +72,7 @@
                             <form action="{{ route('cart.store') }}" method="POST" >
                                 @csrf
                                 <input type="hidden" name="item_id" value="{{ $item->Id }}">
+                                <input type="hidden" name="price" value={{ $item->CostPrice }}>
                                 <input type="hidden" name="quantity" value="1">
                                 <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">
                                     <img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}" alt="Certification"></button>
@@ -78,7 +80,9 @@
                             @else
                         @endif
                             
+
                 </div>
+
             @endforeach
             <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
         </div>
