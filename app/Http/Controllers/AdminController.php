@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\Customer;
+use App\Models\Family;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -19,13 +20,46 @@ class AdminController extends Controller
 
     public function index()
     {
+        $new_user = User::where('compte_actif',0)->count();
+        return view('admin.admin', compact('new_user'));
+    }
+
+    public function showUser()
+    {
+        $new_user = User::where('compte_actif',0)->count();
         $users_verified = User::where('compte_actif',0)->whereNotNull('email_verified_at')->get();
         $users_not_verified = User::where('compte_actif',0)->whereNull('email_verified_at')->get();
 
-        return view('admin.admin', compact('users_verified','users_not_verified'));
+        return view('admin.newUser', compact('users_verified','users_not_verified','new_user'));
     }
 
-    public function delete($id)
+    public function banner()
+    {
+        $new_user = User::where('compte_actif',0)->count();
+        $families = Family::select('Id','Caption')->get();
+        return view('admin.gestionBanner', compact('families','new_user'));
+    }
+
+    public function bannerUpdate()
+    {
+        $uploads_dir = 'public/asset/banner';
+        $tmp_name = $_FILES["banner"]["tmp_name"];
+        // basename() peut empêcher les attaques de système de fichiers;
+        // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/Visuel_maquette.jpg");
+        return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
+    }
+    public function familyBannerUpdate($family)
+    {
+        $uploads_dir = 'public/asset/banner';
+        $tmp_name = $_FILES["banner"]["tmp_name"];
+        // basename() peut empêcher les attaques de système de fichiers;
+        // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/".$family.".jpg");
+        return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
+    }
+
+    public function deleteUser($id)
     {
         $user = User::find($id);
         $user->delete();

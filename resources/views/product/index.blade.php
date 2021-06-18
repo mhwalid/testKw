@@ -9,7 +9,7 @@
     <div   id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/img/Visuel maquette.jpg')}}" alt="First slide">
+            <img class="d-block w-100" src="{{asset('asset/banner/Visuel_maquette.jpg')}}" alt="First slide">
         </div>
 
         </div>
@@ -59,7 +59,7 @@
                 <h4 class="card-title">Nom Produit</h4>
                     <a class="btn   boutton">Ajouter Au Panier</a>
         </div>
-       
+
 
         </div>
     </div>
@@ -101,7 +101,7 @@
                 <h4 class="card-title">Nom Produit</h4>
                     <a class="btn   boutton">Ajouter Au Panier</a>
         </div>
-       
+
         </div>
     </div>
 
@@ -147,7 +147,7 @@
                 <h4 class="card-title">Nom Produit</h4>
                     <a  class="btn   boutton">Ajouter Au Panier</a>
         </div>
-       
+
 
         </div>
     </div>

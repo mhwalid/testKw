@@ -77,6 +77,7 @@ class ItemController extends Controller
             }
 
             foreach ($items as $key =>$item ) {
+
                 if (array_key_exists($item->Id,$hidden_item) || array_key_exists($item->FamilyId,$hidden_item) || array_key_exists($item->SubFamilyId,$hidden_item))
                     $items->forget($key);
                 elseif (array_key_exists($item->Id,$price_item_client))
@@ -184,10 +185,53 @@ class ItemController extends Controller
 
         return view('product.home', compact('items', 'Families'));
     }
-     public function home(){
+
+    public function trie()
+    {
+        $trie = $_POST["trie"];
+
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+        if ($trie == 'noTrie') {
+            return $this->index();
+        }else {
+            if ($trie == 'PrixDecroissant') {
+                $items = Item::itemA()->orderBy('CostPrice')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }elseif ($trie == 'PrixCroissant') {
+                $items = Item::itemA()->orderBy('CostPrice','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }
+        }
+    }
+
+    // public function stock()
+    // {
+
+    //     $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+    //     $items = Item::itemA()->where('RealStock','>',0)->paginate(20);
+    //     $items = $this->getPrice($items);
+
+    //     return view('product.showsAll', compact('items', 'Families'));
+    // }
+
+    // public function noStock()
+    // {
+
+    //     $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+    //     $items = Item::itemA()->paginate(20);
+    //     $items = $this->getPrice($items);
+
+    //     return view('product.showsAll', compact('items', 'Families'));
+    // }
+
+    public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
-         return view('product.index' ,compact('Families'));
-     }
+        return view('product.index' ,compact('Families'));
+    }
 
     public function show($id)
     {
@@ -272,7 +316,7 @@ class ItemController extends Controller
         ->distinct()
         ->where('family', $Id)
         ->get();
-      
+
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
 
