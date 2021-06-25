@@ -14,7 +14,7 @@
 
 <div id="barrefilter">
 
-        <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">{{$number}}</strong>produits
+        <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">{{$items->count()}}</strong>produits
 
 
         <p style="margin-top: 17px;"><input id="checkbox" type="checkbox" class="filter_all ram" value="4">En stock</p>

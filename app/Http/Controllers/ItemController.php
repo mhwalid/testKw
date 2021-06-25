@@ -23,7 +23,6 @@ class ItemController extends Controller
     {
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
-        $number  = Item::itemA()->count();
         $id_customer = '';
         $price_item_client = [];
         $price_item_famy = [];
@@ -185,11 +184,8 @@ class ItemController extends Controller
 
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
-
         $items = $this->getPrice($items);
-
-
-        return view('product.home', compact('items', 'Families','number'));
+        return view('product.home', compact('items', 'Families'));
     }
      public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
@@ -204,7 +200,7 @@ class ItemController extends Controller
     {
 
         $item = Item::itemA()->find($id);
-        $item = $this->getPriceOneitem($item);
+    //    return dd($item = $this->getPriceOneitem($item));
         return view('product.show', compact('item'));
     }
 
@@ -227,7 +223,6 @@ class ItemController extends Controller
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);
         $checked="";
         return view('product.home', compact('items', 'checked','Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
-
     }
     public function contact()
     {
@@ -271,7 +266,6 @@ class ItemController extends Controller
     }
 
     public function filters(Request $rq){
-
         $Id=$rq->FamilyId;
         $marques = Db::connection('mysql')->table('main_carac')->select('marque')->distinct()->where('family', $Id)->get();
         $memoire= Db::connection('mysql')->table('main_carac')->select('memoire')->distinct()->where('family', $Id)->get();
@@ -369,24 +363,15 @@ class ItemController extends Controller
         $items= Item::itemA()->whereIn('Id', $MainCarac)->paginate(20);
         return view('product.home', compact('items','checked', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
     }
-
-
-   
-
     public function feature($id){
         $item = Item::find($id);
         $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
         $data = [
             'item' => $item,
             'arrivage' => $arrivage,
-
         ];
-
         $pdf = PDF::loadView('product.itempdf', $data);
-
         return $pdf->stream($id.'.pdf');
-
     }
-
 
 }

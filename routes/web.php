@@ -26,7 +26,7 @@ Route::get('/', 'ItemController@home')->name('product.home');
 Route::get('/boutique', 'ItemController@index')->name('product.index');
 Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itembyCaption');
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
-Route::get('/boutique/{Id}', 'ItemController@show')->middleware('verified')->name('product.show');
+Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
 
 Route::post('/Boutique/Family/S/{Id}', 'ItemController@filters')->name('filter');
