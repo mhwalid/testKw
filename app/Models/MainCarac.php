@@ -10,6 +10,5 @@ class MainCarac extends Model
     use HasFactory;
     protected $connection = 'mysql';
     protected $table = 'main_carac';
-
-    protected $hidden = [ ];
+    protected $fillable = ['id','marque'];
 }

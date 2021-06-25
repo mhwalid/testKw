@@ -173,7 +173,7 @@
 @section('extra-js')
 @include('include.Searchitem')
 
-    <script>
+<script>
         var qty = document.querySelectorAll('#qty');
         Array.from(qty).forEach((element) => {
             element.addEventListener('change', function() {
@@ -200,6 +200,5 @@
                 });
             });
         });
-
-    </script>
+</script>
 @endsection

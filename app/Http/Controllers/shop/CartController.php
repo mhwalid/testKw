@@ -28,7 +28,7 @@ class CartController extends Controller
     }
     $item = Item::find($re->item_id);
 
-    Cart::add($item->Id, $item->Caption, $re->quantity, $item->CostPrice)->associate('App\Models\Item');
+    Cart::add($item->Id, $item->Caption, $re->quantity, $re->price)->associate('App\Models\Item');
     Session::flash('success', 'Le produit a  été ajouté');
     return Redirect::to($url);
   }
@@ -36,7 +36,7 @@ class CartController extends Controller
 
   public function index()
   {
-    
+
       return view('Cart.index');
   }
 

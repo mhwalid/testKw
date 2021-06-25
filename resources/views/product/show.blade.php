@@ -125,6 +125,8 @@
         @endif
 
         <hr>
+
+        <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
             @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
@@ -150,6 +152,7 @@
                 <input type="text" name="item_id" value="{{ $item->Id }}">
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
+                <input type="hidden" name="price" value={{ $item->CostPrice }}>
 
                 <button type="submit" class="btn  boutton "><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
