@@ -7,12 +7,19 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
+
             <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
+
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                    <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
+                    @else
+                    <img src="{{asset('asset/img/img-indispo-480.jpg')}}"
+                    class="img-fluid z-depth-1 mr-8" id="image">
+                    @endif
                 </a>
               </figure>
             </div>
@@ -115,10 +122,8 @@
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
-
-  </div>
+      </div>
         @endif
-
         <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
@@ -145,6 +150,7 @@
                 <input type="text" name="item_id" value="{{ $item->Id }}">
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
+                <input type="hidden" name="price" value={{ $item->CostPrice }}>
 
                 <button type="submit" class="btn  boutton "><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
@@ -177,12 +183,6 @@
 </div>
   <!-- Creates the bootstrap modal where the image will appear -->
   <div class="modal fade " id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
-
-
-
-
-
-
     <div class="contents">
         <div class="modal-dialog" id="placecarouspopup" >
             <div class="modal-content" style="background-color:transparent;" >
@@ -237,21 +237,14 @@
 
                     </a>
                 </div>
-
-
-
             </div>
-
-
         </div>
-
-
         </div>
-
 
     </div>
             </div>
         </div>
+
 
 
 <script>
@@ -285,7 +278,6 @@ $('#moinsinfo').hide();
                      }
                 });
              });
-
 
              $("#pop").on("click", function() {
          $('#imagepreview').attr('src', $('#imagezoom').attr('src')); // here asign the image to the modal when the user click the enlarge link

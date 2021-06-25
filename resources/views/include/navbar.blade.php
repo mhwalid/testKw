@@ -1,6 +1,8 @@
 <div id="haut">
+
     <nav id="Nav" class="navbar1  navbar-expand-lg navbar-light indigo " style="background-color: white;" >
         <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px;" src="{{asset('asset/img/kw.png')}}" alt=""></a>
+
 
 
         <div class="md-form my-0" id="loupe">

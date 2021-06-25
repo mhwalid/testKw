@@ -109,7 +109,9 @@
                 
                 <div class="col-lg-6">
                     <form class="mx-4" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
+
                     <div style="background-color: #D6D1C1" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
+
                     <div class="p-4">
                         <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
                         <div class="input-group mb-4 border  p-2 d-flex flex-column">
@@ -140,7 +142,9 @@
                             box below</p>
                         <textarea name="" cols="30" rows="2" class="form-control"></textarea>
                     </div> --}}
+
                     <button  type="submit" class="btn boutton col-6 ">Procédez au règlement</button>
+
                 </form>
 
                 </div>
@@ -174,7 +178,7 @@
 @section('extra-js')
 @include('include.Searchitem')
 
-    <script>
+<script>
         var qty = document.querySelectorAll('#qty');
         Array.from(qty).forEach((element) => {
             element.addEventListener('change', function() {
@@ -202,5 +206,5 @@
             });
         });
 
-    </script>
+</script>
 @endsection

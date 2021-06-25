@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade as PDF;
+use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
@@ -27,7 +28,7 @@ class CartController extends Controller
     }
     $item = Item::find($re->item_id);
 
-    Cart::add($item->Id, $item->Caption, $re->quantity, $item->CostPrice)->associate('App\Models\Item');
+    Cart::add($item->Id, $item->Caption, $re->quantity, $re->price)->associate('App\Models\Item');
     Session::flash('success', 'Le produit a  été ajouté');
     return Redirect::to($url);
   }
@@ -36,9 +37,7 @@ class CartController extends Controller
   public function index()
   {
 
-
       return view('Cart.index');
-
   }
 
   public function destroy($rowId)

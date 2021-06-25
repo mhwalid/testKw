@@ -1,6 +1,3 @@
-
-
-
     <ul class="d-flex col-lg-7 col-md-5 " id="headerlon" style="justify-content: space-around;" >
     @guest<div  id="ite9" class="item">
         <li style="list-style: none;" class="nav-item">
@@ -34,9 +31,33 @@
 
                 </form>
 
+
             </div>
-        </li>
-    @endguest
-
-    </ul>
-
+            @endif
+        @else
+    
+            <li style="list-style: none"s class="nav-item dropdown">
+    
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->Contact->ContactFields_Name }} <span class="caret"></span>
+                </a>
+    
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    {{-- <a class="dropdown-item" href="{{ route('Customer.orders') }}">Mes commandes</a> --}}
+    
+                    <a  class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+    
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+    
+                    </form>
+    
+                </div>
+            </li>
+        @endguest
+    
+        </ul>
