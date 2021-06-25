@@ -1,20 +1,17 @@
 
-    <!-- Authentication Links -->
-    <ul class="d-flex" style="padding: 0px; margin: 0px; ">
-    @guest<div class="item">
+
+
+    <ul class="d-flex col-lg-7 col-md-5 " id="headerlon" style="justify-content: space-around;" >
+    @guest<div  id="ite9" class="item">
         <li style="list-style: none;" class="nav-item">
 
-            <a class="nav-link" href="{{ route('login') }}" style="color:black;"><i class="fas fa-user-circle"></i>  {{ __('Login') }}</a>
+            <a  style="text-decoration: none; color: black;"class="nav-link1" href="{{ route('login') }}" style="color:black;"><img id="imgheader" src="{{asset('asset/img/bonhomme_mon_compte.svg')}}" alt=""> <p id="invisible"> {{ __('Mon compte') }}</p></a>
         </li></div>
-
-
-        @if (Route::has('register'))
-        <div class="item">
-            <li style="list-style: none" class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}" style="color:black;">{{ __('Register') }}</a>
-            </li>
+        <div id="ite8" class="item" >
+            <a style="text-decoration: none; color: black;" href="{{ route('cart.index') }}"> <img id="imgheader" src="{{asset('asset/img/mon_panier_header.svg')}}" alt=""> <p id="invisible">{{ __('Mon panier') }} </p></a>
         </div>
-        @endif
+
+
     @else
 
         <li style="list-style: none"s class="nav-item dropdown">

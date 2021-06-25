@@ -42,7 +42,7 @@
       <!--Grid column-->
 
       <!--Grid column-->
-      <div class="col-lg-3 col-md-6 mb-4 mb-md-0 ">
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-md-5 mt-lg-0  ">
         <h5 id="footerjaune">Kw-distribution</h5>
 
         <ul class="list-unstyled mb-0">

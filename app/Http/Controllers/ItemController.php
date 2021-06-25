@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\SaleDocumentLine;
 use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
@@ -26,11 +27,15 @@ class ItemController extends Controller
     {
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
-        return view('product.home', compact('items', 'Families'));
+        $number  = Item::itemA()->count();
+        return view('product.home', compact('items', 'Families','number'));
     }
-     public function home(){
+    public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
-         return view('product.index' ,compact('Families'));
+        $news = Item::itemA()->take(10)->get();
+        $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
+        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
+         return view('product.index' ,compact('Families','news','promotions','bestsell'));
      }
 
     public function show($id)
@@ -119,9 +124,10 @@ class ItemController extends Controller
 
 
         $Families = Family::all()->groupBy('MainIntervener');
-        $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
+        $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+        $number  = Item::itemA()->where('FamilyId', $Id)->count();
         // dd($items);
-        return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+        return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette','number'));
     }
     public function itembysubFamily($Id)
     {
@@ -134,10 +140,15 @@ class ItemController extends Controller
     public function contact()
     {
         return view('product.contact');
+        "wakud";
     }
     public function payement()
     {
         return view('product.payement');
+    }
+    public function qui()
+    {
+        return view('product.qui');
     }
 
 

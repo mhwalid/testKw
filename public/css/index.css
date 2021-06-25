@@ -1,0 +1,210 @@
+
+/*Titre*/
+
+.news{
+    font-family: 'Poppins', sans-serif;
+    display:flex;
+    font-size: 50px;
+    color: #21201b;
+    width: 100%;
+}
+
+#partenaire{
+    display: inline;
+}
+span[aria-label="Next"] {
+    display:none;
+  }
+
+  span[aria-label="Previous"] {
+    display:none;
+  }
+/*ZOOM carousel page index et couleur noir et blanc*/
+
+.item1 {
+    transition: transform .5s, filter 0.5s ease-in-out;
+    filter: grayscale(100%);
+  }
+
+
+  .item1:hover  {
+    filter: grayscale(0);
+    transform: scale(1.1);
+  }
+  #ty{
+      height: 420px;
+  }
+  #ty2{
+    height: 420px;
+}
+
+
+
+
+  .item {
+    transition: transform .5s;
+
+  }
+
+   /* The Transformation */
+  .item:hover  {
+
+    transform: scale(1.1);
+  }
+/*Trait à coté des titres de la page home */
+  .news::before
+{
+    content:"";
+    flex:1 1;
+    background:#D6D1C1;
+    height:1px;
+    align-self: center;
+    margin: 10px 10px 10px 10px;
+
+  }
+  .news::after {
+    content:"";
+    flex:1 1;
+    background:#D6D1C1;
+    height:1px;
+    align-self: center;
+    margin: 10px 20px 10px 10px;
+
+  }
+
+  #CarousselIndex{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#itemcarouss{
+    width: 280px;
+    height: 280px;
+}
+
+
+
+.itemcar{
+
+    width: 450px;
+    height: 400px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#item3{
+    background-color: white;
+    width: 350px;
+    height: 410px;
+    padding: 30px;
+}
+
+#encadrement{
+    height: 440px;
+}
+
+#ecritpart{
+    padding-left: 40px;
+    padding-top: 50px;
+    width: 600px;
+    font-family: 'Roboto', sans-serif;
+}
+#ecrituretailleindex{
+    font-size: 15px;
+
+}
+#imgpart{
+    width: 200px;
+     height: 300px;
+      margin-bottom: 50px;
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+
+    #encadrement{
+        height: auto;
+    }
+
+    #itemcarouss{
+        width: 200px;
+        height: 200px;
+    }
+    #imgpart{
+        width: 150px;
+         height: 250px;
+          margin-bottom: 50px;
+          margin-left: 10px;
+    }
+    #ty{
+        height: 250px;
+    }
+    #ty2{
+        height: 250px;
+    }
+
+    .news{
+
+
+        font-size: 15px;
+        margin-bottom: 0px;
+
+
+    }
+
+    #par{
+
+        height: 100px;
+    }
+
+    #ecritpart{
+
+        padding-top : 30px;
+    }
+
+    #item3{
+
+            background-color: white;
+            height: 250px;
+            padding: 30px;
+            width: auto;
+    }
+    #mv{
+        width: 635px;
+
+
+        /* ????????????????GAUCHe */
+    }
+    /* #encadrement{
+        height: fit-content;
+    }
+    #hg{
+        width:640px;
+    }
+    #carouselExampleControls{
+        width:640px;
+
+    } */
+
+
+
+    .itemcar {
+        margin-left: 15%;
+    }
+    #itemcarouss{
+        width: 150px;
+        height: 150px;
+    }
+    #ecrituretailleindex{
+        font-size: 10px;
+
+    }
+
+
+  }
+
+  @media screen and (min-width: 0px) and (max-width: 481px) {
+   #hg{
+       margin-top: 20%;
+   }
+
+  }

@@ -22,6 +22,16 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/filter.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/general.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/show.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/contact.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/qui.css') }}" rel="stylesheet">
     @yield('extra-css')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -50,7 +60,7 @@
             @yield('content')
 
     </div>
-    <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="far fa-arrow-alt-circle-up"></i></a>
+    <a id="back-to-top" style="z-index: 6" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="far fa-arrow-alt-circle-up"></i></a>
     <script>
         $(document).ready(function(){
 	$(window).scroll(function () {

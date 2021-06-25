@@ -1,6 +1,6 @@
 <div   id="filter"  >
 
-    <div  style="width: 250px;   min-height:2000px; ">
+    <div  id="longfilter" >
         {{-- <form style="" action="{{ route('filter') }}" method="POST" class="form-inline ml-auto"
             onsubmit="traitForm(a)" id="filter"> --}}
             <div style=" background-color: #D6D1C1; border-radius: 20px;" class="list-group"   >
@@ -127,7 +127,7 @@
                       {{-- 4 --}}
                       @if(count($os)>1)
                         <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
-                             <div  class="card-header"  id="headingFour">
+                             <div  class="card-header" style="background-color: transparent"  id="headingFour">
                                <h5  class="mb-0">
                                  <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFive">
                                    OS <i class="fas fa-sort-down ml-2"></i>
@@ -320,9 +320,9 @@
 
                     </ul>
                     <div class="Box">
-                    <button style="margin-bottom: 5px;"  id="???" class=" btn  boutton">Appliquer</button>
+                    <button style="margin-bottom: 5px;"  id="appliquer" class=" btn  boutton">Appliquer</button>
 
-                    <button  onclick='window.location.reload(false)'  class=" btn BouttonReinitialiser">Réinitialiser</button>
+                    <button id="reinitialiser" onclick='window.location.reload(false)'  class=" btn BouttonReinitialiser">Réinitialiser</button>
                         <div class="selected">
                         <button   id="plusinfo" class=" btn  "><i class="fas fa-plus"></i></button>
                         <button  id="moinsinfo"  class=" btn "><img src="{{asset('asset/img/moins.png')}}" alt="rocket_contact"/></button>
@@ -378,6 +378,16 @@
 
 <script>
     $('#moinsinfo').hide();
+    if (0 == $('#datalist li:hidden').length) {
+                $('#plusinfo').hide();
+                $('#moinsinfo').hide();
+            }
+
+
+    if (0 == $('#datalist li:hidden').length) {
+            $('#accordion').hide();
+
+           }
 
 
                     $(function () {
@@ -391,13 +401,17 @@
                    });
                    $(function () {
                        $('#moinsinfo').click(function () {
-                           $('#datalist li:visible ').slice(2, 9).hide();
+                           $('#datalist li:visible ').slice(3, 9).hide();
                            if ($('#datalist li').length !== $('#datalist li:visible').length) {
                                $('#plusinfo').show();
                               $('#moinsinfo').hide();
                            }
                       });
                    });
+
+
+
+
 
   </script>
     </div>

@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <img id="imgcatégorie"  class="" src="{{asset('asset/img/CM_long.jpg')}}"
+    <img id="imgcatégorie"  class="w-100" src="{{asset('asset/img/CM_long.jpg')}}"
     alt="Certification">
 
 
@@ -16,7 +16,7 @@
 
 <div id="barrefilter">
 
-        <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">44</strong>produits
+        <p id="opfilt" ><strong style="margin-right: 10%; font-size: 18px;">{{$number}}</strong>produits
 
 
         <p style="margin-top: 17px;"><input id="checkbox" type="checkbox" class="filter_all ram" value="4">En stock</p>
@@ -27,9 +27,9 @@
             <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
             <select name="marque_id" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
                 <option  class=""></option>
-                <option class="filter_all mrq" value="_LG">Prix Croissants</option>
-                <option class="filter_all mrq" value="_AOC">Prix décroissants</option>
-                <option class="filter_all mrq" value="_LENOV">Meilleures ventes</option>
+                <option id="filter_o" class="filter_all mrq" value="_LG">Prix Croissants</option>
+                <option id="filter_o" class="filter_all mrq" value="_AOC">Prix décroissants</option>
+                <option id="filter_o" class="filter_all mrq" value="_LENOV">Meilleures ventes</option>
 
             </select>
         </div>
@@ -40,14 +40,14 @@
 
 <div class=container>
     <div id="barreprix">
-        <p><strong>Connectez-vous pour voir les prix</strong></p>
+        <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p>
 
 
     </div>
 
 </div>
 
-<div style="display: flex; justify-content: align-items; margin-left: 200px;">
+<div id="filterdispo" >
     @php
                     $re = explode('/',request()->segment(2));
     @endphp
@@ -58,7 +58,7 @@
 
 
     <div class="row"  id="row">
-        <div id="results" style="width: 1147px; margin-left: 100px;">
+        <div id="results" >
             @foreach ($items as $item)
                 <div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">
                     <div>
@@ -88,7 +88,7 @@
                         <form action="{{ route('cart.store') }}" method="POST" style="">
                             @csrf
 
-                            <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  "><img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}"
+                            <button id="boutton_panier" type="submit" id="panier" class="btn  "><img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}"
                                 alt="Certification"></button>
                         </form>
                         @endif
