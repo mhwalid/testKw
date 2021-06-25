@@ -1,19 +1,4 @@
-Footer /
-
-/* footer {
-    text-align:center;
-    margin-top: 50px;
-    background-color: rgb(0, 0, 0);
-    color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 50px;
-    font-size: 12px;
-    height: 200px;
-
-} */
-
+/* Footer / */
 
 /*********************FORMULAIRE*****************************************************/
 .contact-form{
@@ -117,7 +102,7 @@ ul {
 
 /*Fin Footer */
 
-/ Navbar /
+/* / Navbar / */
 
 /* #Nav{
     padding: 20px;
@@ -139,7 +124,7 @@ ul {
 }
 
 #search{
-    / float:left; /
+    /* / float:left; / */
     margin-left: 150px;
     width: 600px;;
     margin-top:7px;
@@ -148,9 +133,9 @@ ul {
 
 }
 
-/ Fin Navbar /
+/* / Fin Navbar /
 
-/ show /
+/ show / */
 
 .mb-show{
     text-align:center;
@@ -161,7 +146,7 @@ ul {
     padding-top:20px; */
 }
 
-/ fin show /
+/* / fin show / */
 
 
 
@@ -202,7 +187,7 @@ body{
     list-style-type: none;
 }
 
-/ Carousel couleur fleche du zoom /
+/* / Carousel couleur fleche du zoom / */
 .carousel-control-next {
     filter: invert(100%);
     }
@@ -433,7 +418,7 @@ body{
       input[type=number] {
         border: 1px solid #ddd;
         text-align: center;
-        / font-size: 1.6em; /
+        /* / font-size: 1.6em; / */
         -moz-appearance: textfield;
       }
       input[type=number]::-webkit-outer-spin-button,
@@ -563,7 +548,7 @@ body{
 
   }
 
-   / The Transformation /
+   /* / The Transformation / */
   .item:hover  {
 
     transform: scale(1.1);
@@ -604,7 +589,8 @@ body{
 }
 #FilterBoutton{
     width: 100%;
-    display:flex; justify-content:left;
+    display:flex;
+    justify-content:left;
     color: black;
     border: none;
 }
@@ -615,57 +601,11 @@ body{
 }
 
 
-#heading{
+#heading ,#headingOne,#headingTwo ,#headingThree,#headingSix,#headingSeven,#headingFive,#headingSix,#headingSeven,#headingEight,#headingNine,#headingTen,#headingEleven{
     background-color: #D6D1C1;
     border-top-left-radius: 200px;
+}
 
-}
-#headingOne{
-
-    background-color: #D6D1C1;
-}
-#headingTwo{
-
-    background-color: #D6D1C1;
-}
-#headingThree{
-
-    background-color: #D6D1C1;
-}
-#headingSix{
-
-    background-color: #D6D1C1;
-}
-#headingSeven{
-
-    background-color: #D6D1C1;
-}
-#headingFive{
-    background-color: #D6D1C1;
-}
-#headingSix{
-
-    background-color: #D6D1C1;
-}
-#headingSeven{
-
-    background-color: #D6D1C1;
-}
-#headingEight{
-
-    background-color: #D6D1C1;
-}
-#headingNine{
-
-    background-color: #D6D1C1;
-}
-#headingTen{
-
-    background-color: #D6D1C1;
-}
-#headingEleven{
-    background-color: #D6D1C1;
-}
 .BouttonReinitialiser{
     background-color: black;
     color: #FFD600;
@@ -863,7 +803,68 @@ a[aria-label="« Previous"] {
     height: 200px;
     overflow-y: scroll;
     overflow: auto;
-
   }
 
 
+
+
+
+
+  #allignlogin{
+    justify-content: center;
+    display: flex;
+}
+
+#log1{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+}
+
+
+
+
+#log{
+    margin-top: 7%;
+    width: 350px;
+  height: 510px;
+}
+
+.loge{
+    margin: 0;
+}
+.news1::before
+  {
+      content:"";
+      flex:1 1;
+      background:#D6D1C1;
+      height:1px;
+      align-self: center;
+      margin: 10px 10px 10px 10px;
+
+    }
+    .news1::after {
+      content:"";
+      flex:1 1;
+      background:#D6D1C1;
+      height:1px;
+      align-self: center;
+      margin: 10px 20px 10px 10px;
+
+    }
+
+.news1{
+    font-family: 'Poppins', sans-serif;
+    display:flex;
+    font-size: 28px;
+    color: #21201b;
+    width: 100%;
+}
+
+
+#log1::placeholder {
+    color: #969281!important;
+
+  }
+  

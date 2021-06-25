@@ -29,9 +29,7 @@ Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')-
 Route::get('/boutique/{Id}', 'ItemController@show')->middleware('verified')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
 
-Route::post('/Boutique/Family/{Id}', 'ItemController@filters')->name('filter');
-
-
+Route::post('/Boutique/Family/S/{Id}', 'ItemController@filters')->name('filter');
 //le panier
 Route::get('/panier', 'Shop\CartController@index')->middleware('verified')->name('cart.index');
 Route::get('/panier', 'Shop\CartController@index')->name('cart.index')->middleware('auth');

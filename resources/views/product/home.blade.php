@@ -21,11 +21,8 @@
          <div style=" border:none; background-color:#D6D1C1; display: flex; justify-content: inline;"  class="list-group-item ">
             <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
             <select name="marque_id" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
-                <option  class=""></option>
                 <option class="filter_all mrq" value="_LG">Prix Croissants</option>
                 <option class="filter_all mrq" value="_AOC">Prix décroissants</option>
-                <option class="filter_all mrq" value="_LENOV">Meilleures ventes</option>
-
             </select>
         </div>
 
@@ -38,18 +35,16 @@
         <p><strong>Connectez-vous pour voir les prix</strong></p>
     </div>
 </div>
-
 <div style="display: flex; justify-content: align-items; margin-left: 200px;">
     @php
-                    $re = explode('/',request()->segment(2));
+        $re = explode('/',request()->segment(2));
     @endphp
-
 @if (($re[0] == 'Family'))
     @include('include.filterPHP')
 @endif
-
     <div class="row"  id="row">
         <div id="results" style="width: 1147px; margin-left: 100px;">
+            {{isset($filtered)? $items=$filtered :''  }}
             @foreach ($items as $item)
                 <div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">
                     <div>
@@ -83,7 +78,13 @@
             <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
         </div>
         <div class="rounded-circle" id="paginat"></div>
-
+            {{-- <h1 style="background-color: red">{{count($test)}}</h1> --}}
+            {{-- @forelse  ($test as $item) --}}
+            {{-- <p>{{$loop->count}}</p> --}}
+                
+            {{-- @empty --}}
+                {{-- <h1>rien</h1>
+            @endforelse              --}}
     </div>
     <p class="rounded-circle" id="url" style="display: none"> {{ Request::path() }} </p>
 
@@ -95,20 +96,25 @@
 
 
 <script>
-    function change() // no ';' here
-{
-    var elem = document.getElementById("myButton1");
-    if (elem.value=="Close Curtain") elem.value = "Open Curtain";
-    else elem.value = "Close Curtain";
-}
+        function change() 
+        {
+        var elem = document.getElementById("myButton1");
+        if (elem.value=="Close Curtain") elem.value = "Open Curtain";
+        else elem.value = "Close Curtain";
+        }
     </script>
 <script>
     $(document).ready(function() {
-    <!-- the :first-child selector is using to select the first h1 child -->
+    // <!-- the :first-child selector is using to select the first h1 child -->
     $(".page-item:first-child").css(
     "background-color", "red");
     });
-    </script>
+</script>
+
+<script>
+    
+</script>
+
 
 {{-- le scripte js de Searchbar et filter  --}}
 @section('extra-js')
