@@ -129,4 +129,10 @@ class AdminController extends Controller
         $user->sendEmailVerificationNotification();
         return redirect()->route('admin.dashboard')->with('success', 'Un mail de vérification a été renvoyer .');
     }
+
+    public function product()
+    {
+        return view('admin.product');
+    }
+
 }

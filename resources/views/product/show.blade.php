@@ -7,12 +7,17 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
-            <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
+            <div class="col-12 mb-4 pb-4"  style="display:flex; justify-content:center; width: 488px; height: 300px;">
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                    <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
+                    @else
+                    <img src="{{asset('asset/img/img-indispo-480.jpg')}}"
+                    class="img-fluid z-depth-1 mr-8" id="image">
+                    @endif
                 </a>
               </figure>
             </div>
@@ -20,7 +25,7 @@
               <div class="row mt-4  pt-4  ">
                 @for ($i = 1; $i < 5; $i++)
                   @if (File::exists('asset/item/images/'.$item->Id.'/Medium'.$i.'.jpg'))
-                
+
                   <div class="col-3 ">
                     <div class="view overlay rounded z-depth-1 gallery-item">
                       <img class="img-thumbnail" src="{{asset('asset/item/images/'.$item->Id.'/Medium'.$i.'.jpg')}}" class="img-fluid">
@@ -115,12 +120,11 @@
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
-    
+
   </div>
         @endif
-        
-        <hr>
 
+        <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
             @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))

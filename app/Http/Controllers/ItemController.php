@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
 use App\Models\MainCarac;
+use App\Models\SaleDocumentLine;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class ItemController extends Controller
 
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
+        $number  = Item::itemA()->count();
         $id_customer = '';
         if (!is_null( Auth::user())) {
             $id_customer = Auth::user()->Contact->Customer->Id;
@@ -56,11 +58,15 @@ class ItemController extends Controller
 
         }
 
-        return view('product.home', compact('items', 'Families'));
+
+        return view('product.home', compact('items', 'Families','number'));
     }
      public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
-         return view('product.index' ,compact('Families'));
+        $news = Item::itemA()->take(10)->get();
+        $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
+        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
+         return view('product.index' ,compact('Families','news','promotions','bestsell'));
      }
 
     public function show($id)
@@ -145,11 +151,12 @@ class ItemController extends Controller
         ->distinct()
         ->where('family', $Id)
         ->get();
-      
+
         $Families = Family::all()->groupBy('MainIntervener');
-        $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);;
-        // dd($items);
-        return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+        $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+        $number  = Item::itemA()->where('FamilyId', $Id)->count();
+        // dd($number);
+        return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette','number'));
     }
     public function itembysubFamily($Id)
     {
@@ -201,12 +208,12 @@ class ItemController extends Controller
     }
 
     public function filters(Request $rq){
-            
+
         $items=Item::itemA();
         if($rq->marque_id) $items->where('');
-       
-       
-       
+
+
+
         return $rq;
     }
 
@@ -507,7 +514,7 @@ class ItemController extends Controller
         ];
 
         $pdf = PDF::loadView('product.itempdf', $data);
-       
+
         return $pdf->stream($id.'.pdf');
 
     }
