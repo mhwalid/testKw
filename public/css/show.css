@@ -1,0 +1,75 @@
+/* Carousel couleur fleche du zoom */
+/*misdansshow*/
+.carousel-control-next {
+    filter: invert(100%);
+    }
+ .carousel-control-prev {
+    filter: invert(100%);
+     }
+     .activeli1{
+        filter: invert(100%);
+     }
+     .activeli2{
+        filter: invert(100%);
+     }
+     .activeli{
+        filter: invert(100%);
+     }
+     .li{
+        filter: invert(100%);
+     }
+
+
+ .mb-show{
+    text-align:center;
+
+
+     margin-top : 5px;
+
+
+  }
+  #carouselExampleCaptions{
+    right: 25%;
+}
+
+/*************** Plus de détails************************************/
+
+#datalist tr:nth-child(n+6) {
+    display:none;
+}
+#datalist tr {
+    border: 1px solid #aaa;
+}
+#carouszoom{
+    width:1000px;
+     height: 1000px;
+}
+#placecarouspopup{
+    margin-top: 10%;
+
+}
+#imgzoom{
+    height: 900px;
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    #carouszoom{
+        width: 500px;
+         height: 500px;
+    }
+
+    #imgzoom{
+        width: 500px;
+        height:500px;
+    }
+    #placecarouspopup{
+        left: 28%;
+        position: absolute;
+         top: 13%;
+
+    }
+    #carouselExampleCaptions{
+        display: flex;
+        justify-content: center;
+    }
+
+}

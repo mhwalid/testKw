@@ -7,23 +7,19 @@
         @endphp
 
 <div class="container-fluid">
+
     <img id="imgcatégorie"  class="" src="{{asset('asset/menu/'.$menu[0].'.png')}}" alt="Certification">
 </div>
 
 <div class="container-fluid">
 
 <div id="barrefilter">
-
         <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">{{$items->count()}}</strong>produits
-
-
         <p style="margin-top: 17px;"><input id="checkbox" type="checkbox" class="filter_all ram" value="4">En stock</p>
-
-
-
          <div style=" border:none; background-color:#D6D1C1; display: flex; justify-content: inline;"  class="list-group-item ">
             <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
             <select name="marque_id" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
+                <option  class=""></option>
                 <option class="filter_all mrq" value="_LG">Prix Croissants</option>
                 <option class="filter_all mrq" value="_AOC">Prix décroissants</option>
             </select>
@@ -35,10 +31,10 @@
 
 <div class=container>
     <div id="barreprix">
-        <a style="color:black; text-decoration:none;" href="{{ route('login') }}"><strong>Connectez-vous pour voir les prix</strong></a>
+        <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p>
     </div>
 </div>
-<div style="display: flex; justify-content: align-items; margin-left: 200px;">
+<div id="filterdispo" >
     @php
         $re = explode('/',request()->segment(2));
     @endphp
@@ -46,7 +42,8 @@
     @include('include.filterPHP')
 @endif
     <div class="row"  id="row">
-        <div id="results" style="width: 1147px; margin-left: 100px;">
+
+        <div id="results" >
             {{isset($filtered)? $items=$filtered :''  }}
             @foreach ($items as $item)
 
@@ -69,6 +66,7 @@
                             <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus en stock.svg')}}"></p>
                              @endif
 
+
                         </div>
                     <a id="Catégorie" href="{{ route('product.show', $item->Id) }}"><strong class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
                         @auth <h5 style="position: absolute; margin-left:991px" class="mb-0">
@@ -80,8 +78,8 @@
                                 <input type="hidden" name="item_id" value="{{ $item->Id }}">
                                 <input type="hidden" name="price" value={{ $item->CostPrice }}>
                                 <input type="hidden" name="quantity" value="1">
-                                <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">
-                                    <img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}" alt="Certification"></button>
+                               <button id="boutton_panier" type="submit" id="panier" class="btn  "><img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}"
+                                alt="Certification"></button>
                             </form>
                             @else
                         @endif

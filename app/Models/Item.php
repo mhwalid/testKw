@@ -47,3 +47,4 @@ class Item extends Model
         return $this->hasOne(MainCarac::class,'id_item', 'Id');
     }
 }
+

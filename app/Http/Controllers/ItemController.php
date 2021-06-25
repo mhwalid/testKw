@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\SaleDocumentLine;
 use App\Models\MainCarac;
 use App\Models\SaleDocumentLine;
 use App\Models\SubFamily;
@@ -184,16 +185,16 @@ class ItemController extends Controller
 
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
+
         $items = $this->getPrice($items);
         return view('product.home', compact('items', 'Families'));
     }
-     public function home(){
+    public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
         $news = Item::itemA()->take(10)->get();
         $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
         $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
          return view('product.index' ,compact('Families','news','promotions','bestsell'));
-
      }
 
     public function show($id)
@@ -221,17 +222,23 @@ class ItemController extends Controller
         $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
         $Families = Family::all()->groupBy('MainIntervener');
         $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+
         $checked="";
         return view('product.home', compact('items', 'checked','Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
     }
     public function contact()
     {
         return view('product.contact');
+        "wakud";
     }
 
     public function payement()
     {
         return view('product.payement');
+    }
+    public function qui()
+    {
+        return view('product.qui');
     }
 
 

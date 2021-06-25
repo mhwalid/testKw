@@ -92,6 +92,8 @@ Route::get('/contact','ItemController@contact')->name('contact');
 Route::get('/index','ItemController@index')->name('index');
 //payement
 Route::get('/payement','ItemController@payement')->name('payement');
+//qui
+Route::get('/Qui-Sommes-Nous','ItemController@qui')->name('qui');
 
 
 

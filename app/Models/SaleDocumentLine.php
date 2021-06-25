@@ -28,3 +28,4 @@ class SaleDocumentLine extends Model
         ->orderBy(DB::raw('count(ItemId)'), 'DESC');
     }
 }
+

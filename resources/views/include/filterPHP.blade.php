@@ -1,5 +1,4 @@
 
-
 <div >
     <div  style="width: 250px;   min-height:2000px; ">
                 @php
@@ -318,6 +317,7 @@
                     </ul>
                     
                     <div class="Box">
+
                      <button style="margin-bottom: 5px;"  type="submit" id="reponse" class=" btn  boutton">Appliquer</button>
                     <a href="{{route('itembyCaption' ,$res[0])}}" class="btn BouttonReinitialiser">Réinitialiser</a>
                         <div class="selected">
@@ -338,6 +338,19 @@
 
 <script>
 
+
+ $('#moinsinfo').hide();
+    if (0 == $('#datalist li:hidden').length) {
+                $('#plusinfo').hide();
+                $('#moinsinfo').hide();
+            }
+
+
+    if (0 == $('#datalist li:hidden').length) {
+            $('#accordion').hide();
+
+           }
+
   if($("#checked").val()!==""){
     var result=$("#checked").val().split(';')
     $.each((result), function(key,value ) {
@@ -350,7 +363,6 @@
     });
   }
    
-$('#moinsinfo').hide();
                 $(function () {
                    $('#plusinfo').click(function () {
                        $('#datalist li:hidden').slice(0, 9).show();

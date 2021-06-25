@@ -1,0 +1,17 @@
+#qui{
+    flex-direction: column;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+
+
+}
+#quimargin{
+    margin-right: 15%;
+
+}
+
+#menu{
+height: 880px;
+    width: 2050px;
+}
