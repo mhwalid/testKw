@@ -28,21 +28,35 @@
                 const ret = response.data.data
                 let results = document.querySelector('#results')
                 results.innerHTML = ''
-                let test='' 
-                    for (let i = 0; i < ret.length; i++) {
+                let test=''
+                Object.keys(ret).forEach(key => {
                     let Card = document.createElement('div');
                     var pathcart="{{ route('cart.store') }}";
-                     var pathId="{{ route('product.index') }}";
-                  test+='<div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">\
-                <a href='+pathId+'/'+ret[i].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[i].Caption +'</strong> </a>\
-                <h5 style="position: absolute; margin-left:991px" class="mb-0">'+ parseFloat(ret[i].CostPrice) +'€</h5>'
-                    if(ret[i].RealStock>0){
-                    test+='<form action='+pathcart+' method="POST" style="position: absolute; margin-left:921px"> <input   name="_token" value="'+csrf+'" type="hidden"> <input type="hidden" name="item_id" value="'+ret[i].Id+'"><input type="hidden" name="quantity" value="1"><button type="submit" class="btn btn-success"> <i class="fa fa-shopping-cart mr-2"></i></button></form>'
+                    var pathId="{{ route('product.index') }}";
+                    var pathImage = "asset/item/images/"+ret[key].Id+"/Cart1.jpg";
+                    test+='<div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">\
+                        <img class="img-responsive mr-4" src='+pathImage+' alt=" " class="bd-placeholder-img" style="width: 80px ;heigth:60px" >\
+                        <a href='+pathId+'/'+ret[key].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[key].Caption +'</strong> </a>\
+                        @guest\
+                        <em class=" ml-4">Connectez-vous pour voir les prix !</em>\
+                        @else\
+                        <h5 style="position: absolute; margin-left:991px" class="mb-0"> '+ Math.round(parseFloat(ret[key].CostPrice)*100)/100 +'€</h5>\
+                        @endguest'
+                    if(ret[key].RealStock>0){
+                        test+='@guest\
+                            @else \
+                            <form action='+pathcart+' method="POST" style="position: absolute; margin-left:921px">\
+                            <input   name="_token" value="'+csrf+'" type="hidden">\
+                            <input type="hidden" name="item_id" value="'+ret[key].Id+'">\
+                            <input type="hidden" name="price" value="'+Math.round(parseFloat(ret[key].CostPrice)*100)/100+'">\
+                            <input type="hidden" name="quantity" value="1">\
+                            <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart mr-2"></i></button>\
+                            </form>\
+                            @endguest'
                     }
                     test+='</div>';
-             }
-             results.innerHTML=test
-                
+                });
+                results.innerHTML=test
             })
             .catch(function(error) {
                 console.log(error);

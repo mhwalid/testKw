@@ -9,8 +9,9 @@
             var action = 'fetch_data';
             var minimum_price = $('#min_price_hide').val();
             var maximum_price = $('#max_price_hide').val();
+            var FamilyId = $('#FamilyId').val();
             var Stockage = get_filter('Stockage');
-            var proc = get_filter('proc');
+            var marque = get_filter('marque');
             var ram = get_filter('ram');
             var disque = get_filter('disque');
             var mrq = get_filter('mrq');
@@ -19,26 +20,27 @@
             const url = document.querySelector('#filter').getAttribute('action');
             var search = document.getElementById("search")
             var ur = document.querySelector('#url').innerText;
-            console.log(url);
+            // console.log(FamilyId);
             axios.post(`${url}`, {
                     action: action,
                     minimum_price: minimum_price,
                     maximum_price: maximum_price,
                     Stockage: Stockage,
-                    proc: proc,
-                    disque: disque,
-                    url: ur,
-                    mrq: mrq,
-                    search: search,
-                    ram: ram,
-                    CGType: CGType,
-                    size: size,
+                    FamilyId: FamilyId,
+                    // proc: proc,
+                    // disque: disque,
+                    // url: ur,
+                    marque: marque,
+                    // search: search,
+                    // ram: ram,
+                    // CGType: CGType,
+                    // size: size,
                 })
                 .then(function(response) {
-                    console.log(response.data.data)
-                    const ret = response.data.data
+                    console.log(response.data)
+                    const ret = response.data
                     let results = document.querySelector('#results')
-                    console.log(ret)
+                    // console.log(ret)
                     if (ret) {
                         ucan = true
                         results.innerHTML = ''
@@ -64,7 +66,7 @@
                             Card.classList.add('p-4', 'd-flex', 'border', 'rounded', 'overflow-hidden',
                                 'flex-md-row', 'mb-4', 'shadow-sm', 'bg-danger', 'text-white')
                             let vide = document.createElement('h5')
-                            vide.innerHTML = "    Il exite pas dans le Stock  Pour l'instant"
+                            vide.innerHTML = "Il existe pas dans le Stock  Pour l'instant"
                             Card.appendChild(vide)
                             results.appendChild(Card)
                         }
@@ -72,6 +74,7 @@
                         if (ucan) {
                             // location.reload(true)
                         }
+                        
                     }
 
                 })

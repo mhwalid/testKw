@@ -6,8 +6,8 @@
 @section('home')
 
 {{-- Caroussel 1  --}}
-    <div   id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
+    <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
+        <div class="carousel-inner" id="hg">
         <div class="carousel-item active">
             <img class="d-block w-100" src="{{asset('asset/img/Visuel maquette.jpg')}}" alt="First slide">
         </div>
@@ -15,14 +15,6 @@
         </div>
 
   </div>
-
-
-
-
-
-
-
-
 
 {{-- premier caroussel --}}
 
@@ -35,75 +27,19 @@
         <p style="margin-top: 20px;" class="news">Les nouveautés</p>
 
 
-         <div  style="height: 420px;" class=" owl-two owl-carousel">
-
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        {{-- <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div> --}}
+         <div  style="height: 420px;" id="ty"  class=" owl-two owl-carousel">
+            @foreach ($news as $new)
 
 
+        <div class="item itemcar">
+            @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
+            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+            @else
+            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+            @endif
+            <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
+        </div>
+        @endforeach
         </div>
     </div>
     {{-- Caroussel 2  --}}
@@ -113,155 +49,43 @@
 
 
          <div  style="height: 420px;" class=" owl-two owl-carousel">
-
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="width: 350px; height: 400px; margin: auto; margin-top: 30px;"  >
-            <img  style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="width: 350px; height: 400px;margin: auto; margin-top: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="{{asset('asset/item/images/CMGIGABYTEB550AORUSE/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        {{-- <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div> --}}
+            @foreach ($promotions as $prom)
 
 
+            <div class="item itemcar">
+
+                @if (File::exists('asset/item/images/'.$prom->Id.'/Medium1.jpg'))
+                <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$prom->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                @else
+                <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                @endif
+                    <h4 class="card-title col-6" style="font-size:12px;">{{ $prom->Caption }}</h4>
+            </div>
+            @endforeach
         </div>
     </div>
 
 
 {{-- Caroussel 3 --}}
 
-    <div style=" background-color: #D6D1C1; " class="container-fluid">
+    <div id="mv"  style=" background-color: #D6D1C1; " class="container-fluid w-100 m-md-0">
 
         <p class="news">Nos meilleures ventes</p>
 
 
-         <div  style=" height: 440px;" class=" owl-two owl-carousel">
+        <div   id="encadrement" class=" owl-two owl-carousel">
+            @foreach ($bestsell as $sell)
 
-        <div class="item" style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;"   class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item"  style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="http://www.kw-distribution.com/themes/mobicity/assets/img/header/msi.png" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
+            <div class="item" id="item3">
+                @if (File::exists('asset/item/images/'.$sell->item->Id.'/Medium1.jpg'))
+                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                @else
+                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                @endif
+                    <h4 class="card-title col-6" style="font-size:12px;">{{ $sell->item->Caption }}</h4>
 
-        <div class="item" style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;"   class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="http://www.kw-distribution.com/themes/mobicity/assets/img/header/msi.png" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-
-        <div class="item" style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;"   class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        <div class="item" style="  background-color: white; width: 350px; height: 410px; padding: 30px;"  >
-            <img style="height: 280px; width: 280px;" class="card-img-top" src="http://www.kw-distribution.com/themes/mobicity/assets/img/header/msi.png" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a  class="btn   boutton">Ajouter Au Panier</a>
-        </div>
-        {{-- <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img  class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div>
-        <div class="item">
-            <img class="card-img-top" src="{{asset('asset/item/images/DDR432SKILL32GVK/Medium1.jpg')}}" alt="Card image cap">
-                <h4 class="card-title">Nom Produit</h4>
-                    <a class="btn  ">Voir</a>
-        </div> --}}
-
+            </div>
+            @endforeach
 
         </div>
     </div>
@@ -276,19 +100,19 @@
     <div class="container">
         <div  class=" owl-one owl-carousel"  >
 
-        <div class="item1">  <img  class="card-img-top"  src="{{asset('asset/img/aoc4.png')}}"
+        <div class="item1">  <img  id="par" class="card-img-top"  src="{{asset('asset/img/aoc4.png')}}"
             alt="Card image cap"></div>
-        <div class="item1">  <img  class="card-img-top"  src="{{asset('asset/img/infosec4.png')}}"
+        <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/infosec4.png')}}"
             alt="Card image cap"></div>
-        <div class="item1"> <img    class="card-img-top"  src="{{asset('asset/img/Lenovo4.png')}}"
+        <div class="item1"> <img id="par"   class="card-img-top"  src="{{asset('asset/img/Lenovo4.png')}}"
             alt="Card image cap"></div>
-        <div class="item1"><img class="card-img-top"  src="{{asset('asset/img/LG24.png')}}"
+        <div class="item1"><img id="par"class="card-img-top"  src="{{asset('asset/img/LG24.png')}}"
             alt="Card image cap"></div>
-        <div class="item1">  <img  class="card-img-top"  src="{{asset('asset/img/MSI4.png')}}"
+        <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/MSI4.png')}}"
             alt="Card image cap"></div>
-        <div class="item1">  <img  class="card-img-top"  src="{{asset('asset/img/seagate4.png')}}"
+        <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/seagate4.png')}}"
             alt="Card image cap"></div>
-            <div class="item1">  <img  class="card-img-top"  src="{{asset('asset/img/western_digital4.png')}}"
+            <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/western_digital4.png')}}"
             alt="Card image cap"></div>
 
 
@@ -299,7 +123,7 @@
         <div style="display:flex; justify-content: center; ">
             <img style=" width: 200px; height: 300px; margin-bottom: 50px;" class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
-            <h1  style=" padding-left: 40px; padding-top: 50px; width: 600px; font-family: 'Roboto', sans-serif; ">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
+            <h1  id="ecritpart">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
             Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
 
         </div>
@@ -347,7 +171,7 @@ $('.owl-two').owlCarousel({
             nav:true
         },
         600:{
-            items:3,
+            items:2,
             nav:false
         },
         1000:{
