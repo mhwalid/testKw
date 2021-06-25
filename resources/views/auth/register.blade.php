@@ -8,6 +8,148 @@
         <p class="row justify-content-center fw-light">{{__('Ce site est exclusivement réservé aux professionnels')}}.</p>
     </div>
 
+    <div class="nationalityChoice">
+        <p class="row justify-content-center fw-light">{{__('Entreprise')}} :</p>
+        <fieldset class="row justify-content-center">
+            <div class="">
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="french_compagny" id="french_yes" value="yes" checked="checked" onchange="display()">
+                    <label class="form-check-label" for="french_yes">{{ __('Française')}} </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="french_compagny" id="french_no" value="no" onchange="display()">
+                    <label class="form-check-label" for="french_no">{{ __('Etrangère')}} </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <div id="contact_form">
+        <form action=""  method="POST">
+            @csrf
+
+            <div class="row justify-content-center mt-5">
+
+                <div class="col-6" id="registerRequestCard">
+                    <div class="formTitle position-relative">
+                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">1</span>{{__('Contact') }} </h2>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12 ">
+                            <label for="contact_civility" class="text-md-right">{{ __('Civilité') }}*</label>
+                            <select id="contact_civility" name="contact_civility" class="dropdownSelect form-control form-select custom-select" aria-label="Default select example">
+                                <option selected value="Monsieur">M.</option>
+                                <option value="Madame">Mme.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_name" class="text-md-right">{{ __('Name') }}*</label>
+                            <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="contact_name" value="{{ old('contact_name') }}" required autocomplete="name" autofocus>
+
+                            @error('contact_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_firstName" class="text-md-right">{{ __('First Name') }}*</label>
+                            <input id="contact_firstName" type="text" class="form-control @error('contact_firstName') is-invalid @enderror" name="contact_firstName" value="{{ old('contact_firstName') }}" required autocomplete="name" autofocus>
+
+                            @error('contact_firstName')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_email" class="text-md-right">{{ __('Email Address') }}*</label>
+                            <input id="contact_email" type="email" class="form-control @error('contact_email') is-invalid @enderror" name="contact_email" value="{{ old('contact_email') }}" required autocomplete="email">
+
+                            @error('contact_email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_phoneNumber" class="text-md-right">{{ __('Phone Number') }}*</label>
+                            <input id="contact_phoneNumber" type="tel" class="form-control @error('phoneNcontact_phoneNumberumber') is-invalid @enderror" name="contact_phoneNumber" required>
+
+                            @error('contact_phoneNumber')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_compagny_name" class="text-md-right">{{ __('Compagny Name') }}*</label>
+                            <input id="contact_compagny_name" type="text" class="form-control @error('contact_compagny_name') is-invalid @enderror" name="contact_compagny_name"  value="{{ old('contact_compagny_name') }}" required>
+
+                            @error('contact_compagny_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_country" class="text-md-left">{{ __('Country') }}*</label>
+                            <input id="contact_country" type="text" class="form-control @error('contact_country') is-invalid @enderror" value="{{ old('contact_country') }}" name="contact_country" required>
+
+                            @error('contact_country')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="contact_message" class="text-md-right">{{ __('Message') }}</label>
+                            <textarea id="contact_message" type="date" class="form-control @error('contact_message') is-invalid @enderror" name="contact_message" value="{{ old('contact_message') }}"></textarea>
+                            @error('contact_message')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <button type="submit" onclick="display()" class="btn boutton">
+                            {{ __('Envoyer') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div id="register_form">
         <form method="POST"  enctype="multipart/form-data" action="{{ route('register') }}">
             @csrf
@@ -105,7 +247,7 @@
 
                         <div class="col-md-12">
                             <label for="phoneNumber" class="text-md-right">{{ __('Numéro de téléphone') }}</label>
-                            <input id="phoneNumber" type="tel" class="form-control @error('phoneNumber') is-invalid @enderror" name="phoneNumber" placeholder="xx xx xx xx xx" required>
+                            <input id="phoneNumber" type="tel" class="form-control @error('phoneNumber') is-invalid @enderror" name="phoneNumber" placeholder="ex : 0389121212" required>
 
                             @error('phoneNumber')
                                 <span class="invalid-feedback" role="alert">
@@ -115,13 +257,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-check row ">
+                    <div class="form-group form-check">
                         <input type="hidden" name="newsletter" value="0">
                         <input type="checkbox" class="form-check-input" id="newsletter" name="newsletter" value="1" onchange="display()">
                         <label class="col-md-12 col-check-label text-md-left" for="newsletter">{{ __('newsletter')}} </label>
                     </div>
 
-                    <div class="form-group form-check row">
+                    <div class="form-group form-check">
                         <input type="hidden" name="haveCustomer" value="0">
                         <input type="checkbox" class="form-check-input" id="haveCustomer" name="haveCustomer" value="1" onchange="display()">
                         <label class="col-md-12 col-check-label text-md-left" for="haveCustomer">{{ __('Est ce que votre entreprise est déja cliente ?')}} </label>
@@ -137,7 +279,7 @@
 
                         <div class="col-md-12">
                             <label for="siret" class="text-md-right">{{ __('Numéro de Siret') }}</label>
-                            <input id="siret" type="text" class="form-control @error('siret') is-invalid @enderror" name="siret" value="{{ old('siret') }}" placeholder="xxxxxxxxxxxxxx" required autocomplete="" autofocus>
+                            <input id="siret" type="text" class="form-control @error('siret') is-invalid @enderror" name="siret" value="{{ old('siret') }}" placeholder="ex : 36252187900034" required autocomplete="" autofocus>
 
                             @error('siret')
                                 <span class="invalid-feedback" role="alert">
@@ -225,7 +367,7 @@
 
                         <div class="col-md-12">
                             <label for="iban" class="text-md-right">{{ __('IBAN') }}*</label>
-                            <input id="iban" type="text" class="form-control @error('iban') is-invalid @enderror" name="iban" value="{{ old('iban') }}" placeholder="ex : FRxxxxxxxxxxxxxxxxxxxxxxxxx" required autofocus>
+                            <input id="iban" type="text" class="form-control @error('iban') is-invalid @enderror" name="iban" value="{{ old('iban') }}" placeholder="ex : FR1420041010050500013M02606" required autofocus>
 
                             @error('iban')
                                 <span class="invalid-feedback" role="alert">
@@ -246,6 +388,43 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6" id="compagny">
+
+                    <div class="formTitle position-relative">
+                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Votre entreprise') }} </h2>
+                    </div>
+
+                    <div class="form-group row">
+                        <p class="italic">
+                            L'Id de votre entreprise lui a été fourni lors de son inscription. Si elle ne le possède plus merci de nous contacter.
+                        </p>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-12">
+                            <label for="compagnyId" class="text-md-right">{{ __('Id de votre entreprise') }}*</label>
+                            <input id="compagnyId" type="text" class="form-control @error('compagnyId') is-invalid @enderror" name="compagnyId" value="{{ old('compagnyId') }}" placeholder="ex : 2f776d04-c9f9-11eb-b8bc-0242ac130003" required autofocus>
+
+                            @error('compagnyId')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="submit" onclick="display()" class="btn boutton">
+                                    {{ __('Envoyer') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -292,7 +471,7 @@
 
                             <div class="col-md-12">
                                 <label for="invoivingZipCode" class="text-md-right">{{ __('Code Postale') }}</label>
-                                <input id="invoivingZipCode" type="text" class="form-control @error('invoivingZipCode') is-invalid @enderror" name="invoivingZipCode" placeholder="xxxxx" value="{{ old('invoivingZipCode') }}" autofocus required>
+                                <input id="invoivingZipCode" type="text" class="form-control @error('invoivingZipCode') is-invalid @enderror" name="invoivingZipCode" placeholder="ex : 69000" value="{{ old('invoivingZipCode') }}" autofocus required>
 
                                 @error('invoivingZipCode')
                                     <span class="invalid-feedback" role="alert">
@@ -320,7 +499,7 @@
 
                             <div class="col-md-12">
                                 <label for="invoicingPhoneNumber" class="text-md-right">{{ __('Numéro de téléphone') }}</label>
-                                <input id="invoicingPhoneNumber" type="tel" class="form-control @error('invoicingPhoneNumber') is-invalid @enderror" name="invoicingPhoneNumber" placeholder="xx xx xx xx xx" value="{{ old('invoicingPhoneNumber') }}" autofocus required>
+                                <input id="invoicingPhoneNumber" type="tel" class="form-control @error('invoicingPhoneNumber') is-invalid @enderror" name="invoicingPhoneNumber" placeholder="ex : 0389121212" value="{{ old('invoicingPhoneNumber') }}" autofocus required>
 
                                 @error('invoicingPhoneNumber')
                                     <span class="invalid-feedback" role="alert">
@@ -337,9 +516,9 @@
                                 <h2 class="textTitle">{{__('Adresse de livraison') }} </h2>
                             </div>
                             <div class="form-group form-check">
-                                <label class="col-md-12 col-check-label text-md-left" for="sameDeliveryInvoicing">{{ __('Identique à celle de facturation')}} </label>
                                 <input type="hidden" name="sameDeliveryInvoicing" value="0">
                                 <input type="checkbox" class="form-check-input" id="sameDeliveryInvoicing" name="sameDeliveryInvoicing" value="1" onchange="display()">
+                                <label class="col-md-12 col-check-label text-md-left" for="sameDeliveryInvoicing">{{ __('Identique à celle de facturation')}} </label>
                             </div>
                         </div>
 
@@ -377,7 +556,7 @@
 
                                 <div class="col-md-12">
                                     <label for="deliveryZipCode" class="text-md-right">{{ __('Code Postale') }}*</label>
-                                    <input id="deliveryZipCode" type="text" class="form-control @error('deliveryZipCode') is-invalid @enderror" name="deliveryZipCode" value="{{ old('deliveryZipCode') }}" placeholder="xxxxx" autofocus required>
+                                    <input id="deliveryZipCode" type="text" class="form-control @error('deliveryZipCode') is-invalid @enderror" name="deliveryZipCode" value="{{ old('deliveryZipCode') }}" placeholder="ex : 69000" autofocus required>
 
                                     @error('deliveryZipCode')
                                         <span class="invalid-feedback" role="alert">
@@ -473,210 +652,26 @@
 
                         </div>
 
+                        <div class="row justify-content-center">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <button type="submit" onclick="display()" class="btn boutton">
+                                        {{ __('Envoyer') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
             </div>
 
-            <div class="row justify-content-center mt-5">
-                <div class="form-group row mb-0">
-                    <div class="col-md-12">
-                        <button type="submit" onclick="display()" class="btn btn-primary">
-                            {{ __('Register') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
+
 
         </form>
     </div>
 
-
-    <div class="row justify-content-center">
-
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <fieldset class="form-group row">
-                        <legend class="col-form-label col-sm-2 float-sm-left pt-0">{{ __('French Compagny')}} : </legend>
-                        <div class="col-sm-6">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="french_compagny" id="french_yes" value="yes" checked="checked" onchange="display()">
-                                <label class="form-check-label" for="french_yes">{{ __('yes')}} </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="french_compagny" id="french_no" value="no" onchange="display()">
-                                <label class="form-check-label" for="french_no">{{ __('no')}} </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-2"></div>
-
-                        <a href="tel:+33711223344">Nous appeler</a>
-                    </fieldset>
-
-                    <div id="contact_form">
-                        <form action=""  method="POST">
-                            @csrf
-
-                            <div class="card" id="registerRequestCard">
-                                <div class="card-header">{{ __('Contact') }}</div>
-
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="contact_civility" class="col-md-4 col-form-label text-md-right">{{ __('Civilité') }}*</label>
-                                        <div class="col-md-6">
-                                            <select id="contact_civility" name="contact_civility" class="form-select custom-select" aria-label="Default select example">
-                                                <option selected value="Monsieur">M.</option>
-                                                <option value="Madame">Mme.</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="contact_name" value="{{ old('contact_name') }}" required autocomplete="name" autofocus>
-
-                                            @error('contact_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_firstName" type="text" class="form-control @error('contact_firstName') is-invalid @enderror" name="contact_firstName" value="{{ old('contact_firstName') }}" required autocomplete="name" autofocus>
-
-                                            @error('contact_firstName')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_email" class="col-md-4 col-form-label text-md-right">{{ __('Email Address') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_email" type="email" class="form-control @error('contact_email') is-invalid @enderror" name="contact_email" value="{{ old('contact_email') }}" required autocomplete="email">
-
-                                            @error('contact_email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_phoneNumber" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_phoneNumber" type="tel" class="form-control @error('phoneNcontact_phoneNumberumber') is-invalid @enderror" name="contact_phoneNumber" required>
-
-                                            @error('contact_phoneNumber')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_compagny_name" class="col-md-4 col-form-label text-md-right">{{ __('Compagny Name') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_compagny_name" type="text" class="form-control @error('contact_compagny_name') is-invalid @enderror" name="contact_compagny_name"  value="{{ old('contact_compagny_name') }}" required>
-
-                                            @error('contact_compagny_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}*</label>
-
-                                        <div class="col-md-6">
-                                            <input id="contact_country" type="text" class="form-control @error('contact_country') is-invalid @enderror" value="{{ old('contact_country') }}" name="contact_country" required>
-
-                                            @error('contact_country')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="contact_message" class="col-md-4 col-form-label text-md-right">{{ __('Message') }}</label>
-
-                                        <div class="col-md-6">
-                                            <textarea id="contact_message" type="date" class="form-control @error('contact_message') is-invalid @enderror" name="contact_message" value="{{ old('contact_message') }}"></textarea>
-                                            @error('contact_message')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Send') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div id="">
-                        <form method="POST"  enctype="multipart/form-data" action="{{ route('register') }}">
-                            @csrf
-
-                            <div class="card" id="compagny">
-
-                                <div class="card-header">{{ __('Your Compagny') }}</div>
-
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="compagnyId" class="col-md-4 col-form-label text-md-right">{{ __('compagnyId') }}*</label>
-                                        <div class="col-md-6">
-                                            <input id="compagnyId" type="text" class="form-control @error('compagnyId') is-invalid @enderror" name="compagnyId" value="{{ old('compagnyId') }}" required autofocus>
-
-                                            @error('compagnyId')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                        </form>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
