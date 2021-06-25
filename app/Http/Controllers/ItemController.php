@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
 use App\Models\MainCarac;
+use App\Models\SaleDocumentLine;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,9 +21,14 @@ class ItemController extends Controller
 {
     private function getPrice($items)
     {
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+        $items = Item::itemA()->paginate(20);
+        $number  = Item::itemA()->count();
+        $id_customer = '';
         $price_item_client = [];
         $price_item_famy = [];
         $hidden_item = [];
+
         if (!is_null( Auth::user())) {
             $id_customer = Auth::user()->Contact->Customer->Id;
             $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
@@ -182,12 +188,16 @@ class ItemController extends Controller
 
         $items = $this->getPrice($items);
 
-        return view('product.home', compact('items', 'Families'));
+
+        return view('product.home', compact('items', 'Families','number'));
     }
      public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
-        
-         return view('product.index' ,compact('Families'));
+        $news = Item::itemA()->take(10)->get();
+        $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
+        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
+         return view('product.index' ,compact('Families','news','promotions','bestsell'));
+
      }
 
     public function show($id)
@@ -261,6 +271,7 @@ class ItemController extends Controller
     }
 
     public function filters(Request $rq){
+
         $Id=$rq->FamilyId;
         $marques = Db::connection('mysql')->table('main_carac')->select('marque')->distinct()->where('family', $Id)->get();
         $memoire= Db::connection('mysql')->table('main_carac')->select('memoire')->distinct()->where('family', $Id)->get();
@@ -354,11 +365,6 @@ class ItemController extends Controller
                 return  $query;
             });
         }
-
-
-
-
-        
         $MainCarac= $MainCarac->pluck('id_item');
         $items= Item::itemA()->whereIn('Id', $MainCarac)->paginate(20);
         return view('product.home', compact('items','checked', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));

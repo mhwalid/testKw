@@ -134,9 +134,11 @@ ul {
 
 }
 
-/* / Fin Navbar /
 
-/ show / */
+/* Fin Navbar  */
+
+/* / show / */
+
 
 .mb-show{
     text-align:center;
@@ -807,10 +809,6 @@ a[aria-label="« Previous"] {
   }
 
 
-
-
-
-
   #allignlogin{
     justify-content: center;
     display: flex;
@@ -868,4 +866,3 @@ a[aria-label="« Previous"] {
     color: #969281!important;
 
   }
-  

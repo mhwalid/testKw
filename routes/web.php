@@ -51,6 +51,7 @@ Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::get('/product', 'AdminController@product')->name('admin.product');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     // Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');
     // Route::post('/register', 'Auth\AdminRegisterController@register')->name('admin.register.submit');

@@ -7,12 +7,17 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
-            <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
+            <div class="col-12 mb-4 pb-4"  style="display:flex; justify-content:center; width: 488px; height: 300px;">
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                    <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
+                    @else
+                    <img src="{{asset('asset/img/img-indispo-480.jpg')}}"
+                    class="img-fluid z-depth-1 mr-8" id="image">
+                    @endif
                 </a>
               </figure>
             </div>
@@ -121,6 +126,7 @@
 
         <hr>
 
+        <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
             @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
