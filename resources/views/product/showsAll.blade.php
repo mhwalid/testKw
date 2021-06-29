@@ -33,6 +33,16 @@
         </div>
 
     @endforeach
-    <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
+    <p id="pagination" class="rounded-circle">
+        @if (isset($_GET["trie"]) && isset($_GET["stock"]))
+         {{$items->appends(['stock' => $_GET["stock"]])->appends(['trie' => $_GET["trie"]])->links('pagination::bootstrap-4')}}
+        @elseif (isset($_GET["trie"]))
+            {{$items->appends(['trie' => $_GET["trie"]])->links('pagination::bootstrap-4')}}
+        @elseif (isset($_GET["stock"]))
+            {{$items->appends(['stock' => $_GET["stock"]])->links('pagination::bootstrap-4')}}
+        @else
+            {{$items->links('pagination::bootstrap-4')}}
+        @endif
+    </p>
 </div>
 <div class="rounded-circle" id="paginat"></div>

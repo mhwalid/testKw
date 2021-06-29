@@ -76,12 +76,12 @@ class AdminController extends Controller
             $id_customer = $customer->Id;
 
             // écrire les info dans le fichier add_contact.txt
-            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\test\command_files_contact_add.txt"';
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\commande_ebp\command_files_contact_add.txt"';
 
             $first_ligne = "Civility;Name;FirstName;Phone;Email;typrContact;NomEntreprise;AssociatedCustomerId;xx_birthday";
             $param = "\n".$user->civility.";".$user->name.";".$user->first_name.";".$user->phone.";".$user->email.";Client/Prospect;".$user->compagny.";".$id_customer.";".$user->birthday;
 
-            $add_contact = fopen(__DIR__.'/../../../public/asset/test/add_contact.txt', 'w+');
+            $add_contact = fopen(__DIR__.'/../../../public/asset/commande_ebp/add_contact.txt', 'w+');
             fputs($add_contact,$first_ligne);
             fputs($add_contact,$param);
             fclose($add_contact);
@@ -136,11 +136,11 @@ class AdminController extends Controller
             rename(__DIR__."/../../../public/asset/document/newCustomer/".$user->IdUser."/KBIS.pdf", $target_file_kbis);
             rmdir(__DIR__."/../../../public/asset/document/newCustomer/".$user->IdUser);
 
-            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\test\command_files_customer_add.txt"';
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\commande_ebp\command_files_customer_add.txt"';
 
             $first_ligne = "code;civility;adresseFac1;adresseFac2;codePostalFac;villeFac;contactCivilite;contactPrénom;contactNom;contactPhone;ContactMail;siteWeb;adressLiv1;adressLiv2;codePostalLiv;villeLiv;codepaysBanque;domiciliation;bban;bic;iban;Nom;Naf;siret;pays;VAT";
             $param = "\n".$id_customer.";".$user->statut.";".$user->soc_fac_adr1.";".$user->soc_fac_adr2.";".$user->soc_fac_zc.";".$user->soc_fac_city.";".$user->civility.";".$user->first_name.";".$user->name.";".$user->phone.";".$user->email.";".$user->website.";".$user->soc_liv_adr1.";".$user->soc_liv_adr2.";".$user->soc_liv_zc.";".$user->soc_liv_city.";".substr($user->rib_iban,0,2).";".$user->rib_domicil.";".substr($user->rib_iban,4).";".$user->rib_bic.";".$user->rib_iban.";".$user->compagny.";".$user->ape.";".$user->siret.";FR;".$user->vat_number;
-            $add_customer = fopen(__DIR__.'/../../../public/asset/test/add_customer.txt', 'w+');
+            $add_customer = fopen(__DIR__.'/../../../public/asset/commande_ebp/add_customer.txt', 'w+');
             fputs($add_customer,$first_ligne);
             fputs($add_customer,$param);
             fclose($add_customer);
