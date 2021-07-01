@@ -1,5 +1,6 @@
 
 
+
                 @php
                     $res = explode('/', last(request()->segments()));
                 @endphp
@@ -9,7 +10,8 @@
                   <input type="hidden" id="FamilyId" name="FamilyId" value="{{$res[0]}}">
                   <input type="hidden" id="checked" name="checked" value="{{$checked}}"> 
                     <div  id="accordion" style="  display:flex; flex-direction:column;"  >
-                        <ul style="background-color: #D6D1C1;  border-radius: 20px;" id="datalist">
+                        <ul  style="background-color: #D6D1C1;  border-radius: 20px;     list-style-type: none;"  id="datalist">
+
                         {{-- Titre --}}
                           <li  > 
                             <div id="rond" style=" border-radius: 200px; right:19%;"   class="card my-0">
@@ -209,6 +211,7 @@
                                     {{$sock->sock_proc}}
                                 </label>
                                 @endif
+
                                 @endforeach
                               </div>
                             </div>
@@ -317,13 +320,15 @@
                     
                     <div class="Box">
 
-                     <button style="margin-bottom: 5px;"  type="submit" id="reponse" class=" btn  boutton">Appliquer</button>
-                    <a href="{{route('itembyCaption' ,$res[0])}}" class="btn BouttonReinitialiser">Réinitialiser</a>
+
+                     <button style="margin-bottom: 5px;"  type="submit" id="reponse" class=" btn   Button">Appliquer</button>
+                    <a href="{{route('itembyCaption' ,$res[0])}}" class="btn mb-2 BouttonReinitialiser">Réinitialiser</a>
                         <div class="selected">
                         <button   id="plusinfo"  type="button" class=" btn  "><i class="fas fa-plus"></i></button>
                         <button  id="moinsinfo" type="button"  class=" btn "><img src="{{asset('asset/img/moins.png')}}" alt="rocket_contact"/></button>
                         </div>
                 </div>
+
                 </div>
             </div>
       </form>
@@ -332,10 +337,7 @@
 {{-- @section('extra-js')
     @include('include.filter')
 @endsection --}}
-
 <script>
-
-
  $('#moinsinfo').hide();
     if (0 == $('#datalist li:hidden').length) {
                 $('#plusinfo').hide();
@@ -343,7 +345,7 @@
             }
 
 
-    if (0 == $('#datalist li:hidden').length) {
+    if (0 == $('#datalist li:visible').length) {
             $('#accordion').hide();
 
            }

@@ -70,6 +70,11 @@ a[aria-label="« Previous"] {
   #row{
       width: 100%;
   }
+  @media screen and (min-width: 600px) and (max-width: 2600px) {
+      #accordion12{
+          display: none;
+      }
+    }
 
   @media screen and (min-width: 481px) and (max-width: 768px) {
 
@@ -83,8 +88,6 @@ a[aria-label="« Previous"] {
     #filterdispo{
         display: flex;
         margin-left: 0px;
-
-
       }
 
       #results{
@@ -110,3 +113,25 @@ a[aria-label="« Previous"] {
 
 
   }
+
+  @media screen and (min-width: 0px) and (max-width: 481px) {
+
+    #imgcatégorie{
+      margin-top: 15%;
+      margin-bottom: 5%;
+      }
+      #filterdispo{
+        display: flex;
+        margin-left: 0px;
+        margin-top: 5%;
+      }
+      #results{
+        width: 100%;
+         margin-left: 35px;
+
+      }
+      #longueurphotohome{
+          padding: 0px;
+
+      }
+}

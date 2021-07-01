@@ -24,6 +24,7 @@
          <div  id="ty"  class=" owl-two owl-carousel">
             @foreach ($news as $new)
         <div class="item itemcar">
+
             @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
             <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
             @else
@@ -45,7 +46,7 @@
                 @else
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
-                    <h4 class="card-title col-6" style="font-size:12px;">{{ $prom->Caption }}</h4>
+                    <h4 class="card-title col-5 col-sm-6  col-md-9" id="ecrituretailleindex">{{ $prom->Caption }}</h4>
             </div>
             @endforeach
         </div>
@@ -58,12 +59,14 @@
         <div   id="encadrement" class=" owl-two owl-carousel">
             @foreach ($bestsell as $sell)
             <div class="item" id="item3">
+
                 @if (File::exists('asset/item/images/'.$sell->item->Id.'/Medium1.jpg'))
                 <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
                 @else
                 <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
-                    <h4 class="card-title col-6" style="font-size:12px;">{{ $sell->item->Caption }}</h4>
+                    <h4 class="card-title col-5 col-sm-6  col-md-9 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+
             </div>
             @endforeach
 
@@ -100,12 +103,13 @@
     </div>
 
 
-        <div style="display:flex; justify-content: center; ">
+        <div id="divpartenaire" style="display:flex; justify-content: center; ">
             <img id="imgpart"  class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
             <h1  id="ecritpart">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
             Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
-
+            <img id="imgpart2"  class="" src="{{asset('asset/img/Certification.svg')}}"
+            alt="Certification">
         </div>
 
 
@@ -150,6 +154,11 @@ $('.owl-two').owlCarousel({
             items:1,
             nav:true
         },
+        500:{
+            items:2,
+            nav:true
+        },
+
         600:{
             items:2,
             nav:false

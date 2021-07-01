@@ -6,3 +6,148 @@ input{
     box-shadow: none;
     outline: 0;
 }
+
+#ptittextecontact{
+    font-size: 18px;
+     color: #21201B;
+      margin-top:10px;
+       margin-bottom:10px;
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 481px) {
+#contactinvisiblemobile{
+    display: none;
+    }
+    #contacte{
+        margin-top: 35%;
+        justify-content: space-around;
+    }
+
+    #msgcontactimg{
+        margin-left: 0%;
+        margin-bottom: 20px;
+        border-radius: 30px;
+        width: 80%;
+       }
+
+    #contactkw{
+        margin-bottom: 7%;
+    }
+
+    #contacttexte{
+        font-size: 12px;
+        line-height: 8px;
+    }
+    #contacttexte1{
+        font-size: 12px;
+
+    }
+    #ptittextecontact{
+        font-size: 10px;
+         color: #21201B;
+          margin-top:6px;
+           margin-bottom:6px;
+    }
+    #ptittextecontact1{
+        font-size: 15px;
+         color: #21201B;
+          margin-top:6px;
+           margin-bottom:6px;
+    }
+    #contactvisiblemobile{
+        display: flex;
+        flex-direction: column;
+        align-content: stretch;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+}
+@media screen and (min-width: 481px) and (max-width: 1150px) {
+    #contactinvisiblemobile{
+        display: none;
+        }
+        #contacte{
+            justify-content: space-around;
+        }
+
+        #msgcontactimg{
+            margin-left: 0%;
+            margin-bottom: 20px;
+            border-radius: 30px;
+            width: 80%;
+           }
+
+        #contactkw{
+            margin-bottom: 7%;
+        }
+
+        #contacttexte{
+            font-size: 15px;
+            line-height: 12px;
+        }
+        #contacttexte1{
+            font-size: 15px;
+
+        }
+        #ptittextecontact{
+            font-size: 14px;
+             color: #21201B;
+              margin-top:6px;
+               margin-bottom:6px;
+        }
+        #ptittextecontact1{
+            font-size: 15px;
+             color: #21201B;
+              margin-top:6px;
+               margin-bottom:6px;
+        }
+        #contactvisiblemobile{
+            display: flex;
+            flex-direction: column;
+            align-content: stretch;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+    }
+
+    @media screen and (min-width: 1150px) and (max-width: 2561px) {
+        #contactvisiblemobile{
+            display: none;
+
+            }
+
+            #contacte{
+                justify-content: center;
+            }
+           #msgcontactimg{
+            margin-left: 5%;
+             margin-bottom: 20px;
+              border-radius: 30px;
+              width: 80%;
+           }
+
+           #contacttexte{
+            font-size: 20px;
+            line-height: 12px;
+        }
+        #contacttexte1{
+            font-size: 20px;
+
+        }
+        #ptittextecontact{
+            font-size: 18px;
+             color: #21201B;
+              margin-top:10px;
+               margin-bottom:10px;
+        }
+        #ptittextecontact1{
+            font-size: 15px;
+             color: #21201B;
+              margin-top:10px;
+               margin-bottom:10px;
+        }
+
+        }

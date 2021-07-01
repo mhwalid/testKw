@@ -8,12 +8,21 @@
     color: black;
     border: none;
 }
+
 #rond{
     border: none;
     background-color: #D6D1C1;
     color: black;
+    border-radius: 200px;
+     right:19%;
 }
-
+#rond1{
+    border: none;
+    background-color: #D6D1C1;
+    color: black;
+    border-radius: 200px;
+     right:13%;
+}
 
 #heading{
     background-color: #D6D1C1;
@@ -133,6 +142,7 @@
     padding-left: 1%;
     padding-right: 1%;
 }
+
 #test{
     border: none;
 }
@@ -147,6 +157,9 @@
 #datalist li:nth-child(n+4) {
     display:none;
 }
+/* #datalist2 li:nth-child(n+4) {
+    display:none;
+} */
 #opfilt{
     margin-top:15px;
 }
@@ -165,6 +178,14 @@
         position: relative;
         right: 90;
 
+    }
+
+    #rond1{
+        border: none;
+        background-color: #D6D1C1;
+        color: black;
+        border-radius: 200px;
+         right:13%;
     }
 
     #longfilter{
@@ -198,5 +219,29 @@
         margin-top:15px;
         margin-right: 30px;
 
+    }
+}
+@media screen and (min-width: 0px) and (max-width: 481px) {
+
+    #longfilter{
+        display:none;
+    }
+    #barreprix{
+        margin-left: 8%;
+    }
+    #rond1{
+        border: none;
+        background-color: #D6D1C1;
+        color: black;
+        border-radius: 200px;
+         right:17%;
+    }
+
+}
+
+@media screen and (min-width: 0px) and (max-width: 600px) {
+
+    #longfilter{
+        display:none;
     }
 }

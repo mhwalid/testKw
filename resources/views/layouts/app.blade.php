@@ -63,7 +63,6 @@
         </div>
         <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="far fa-arrow-alt-circle-up"></i></a>
     </body> 
-   
     @yield('home')
     @include('include.footer')
     @yield('extra-js')
