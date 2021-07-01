@@ -1,9 +1,4 @@
 
-
-
-
-
-
 .fa-shopping-cart{
 
     color:black;
@@ -24,32 +19,17 @@
 
 }
 
-/* Fin Navbar */
-
-
-
-
-
-
 /*************** NavBar************************************/
 
 .dropdown-header{
     color: blue;
 
 }
-
-
 /*header*/
-
 #item{
     margin-right: 10%;
 
 }
-
-
-
-
-
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body{
         color: red;
@@ -63,7 +43,4 @@
 
 
     }
-
-
-
  }

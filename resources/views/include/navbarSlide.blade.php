@@ -7,11 +7,10 @@
         <div  id="tr" class="dropdown-menu pt-0 " aria-labelledby="navbarDropdown">
             <div  id="frf" >
                 @foreach ($Familie as $item)
-                <div   class="row ">
+                <div class="row ">
                     <div id="grid">
                     <div id="mot" style="font-size: 17px;   " class="dropdown-header " >
                         <a id="lien" style="text-decoration: none;" href="{{ route('itembyCaption', $item->Id) }}" >{{$item->Caption}}</a></div>
-
                     </div>
                 </div>
                 @endforeach

@@ -6,6 +6,7 @@
         <div class="md-form " style="margin-bottom: 5%; z-index: 9;" id="loupe">
             <button style="border: none; background-color : white; " id="loupe"   >
             <img style="width: 20px; heigth:20px;" src="{{asset('asset/img/loupe.png')}}" alt="">
+
             </button>
         </div>
         <div class="md-form my-0" style="z-index: 9;" id="navpour">
@@ -34,16 +35,12 @@
 
                          $('#loupe').hide();
                          $('#navpour').show();
-
                          $('#ite8').hide();
                          $('#ite9').hide();
-
-
-
-
                  });
              });
-             function myFunction(x) {
+ 
+ function myFunction(x) {
   if (x.matches) { // If media query matches
     $(document).mouseup(function(e){
     var container = $("#navpour");
@@ -66,9 +63,5 @@
 var x = window.matchMedia("(max-width: 480px)")
 myFunction(x) // Call listener function at run time
 x.addListener(myFunction)
-
-
-
-
 
 </script>

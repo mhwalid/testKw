@@ -2,15 +2,17 @@
 
 
 @section('content')
+        @php
+        $menu = explode('/',last(request()->segments()));
+        @endphp
 
 <div class="container-fluid" id="longueurphotohome">
     <img id="imgcatégorie"  class="w-100" src="{{asset('asset/img/CM_long.jpg')}}" alt="Certification">
 
 
+
+    <img id="imgcatégorie"  class="w-100" src="{{asset('asset/menu/'.$menu[0].'.png')}}" alt="Certification">
 </div>
-
-
-
 <div class="container-fluid">
 
 <div id="barrefilter" style="display: none;">
@@ -31,29 +33,25 @@
                 <option id="filter_o" class="filter_all mrq" value="_LENOV">Meilleures ventes</option>
 
             </select>
+
         </div>
-
-
-</div>
-</div>
-
-<div class=container>
-    <div id="barreprix">
-        <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p>
-
-
+    
     </div>
-
+    
+    <div id="filterdispo" >
+        @php
+                        $re = explode('/',request()->segment(2));
+        @endphp
+    <div >
+        <div  style="width: 250px;   min-height:2000px; ">
+    @if (($re[0] == 'Family'))
+        @include('include.filterPHP')
+    @endif
+</div>
 </div>
 
-
-
-{{-- fffffffffffffffffffffffffffff --}}
 @php
-
-
 $re = explode('_', last(request()->segments()));
-
 @endphp
 <div id="accordion12" style="background-color: #D6D1C1 ">
     <div class="card" style="background-color: #D6D1C1 ">
@@ -444,13 +442,6 @@ $re = explode('_', last(request()->segments()));
   </div>
 
 
-
-
-
-
-
-{{-- ffffffffffffffffffffffffffffffffffff --}}
-
 <div id="filterdispo" >
     @php
                     $re = explode('/',request()->segment(2));
@@ -485,51 +476,65 @@ $re = explode('_', last(request()->segments()));
                     <a id="Catégorie" href="{{ route('product.show', $item->Id) }}"> <strong
                             class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
 
-
-
-
                         @if ($item->RealStock>0)
-                        <form action="{{ route('cart.store') }}" method="POST" style="">
-                            @csrf
-
-                            <button id="boutton_panier" type="submit" id="panier" class="btn  "><img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}"
-                                alt="Certification"></button>
-                        </form>
+    
+                            <p>En stock <img style=" width: 15px; height: 15px;"   src="{{asset('asset/img/en stock.svg')}}"></p>
+                            <p>
+                        @else
+    
+                            <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus en stock.svg')}}"></p>
+                            <p>
                         @endif
-                </div>
-            @endforeach
-            <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
+                            </div>
+                        <a id="Catégorie" href="{{ route('product.show', $item->Id) }}"> <strong
+                                class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
+                            @if ($item->RealStock>0)
+                            @auth
+                                
+                            <form action="{{ route('cart.store') }}" method="POST" >
+                                @csrf
+                                <input  type="hidden" name="item_id" value="{{ $item->Id }}">
+                                <input type="hidden" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1" value="1">
+                                <input type="hidden" name="price" value={{ $item->CostPrice }}>
+                                <button id="boutton_panier" type="submit" id="panier" class="btn"><img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}"
+                                    alt="Certification"></button>
+                            </form>
+                            @endauth
+                            @endif
+                    </div>
+                @endforeach
+                <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
+            </div>
+            <div class="rounded-circle" id="paginat"></div>
+    
         </div>
-        <div class="rounded-circle" id="paginat"></div>
-
+        <p class="rounded-circle" id="url" style="display: none"> {{ Request::path() }} </p>
+    
+    
     </div>
-    <p class="rounded-circle" id="url" style="display: none"> {{ Request::path() }} </p>
-
-
-</div>
-</div>
-
-@endsection
-
-
-<script>
-    function change() // no ';' here
-{
-    var elem = document.getElementById("myButton1");
-    if (elem.value=="Close Curtain") elem.value = "Open Curtain";
-    else elem.value = "Close Curtain";
-}
-    </script>
-<script>
-    $(document).ready(function() {
-    <!-- the :first-child selector is using to select the first h1 child -->
-    $(".page-item:first-child").css(
-    "background-color", "red");
-    });
-    </script>
-
-{{-- le scripte js de Searchbar et filter  --}}
-@section('extra-js')
-@include('include.SearchItem')
-{{-- @include('include.filter') --}}
-@endsection
+    </div>
+    
+    @endsection
+    
+    
+    <script>
+        function change() // no ';' here
+    {
+        var elem = document.getElementById("myButton1");
+        if (elem.value=="Close Curtain") elem.value = "Open Curtain";
+        else elem.value = "Close Curtain";
+    }
+        </script>
+    <script>
+        $(document).ready(function() {
+        <!-- the :first-child selector is using to select the first h1 child -->
+        $(".page-item:first-child").css(
+        "background-color", "red");
+        });
+        </script>
+    
+    {{-- le scripte js de Searchbar et filter  --}}
+    @section('extra-js')
+    @include('include.SearchItem')
+    {{-- @include('include.filter') --}}
+    @endsection
