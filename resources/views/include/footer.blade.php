@@ -57,7 +57,7 @@
             <i class="fas fa-phone-alt"></i> <a href="tel:0486800800" id="footerjaune">04 86 80 08 00</a>
           </li>
           <li>
-            <a href="??" id="footerjaune">Qui sommes-nous ?</a>
+            <a href="{{ route('qui') }}" id="footerjaune">Qui sommes-nous ?</a>
           </li>
 
           <li>

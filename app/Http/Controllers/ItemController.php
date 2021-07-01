@@ -488,3 +488,4 @@ $options->set('isRemoteEnabled', TRUE);
         // return view('product.itempdf', compact('item', 'arrivage'));
     }
 }
+

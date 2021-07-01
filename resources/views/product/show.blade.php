@@ -7,7 +7,7 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
-            <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
+            <div class="col-12 mb-4 pb-4" id="produitimage"  >
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
@@ -146,12 +146,12 @@
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
 
-                <button type="submit" class="btn  boutton "><i
+                <button type="submit" class="btn  boutton " id="btnshow"><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
 
             </form>
             @else
-                    <button type="submit" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
+                    <button type="submit" id="btnshow" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
                     </button>
                 @endif
                 <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
@@ -171,8 +171,8 @@
 
             @endif
             </ul>
-        <button  id="plusinfo" class=" btn btn-dark btn-md mr-1 mb-2">Plus de détails</button>
-        <button  id="moinsinfo" class=" btn btn-dark btn-md mr-1 mb-2">Moins de détails</button>
+        <button  id="plusinfo" class=" btn btn-dark btn-md ml-4 mb-2">Plus de détails</button>
+        <button  id="moinsinfo" class=" btn btn-dark btn-md ml-4 mb-2">Moins de détails</button>
   </div>
 </div>
   <!-- Creates the bootstrap modal where the image will appear -->
@@ -191,7 +191,7 @@
 
 
         <div class="divCarousel" style="" >
-            <div class="divCarousel" >
+            <div class="divCarousel" style=" height: 0px;" >
 
                 <div id="carouselExampleCaptions" class="carousel divCarousel slide" data-ride="carousel" data-interval="false">
                     <ol class="carousel-indicators " style=" bottom: 95%;">
@@ -256,6 +256,12 @@
 
 <script>
 $('#moinsinfo').hide();
+if (0 == $('#datalist li:hidden').length) {
+                $('#plusinfo').hide();
+                $('#moinsinfo').hide();
+            }
+
+
     var thumbImage =document.querySelectorAll('.img-thumbnail');
               thumbImage.forEach((element) => element.addEventListener('mouseenter', changeImage));
              function changeImage(element){
@@ -287,10 +293,24 @@ $('#moinsinfo').hide();
              });
 
 
-             $("#pop").on("click", function() {
+
+
+      var x = window.matchMedia("(min-width: 480px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction)
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    $("#pop").on("click", function() {
          $('#imagepreview').attr('src', $('#imagezoom').attr('src')); // here asign the image to the modal when the user click the enlarge link
          $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
       });
+
+
+  } else {
+
+  }
+}
 
 </script>
 

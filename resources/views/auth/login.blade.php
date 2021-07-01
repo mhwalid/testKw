@@ -3,9 +3,9 @@
 @section('content')
 
 <div id="allignlogin">
-    <div style="width: 40%; height: 40%;">
+    <div id="imgordi" style="width: 40%; height: 40%;">
     <img style=" width: 100%; height: 100%; margin-top: 7%;"   src="{{asset('asset/img/connectez-vous2.png')}}" alt="Connect">
-</div>
+    </div>
 
     <div id=log>
     <p class="news1">Connectez-vous</p>
@@ -50,11 +50,17 @@
                 <div  style="margin-left: 15%;"><a style="color: #FFD600;" href="#">mot de passe oublié?</a></div>
             </div>
             </div>
+            {{-- <div id="imgordi2" style="width: 40%; height: 40%;">
+                <img style=" width: 100%; height: 100%; "   src="{{asset('asset/img/connectez-vous2.png')}}" alt="Connect">
+                </div> --}}
             </form>
+
     </div>
 
 
+
     </div>
+
 </div>
 
 

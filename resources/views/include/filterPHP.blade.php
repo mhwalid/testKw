@@ -3,7 +3,7 @@
     <div  id="longfilter" >
         {{-- <form style="" action="{{ route('filter') }}" method="POST" class="form-inline ml-auto"
             onsubmit="traitForm(a)" id="filter"> --}}
-            <div style=" background-color: #D6D1C1; border-radius: 20px;" class="list-group"   >
+            <div style=" background-color: #D6D1C1; border-radius: 20px; " class="list-group"   >
                 @php
 
 
@@ -12,7 +12,7 @@
                 @endphp
 
                     <div  id="accordion" style="  display:flex; flex-direction:column;"  >
-                        <ul  style="background-color: #D6D1C1;  border-radius: 20px;"  id=datalist>
+                        <ul  style="background-color: #D6D1C1;  border-radius: 20px;     list-style-type: none;"  id="datalist">
                         {{-- Titre --}}
 
                         <li  > <div id="rond" style=" border-radius: 200px; right:19%;"   class="card my-0">
@@ -127,9 +127,9 @@
                       {{-- 4 --}}
                       @if(count($os)>1)
                         <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
-                             <div  class="card-header" style="background-color: transparent"  id="headingFour">
+                             <div  class="card-header" style="background-color: transparent; "  id="headingFour">
                                <h5  class="mb-0">
-                                 <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFive">
+                                 <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                    OS <i class="fas fa-sort-down ml-2"></i>
                                  </button>
                                </h5>
@@ -322,7 +322,7 @@
                     <div class="Box">
                     <button style="margin-bottom: 5px;"  id="appliquer" class=" btn  boutton">Appliquer</button>
 
-                    <button id="reinitialiser" onclick='window.location.reload(false)'  class=" btn BouttonReinitialiser">Réinitialiser</button>
+                    <button id="reinitialiser" onclick='window.location.reload(false)'  class=" btn mb-2 BouttonReinitialiser">Réinitialiser</button>
                         <div class="selected">
                         <button   id="plusinfo" class=" btn  "><i class="fas fa-plus"></i></button>
                         <button  id="moinsinfo"  class=" btn "><img src="{{asset('asset/img/moins.png')}}" alt="rocket_contact"/></button>
@@ -332,49 +332,6 @@
                 </div>
         {{-- Prix en barre js --}}
 
-        <script>
-        (function() {
-
-            var parent = document.querySelector(".price-slider");
-            if(!parent) return;
-
-            var
-              rangeS = parent.querySelectorAll("input[type=range]"),
-              numberS = parent.querySelectorAll("input[type=number]");
-
-            rangeS.forEach(function(el) {
-              el.oninput = function() {
-                var slide1 = parseFloat(rangeS[0].value),
-                      slide2 = parseFloat(rangeS[1].value);
-
-                if (slide1 > slide2) {
-                  [slide1, slide2] = [slide2, slide1];
-                }
-
-                numberS[0].value = slide1;
-                numberS[1].value = slide2;
-              }
-            });
-
-            numberS.forEach(function(el) {
-              el.oninput = function() {
-                  var number1 = parseFloat(numberS[0].value),
-                  number2 = parseFloat(numberS[1].value);
-
-                if (number1 > number2) {
-                  var tmp = number1;
-                  numberS[0].value = number2;
-                  numberS[1].value = tmp;
-                }
-
-                rangeS[0].value = number1;
-                rangeS[1].value = number2;
-
-              }
-            });
-
-          })();
-        </script>
 
 <script>
     $('#moinsinfo').hide();
@@ -384,7 +341,7 @@
             }
 
 
-    if (0 == $('#datalist li:hidden').length) {
+    if (0 == $('#datalist li:visible').length) {
             $('#accordion').hide();
 
            }

@@ -59,6 +59,8 @@
             @endif
             @yield('content')
 
+    </main>
+
     </div>
     <a id="back-to-top" style="z-index: 6" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="far fa-arrow-alt-circle-up"></i></a>
     <script>

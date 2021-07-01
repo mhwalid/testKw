@@ -29,7 +29,7 @@
 
         <div class="item itemcar">
             <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss"  class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                <h4 class="card-title col-6" id="ecrituretailleindex" >{{ $new->Caption }}</h4>
+                <h4 class="card-title col-5 col-sm-6 col-lg-7" id="ecrituretailleindex" >{{ $new->Caption }}</h4>
         </div>
         @endforeach
         </div>
@@ -46,7 +46,7 @@
 
             <div class="item itemcar">
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$prom->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                    <h4 class="card-title col-5" id="ecrituretailleindex" >{{ $prom->Caption }}</h4>
+                    <h4 class="card-title col-5 col-sm-6 col-lg-7" id="ecrituretailleindex" >{{ $prom->Caption }}</h4>
             </div>
             @endforeach
         </div>
@@ -65,7 +65,7 @@
 
             <div class="item" id="item3">
                 <a href="{{ route('product.show', $sell->item->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                    <h4 class="card-title col-9" id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+                    <h4 class="card-title col-5 col-sm-6  col-md-9" id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
             </div>
             @endforeach
 
@@ -102,12 +102,13 @@
     </div>
 
 
-        <div style="display:flex; justify-content: center; ">
+        <div id="divpartenaire" style="display:flex; justify-content: center; ">
             <img id="imgpart"  class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
             <h1  id="ecritpart">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
             Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
-
+            <img id="imgpart2"  class="" src="{{asset('asset/img/Certification.svg')}}"
+            alt="Certification">
         </div>
 
 
@@ -152,6 +153,11 @@ $('.owl-two').owlCarousel({
             items:1,
             nav:true
         },
+        500:{
+            items:2,
+            nav:true
+        },
+
         600:{
             items:3,
             nav:false
