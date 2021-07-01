@@ -143,7 +143,7 @@
                     @endif
                 </div>
             @endif
-
+            @auth
             <form action="{{ route('cart.store') }}" method="POST">
                 @csrf
 
@@ -156,6 +156,7 @@
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
 
             </form>
+            @endauth
             @else
                     <button type="submit" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
                     </button>

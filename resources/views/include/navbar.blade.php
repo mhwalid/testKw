@@ -1,10 +1,7 @@
 <div id="haut">
 
     <nav id="Nav" class="navbar1  navbar-expand-lg navbar-light indigo " style="background-color: white;" >
-        <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px;" src="{{asset('asset/img/kw.png')}}" alt=""></a>
-
-
-
+        <a class="navbar-brand" href="{{ route('product.index') }}"><img style="width: 80px; heigth:80px;" src="{{asset('asset/img/kw.jpg')}}" alt=""></a>
         <div class="md-form my-0" id="loupe">
             <button   id="loupe" >
             <img style="width: 20px; heigth:20px;" src="{{asset('asset/img/kw.png')}}" alt="">
@@ -36,14 +33,8 @@
 
                          $('#loupe').hide();
                          $('#navpour').show();
-
                          $('#ite8').hide();
                          $('#ite9').hide();
-
-
-
-
                  });
              });
-
 </script>

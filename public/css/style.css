@@ -1,3 +1,4 @@
+
 .fa-shopping-cart{
 
     color:black;
@@ -9,26 +10,25 @@
 
 #search{
 
-
     margin-left: 0px;
     width: 80%;
-
     margin-top:7px;
     border-color: #f0ad4e;
     border-radius: 30px;
 
 }
+
 /*************** NavBar************************************/
 
 .dropdown-header{
     color: blue;
 
 }
+/*header*/
 #item{
     margin-right: 10%;
 
 }
-
 @media screen and (min-width: 481px) and (max-width: 768px) {
     body{
         color: red;
@@ -41,3 +41,4 @@
         border-radius: 30px;
 
     }
+ }

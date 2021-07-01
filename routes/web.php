@@ -78,7 +78,6 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 ###################### test the connection #############
 
-Route::get('/conn', 'CustomerContoller@conn');
 
 //Item
 Route::get('generate-feature/{Id}','ItemController@feature');
@@ -97,3 +96,5 @@ Route::get('/Qui-Sommes-Nous','ItemController@qui')->name('qui');
 
 
 
+//test url
+Route::get('/conn', 'ItemController@emal');

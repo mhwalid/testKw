@@ -1,6 +1,5 @@
 
-<div >
-    <div  style="width: 250px;   min-height:2000px; ">
+
                 @php
                     $res = explode('/', last(request()->segments()));
                 @endphp
@@ -328,8 +327,6 @@
                 </div>
             </div>
       </form>
-    </div>
-</div>
 
 
 {{-- @section('extra-js')

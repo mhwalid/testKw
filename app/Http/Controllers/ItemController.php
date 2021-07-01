@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderMail;
 use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
 use App\Models\SaleDocumentLine;
 use App\Models\MainCarac;
-use App\Models\SaleDocumentLine;
 use App\Models\SubFamily;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
 
 class ItemController extends Controller
 {
@@ -201,10 +201,15 @@ class ItemController extends Controller
     {
 
         $item = Item::itemA()->find($id);
-    //    return dd($item = $this->getPriceOneitem($item));
+        if(Auth::check()){
+       $item = $this->getPriceOneitem($item); }
         return view('product.show', compact('item'));
     }
 
+    public function emal(){
+        Mail::to('mhwalid7@gmail.com')->send(new OrderMail());
+        return "walid";
+    }
 
     public function itembyCaption($Id)
     {
@@ -229,7 +234,6 @@ class ItemController extends Controller
     public function contact()
     {
         return view('product.contact');
-        "wakud";
     }
 
     public function payement()

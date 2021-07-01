@@ -38,7 +38,7 @@
                         <img class="img-responsive mr-4" src='+pathImage+' alt=" " class="bd-placeholder-img" style="width: 80px ;heigth:60px" >\
                         <a href='+pathId+'/'+ret[key].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[key].Caption +'</strong> </a>\
                         @guest\
-                        <em class=" ml-4">Connectez-vous pour voir les prix !</em>\
+                        <em class=" ml-4"> </em>\
                         @else\
                         <h5 style="position: absolute; margin-left:991px" class="mb-0"> '+ Math.round(parseFloat(ret[key].CostPrice)*100)/100 +'€</h5>\
                         @endguest'
