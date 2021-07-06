@@ -155,7 +155,7 @@
             @csrf
 
             <div class="row justify-content-center mt-5">
-                <div class="col-6" id="personalData">
+                <div class="col-12 col-md-6" id="personalData">
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">1</span>{{__('Information Personnelles') }} </h2>
                     </div>
@@ -270,7 +270,7 @@
                     </div>
                 </div>
 
-                <div class="col-6" id="compagnyDataCard">
+                <div class="col-12 col-md-6" id="compagnyDataCard">
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Information entreprise') }} </h2>
                     </div>
@@ -392,7 +392,7 @@
                     </div>
                 </div>
 
-                <div class="col-6" id="compagny">
+                <div class="col-12 col-md-6" id="compagny">
 
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Votre entreprise') }} </h2>
@@ -589,7 +589,7 @@
                 <div class="col-md-6" id="document">
 
                     <div class="formTitle position-relative">
-                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">4</span>{{__('Adresse de facturation') }} </h2>
+                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">4</span>{{__('Documents') }} </h2>
                     </div>
 
                     <div class="">

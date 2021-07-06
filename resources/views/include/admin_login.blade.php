@@ -3,16 +3,11 @@
     <ul class="d-flex" style="padding: 0px; margin: 0px; ">
     @guest
         <li style="list-style: none;" class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}" style="color:black;"><i class="fas fa-user-circle"></i>  {{ __('Login') }}</a>
+            <a class="nav-link" href="{{ route('admin.login') }}" style="color:black;"><i class="fas fa-user-circle"></i>  {{ __('Login') }}</a>
         </li>
-
-
-        @if (Route::has('register'))
-            <li style="list-style: none" class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}" style="color:black;">{{ __('Register') }}</a>
-            </li>
-        @endif
     @else
+
+
 
         <li style="list-style: none"s class="nav-item dropdown">
 
@@ -22,7 +17,7 @@
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                <a  class="dropdown-item" href="{{ route('logout') }}"
+                <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}

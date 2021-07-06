@@ -9,7 +9,7 @@
     <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner" id="hg">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/img/Visuel maquette.jpg')}}" alt="First slide">
+            <img class="d-block w-100" src="{{asset('asset/banner/Visuel_maquette.jpg')}}" alt="First slide">
         </div>
 
         </div>
@@ -32,12 +32,14 @@
             @endif
             <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
         </div>
+
         @endforeach
         </div>
     </div>
     {{-- Caroussel 2  --}}
     <div class="container-fluid">
         <p class="news">  Des promotions à ne pas louper !</p>
+
          <div  id="ty2" class=" owl-two owl-carousel">
             @foreach ($promotions as $prom)
             <div class="item itemcar">
@@ -66,6 +68,7 @@
                 <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
                     <h4 class="card-title col-5 col-sm-6  col-md-9 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+
 
             </div>
             @endforeach

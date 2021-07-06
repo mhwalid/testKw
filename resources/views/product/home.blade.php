@@ -1,61 +1,82 @@
 @extends('layouts.app')
 
-
 @section('content')
-        @php
-        $menu = explode('/',last(request()->segments()));
-        @endphp
+@php
+    $re = explode('/',request()->segment(2));
+    $family = explode('/',request()->segment(3));
+@endphp
 
 <div class="container-fluid">
-    <img id="imgcatégorie"  class="w-100" src="{{asset('asset/menu/'.$menu[0].'.png')}}" alt="Certification">
+    @if (($re[0] == 'Family'))
+        <img id="imgcatégorie" src="{{asset('asset/banner/'.$family[0].'.jpg')}}" alt="Certification">
+    @else
+        <img id="imgcatégorie" src="{{asset('asset/banner/allItem.jpg')}}" alt="Certification">
+    @endif
 </div>
 
 <div class="container-fluid">
+    @if ($re[0] == "Family")
+        <form  id="form_tri" action="{{route('itembyCaption',$family[0]) }} " method="get" style="border: none">
+            <div id="barrefilter">
 
-<div id="barrefilter">
+                <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">44</strong>produits
 
-        <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">{{$items->total()}}</strong>produits
+                <p style="margin-top: 17px"><input id="enStock" type="checkbox" class="filter_all ram" name="stock" @if (isset($_GET["stock"])) checked @endif value="enStock"> En stock</p>
 
+                <div style=" border:none; background-color:#D6D1C1; display: flex; justify-content: inline;"  class="list-group-item ">
+                    <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
+                    <select id="trie" name="trie" id="trie" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
+                        <option @if (!isset($_GET["trie"]) || $_GET["trie"] == "noTrie") selected @endif class="" value="noTrie"></option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "PrixCroissant") selected @endif class="filter_all mrq" value="PrixCroissant">Prix Croissants</option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "PrixDecroissant") selected @endif class="filter_all mrq" value="PrixDecroissant">Prix décroissants</option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "meilleurVente") selected @endif class="filter_all mrq" value="meilleurVente">Meilleures ventes</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    @else
+        <form  id="form_tri" action="{{route('product.index') }} " method="get" style="border: none">
+            <div id="barrefilter">
 
-        <p style="margin-top: 17px;"><input id="checkbox" type="checkbox" class="filter_all ram" value="4">En stock</p>
+                <p style="margin-top:15px;"><strong style="margin-right: 10%; font-size: 18px;">44</strong>produits
 
+                <p style="margin-top: 17px"><input id="enStock" type="checkbox" class="filter_all ram" name="stock" @if (isset($_GET["stock"])) checked @endif value="enStock"> En stock</p>
 
+                <div style=" border:none; background-color:#D6D1C1; display: flex; justify-content: inline;"  class="list-group-item ">
+                    <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
+                    <select id="trie" name="trie" id="trie" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
+                        <option @if (!isset($_GET["trie"]) || $_GET["trie"] == "noTrie") selected @endif class="" value="noTrie"></option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "PrixCroissant") selected @endif class="filter_all mrq" value="PrixCroissant">Prix Croissants</option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "PrixDecroissant") selected @endif class="filter_all mrq" value="PrixDecroissant">Prix décroissants</option>
+                        <option @if (isset($_GET["trie"]) && $_GET["trie"] == "meilleurVente") selected @endif class="filter_all mrq" value="meilleurVente">Meilleures ventes</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    @endif
+</div>
 
-         <div style=" border:none; background-color:#D6D1C1; display: flex; justify-content: inline;"  class="list-group-item ">
-            <p style="margin-top: 5px; margin-right:10px;">Trier par:</p>
-            <select name="marque_id" style=" margin-top: 5px; height: 70%; border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
-                <option  class=""></option>
-                <option class="filter_all mrq" value="_LG">Prix Croissants</option>
-                <option class="filter_all mrq" value="_AOC">Prix décroissants</option>
-                <option class="filter_all mrq" value="_LENOV">Meilleures ventes</option>
-
-            </select>
+@guest
+    <div class=container>
+        <div id="barreprix">
+            <p><strong>Connectez-vous pour voir les prix</strong></p>
         </div>
-
-
-</div>
-</div>
-
-<div class=container>
-    <div id="barreprix">
-        <a style="color:black; text-decoration:none;" href="{{ route('login') }}"><strong>Connectez-vous pour voir les prix</strong></a>
     </div>
-</div>
+@endguest
 
 <div style="display: flex; justify-content: align-items; margin-left: 200px;">
-    @php
-                    $re = explode('/',request()->segment(2));
-    @endphp
 
-@if (($re[0] == 'Family'))
-    @include('include.filterPHP')
-@endif
+    @if (($re[0] == 'Family'))
+        @include('include.filterPHP')
+    @endif
 
-    <div class="row"  id="row">
-        <div id="results" style="width: 1147px; margin-left: 100px;">
+    <div class="row"  id="row_results">
+        @include('product.showsAll')
+        {{-- <div id="results" style="width: 1147px; margin-left: 100px;">
             @foreach ($items as $item)
                 <div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">
                     <div>
+
 
                         @if (File::exists('asset/item/images/'.$item->Id.'/Cart1.jpg'))
                     <img style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"
@@ -79,40 +100,36 @@
                             {{ number_format($item->CostPrice, 2) }}
                             €</h5> @endauth
                             @if ($item->RealStock>0)
+
                             <form action="{{ route('cart.store') }}" method="POST" >
                                 @csrf
                                 <input type="hidden" name="item_id" value="{{ $item->Id }}">
                                 <input type="hidden" name="quantity" value="1">
                                 <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">
-                                    <img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter au panier.svg')}}" alt="Certification"></button>
+                                    <img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter_au_panier.svg')}}" alt="Certification"></button>
                             </form>
-                            @else
+                        @else
                         @endif
-
                 </div>
             @endforeach
             <p id="pagination" class="rounded-circle"> {{ $items->links('pagination::bootstrap-4') }}</p>
         </div>
-        <div class="rounded-circle" id="paginat"></div>
+        <div class="rounded-circle" id="paginat"></div> --}}
 
     </div>
     <p class="rounded-circle" id="url" style="display: none"> {{ Request::path() }} </p>
-
-
-</div>
 </div>
 
 @endsection
 
-
 <script>
     function change() // no ';' here
-{
-    var elem = document.getElementById("myButton1");
-    if (elem.value=="Close Curtain") elem.value = "Open Curtain";
-    else elem.value = "Close Curtain";
-}
-    </script>
+    {
+        var elem = document.getElementById("myButton1");
+        if (elem.value=="Close Curtain") elem.value = "Open Curtain";
+        else elem.value = "Close Curtain";
+    }
+</script>
 <script>
     $(document).ready(function() {
     <!-- the :first-child selector is using to select the first h1 child -->
@@ -123,6 +140,19 @@
 
 {{-- le scripte js de Searchbar et filter  --}}
 @section('extra-js')
+
+<script>
+
+    $('#trie').change(function (e) {
+        $('#form_tri').submit();
+
+    });
+
+    $('#enStock').change(function (e) {
+        $('#form_tri').submit();
+    });
+</script>
+
 @include('include.SearchItem')
 {{-- @include('include.filter') --}}
 @endsection

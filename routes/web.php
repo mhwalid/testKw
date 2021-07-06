@@ -24,6 +24,8 @@ Route::get('test', function () {
 
 Route::get('/', 'ItemController@home')->name('product.home');
 Route::get('/boutique', 'ItemController@index')->name('product.index');
+// Route::post('/boutique/stock', 'ItemController@stock')->name('product.stock');
+Route::post('/boutique', 'ItemController@trie')->name('product.trie');
 Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itembyCaption');
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
@@ -49,17 +51,22 @@ Route::get('/merci', 'Shop\CheckoutController@thanks')->name('checkout.thanks');
 
 // Admin routes
 Route::prefix('admin')->middleware('admin')->group(function(){
-     Route::get('/', 'AdminController@index')->name('admin.dashboard');
-     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-     Route::get('/ean', 'AdminController@ean')->name('admin.ean');
+    Route::get('/', 'AdminController@index')->name('admin.dashboard');
+    Route::get('/user', 'AdminController@showUser')->name('admin.user');
+    Route::get('/banner', 'AdminController@banner')->name('admin.banner');
+    Route::post('/banner/update' ,'AdminController@bannerUpdate')->name('admin.banner.update');
+    Route::post('/banner/Update/{family}' ,'AdminController@familyBannerUpdate')->name('admin.banner.update.family');
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+       Route::get('/ean', 'AdminController@ean')->name('admin.ean');
      Route::post('/product', 'AdminController@product')->name('admin.product');
      Route::post('/submitdata', 'AdminController@submitdata')->name('admin.submitdata');
-     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-     // Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');
-     // Route::post('/register', 'Auth\AdminRegisterController@register')->name('admin.register.submit');
+    // Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');
+    // Route::post('/register', 'Auth\AdminRegisterController@register')->name('admin.register.submit');
+
 
     //action on User
-    Route::delete('/user/delete/{id}','AdminController@delete')->name('admin.delete.user');
+    Route::delete('/user/delete/{id}','AdminController@deleteUser')->name('admin.delete.user');
     Route::patch('/user/validate/{id}','AdminController@validateUser')->name('admin.validate.user');
     Route::post('/users/{id}', 'AdminController@resend')->name('admin.resend.user');
 });

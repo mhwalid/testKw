@@ -29,7 +29,7 @@ class Item extends Model
 
     public function ScopeItemA($query)
     {
-        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy("sysCreatedDate", 'desc');
+        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0);
     }
 
     public static function search($search)

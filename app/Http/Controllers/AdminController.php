@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\Customer;
+use App\Models\Family;
 use App\Models\Item;
 use App\Models\MainCarac;
 use Illuminate\Support\Str;
@@ -21,13 +22,46 @@ class AdminController extends Controller
 
     public function index()
     {
+        $new_user = User::where('compte_actif',0)->count();
+        return view('admin.admin', compact('new_user'));
+    }
+
+    public function showUser()
+    {
+        $new_user = User::where('compte_actif',0)->count();
         $users_verified = User::where('compte_actif',0)->whereNotNull('email_verified_at')->get();
         $users_not_verified = User::where('compte_actif',0)->whereNull('email_verified_at')->get();
 
-        return view('admin.admin', compact('users_verified','users_not_verified'));
+        return view('admin.newUser', compact('users_verified','users_not_verified','new_user'));
     }
 
-    public function delete($id)
+    public function banner()
+    {
+        $new_user = User::where('compte_actif',0)->count();
+        $families = Family::select('Id','Caption')->get();
+        return view('admin.gestionBanner', compact('families','new_user'));
+    }
+
+    public function bannerUpdate()
+    {
+        $uploads_dir = 'public/asset/banner';
+        $tmp_name = $_FILES["banner"]["tmp_name"];
+        // basename() peut empêcher les attaques de système de fichiers;
+        // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/Visuel_maquette.jpg");
+        return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
+    }
+    public function familyBannerUpdate($family)
+    {
+        $uploads_dir = 'public/asset/banner';
+        $tmp_name = $_FILES["banner"]["tmp_name"];
+        // basename() peut empêcher les attaques de système de fichiers;
+        // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/".$family.".jpg");
+        return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
+    }
+
+    public function deleteUser($id)
     {
         $user = User::find($id);
         $user->delete();
@@ -44,12 +78,12 @@ class AdminController extends Controller
             $id_customer = $customer->Id;
 
             // écrire les info dans le fichier add_contact.txt
-            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\test\command_files_contact_add.txt"';
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\commande_ebp\command_files_contact_add.txt"';
 
             $first_ligne = "Civility;Name;FirstName;Phone;Email;typrContact;NomEntreprise;AssociatedCustomerId;xx_birthday";
             $param = "\n".$user->civility.";".$user->name.";".$user->first_name.";".$user->phone.";".$user->email.";Client/Prospect;".$user->compagny.";".$id_customer.";".$user->birthday;
 
-            $add_contact = fopen(__DIR__.'/../../../public/asset/test/add_contact.txt', 'w+');
+            $add_contact = fopen(__DIR__.'/../../../public/asset/commande_ebp/add_contact.txt', 'w+');
             fputs($add_contact,$first_ligne);
             fputs($add_contact,$param);
             fclose($add_contact);
@@ -104,11 +138,11 @@ class AdminController extends Controller
             rename(__DIR__."/../../../public/asset/document/newCustomer/".$user->IdUser."/KBIS.pdf", $target_file_kbis);
             rmdir(__DIR__."/../../../public/asset/document/newCustomer/".$user->IdUser);
 
-            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\test\command_files_customer_add.txt"';
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\public\asset\commande_ebp\command_files_customer_add.txt"';
 
             $first_ligne = "code;civility;adresseFac1;adresseFac2;codePostalFac;villeFac;contactCivilite;contactPrénom;contactNom;contactPhone;ContactMail;siteWeb;adressLiv1;adressLiv2;codePostalLiv;villeLiv;codepaysBanque;domiciliation;bban;bic;iban;Nom;Naf;siret;pays;VAT";
             $param = "\n".$id_customer.";".$user->statut.";".$user->soc_fac_adr1.";".$user->soc_fac_adr2.";".$user->soc_fac_zc.";".$user->soc_fac_city.";".$user->civility.";".$user->first_name.";".$user->name.";".$user->phone.";".$user->email.";".$user->website.";".$user->soc_liv_adr1.";".$user->soc_liv_adr2.";".$user->soc_liv_zc.";".$user->soc_liv_city.";".substr($user->rib_iban,0,2).";".$user->rib_domicil.";".substr($user->rib_iban,4).";".$user->rib_bic.";".$user->rib_iban.";".$user->compagny.";".$user->ape.";".$user->siret.";FR;".$user->vat_number;
-            $add_customer = fopen(__DIR__.'/../../../public/asset/test/add_customer.txt', 'w+');
+            $add_customer = fopen(__DIR__.'/../../../public/asset/commande_ebp/add_customer.txt', 'w+');
             fputs($add_customer,$first_ligne);
             fputs($add_customer,$param);
             fclose($add_customer);

@@ -83,6 +83,7 @@ class ItemController extends Controller
             }
 
             foreach ($items as $key =>$item ) {
+
                 if (array_key_exists($item->Id,$hidden_item) || array_key_exists($item->FamilyId,$hidden_item) || array_key_exists($item->SubFamilyId,$hidden_item))
                     $items->forget($key);
                 elseif (array_key_exists($item->Id,$price_item_client))
@@ -183,39 +184,51 @@ class ItemController extends Controller
     public function index()
     {
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
-        $items = Item::itemA()->paginate(20);
-        $number  = Item::itemA()->count();
-        $id_customer = '';
-        if (!is_null( Auth::user())) {
-            $id_customer = Auth::user()->Contact->Customer->Id;
-            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
-            $prices = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
-            ->where('InclusionType','<>','128')
-            ->where('InclusionType','<>','32')
-            ->whereIn('PriceListId',function ($query) {
-                $query->select('PriceListId')
-                ->from('PriceListInclusionLine')
-                ->where('StartElementId','=','INF009')
-                ->where('inclusionType','128')
-                ->orWhere(function($query) {
-                    $query->where('StartElementId', '004')
-                          ->where('inclusionType', '=', '32');
-                });
-            })
-            ->get();
 
-            foreach ($prices as $price) {
-                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
 
-                print_r($tmp_value->DiscountValue);
+        if (!isset($_GET["stock"])) {
+            if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
+                $items = Item::itemA()->paginate(20);
+
+                $items = $this->getPrice($items);
+
+                return view('product.home', compact('items', 'Families'));
             }
+            else if ($_GET["trie"] == 'PrixDecroissant') {
+                $items = Item::itemA()->orderBy('CostPrice')->paginate(20);
 
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }else if ($_GET["trie"] == 'PrixCroissant') {
+                $items = Item::itemA()->orderBy('CostPrice','desc')->paginate(20);
 
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }
+        }else {
+            if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
+                $items = Item::itemA()->where('RealStock','>','0')->paginate(20);
+
+                $items = $this->getPrice($items);
+
+                return view('product.home', compact('items', 'Families'));
+            }
+            else if ($_GET["trie"] == 'PrixDecroissant') {
+                $items = Item::itemA()->where('RealStock','>','0')->orderBy('CostPrice')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }else if ($_GET["trie"] == 'PrixCroissant') {
+                $items = Item::itemA()->where('RealStock','>','0')->orderBy('CostPrice','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
+            }
         }
 
 
-        return view('product.home', compact('items', 'Families','number'));
     }
+        
     public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
         $news = Item::itemA()->take(10)->get();
@@ -240,20 +253,121 @@ class ItemController extends Controller
 
     public function itembyCaption($Id)
     {
-        $marques = Db::connection('mysql')->table('main_carac')->select('marque')->distinct()->where('family', $Id)->get();
-        $memoire= Db::connection('mysql')->table('main_carac')->select('memoire')->distinct()->where('family', $Id)->get();
-        $taille_ecran= Db::connection('mysql')->table('main_carac')->select('taille_ecran')->distinct()->where('family', $Id)->get();
-        $ssd= Db::connection('mysql')->table('main_carac')->select('ssd')->distinct()->where('family', $Id)->get();
-        $os= Db::connection('mysql')->table('main_carac')->select('os')->distinct()->where('family', $Id)->get();
-        $chipset= Db::connection('mysql')->table('main_carac')->select('chipset')->distinct()->where('family', $Id)->get();
-        $fam_proc= Db::connection('mysql')->table('main_carac')->select('fam_proc')->distinct()->where('family', $Id)->get();
-        $sock_proc= Db::connection('mysql')->table('main_carac')->select('sock_proc')->distinct()->where('family', $Id)->get();
-        $gpu= Db::connection('mysql')->table('main_carac')->select('gpu')->distinct()->where('family', $Id)->get();
-        $puissance= Db::connection('mysql')->table('main_carac')->select('puissance')->distinct()->where('family', $Id)->get();
-        $frequ_mem= Db::connection('mysql')->table('main_carac')->select('frequ_memoire')->distinct()->where('family', $Id)->get();
-        $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
+
+        $marques = Db::connection('mysql')->table('main_carac')
+        ->select('marque')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $memoire= Db::connection('mysql')->table('main_carac')
+        ->select('memoire')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $taille_ecran= Db::connection('mysql')->table('main_carac')
+        ->select('taille_ecran')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $ssd= Db::connection('mysql')->table('main_carac')
+        ->select('ssd')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $os= Db::connection('mysql')->table('main_carac')
+        ->select('os')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $chipset= Db::connection('mysql')->table('main_carac')
+        ->select('chipset')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $fam_proc= Db::connection('mysql')->table('main_carac')
+        ->select('fam_proc')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $sock_proc= Db::connection('mysql')->table('main_carac')
+        ->select('sock_proc')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $gpu= Db::connection('mysql')->table('main_carac')
+        ->select('gpu')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $puissance= Db::connection('mysql')->table('main_carac')
+        ->select('puissance')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $frequ_mem= Db::connection('mysql')->table('main_carac')
+        ->select('frequ_memoire')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
+        $nb_barrette= Db::connection('mysql')->table('main_carac')
+        ->select('nb_barrette')
+        ->distinct()
+        ->where('family', $Id)
+        ->get();
+
         $Families = Family::all()->groupBy('MainIntervener');
-        $items  = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+
+        if (!isset($_GET["stock"])) {
+            if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
+                $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+
+                $items = $this->getPrice($items);
+
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }
+            else if ($_GET["trie"] == 'PrixDecroissant') {
+                $items = Item::itemA()->where('FamilyId', $Id)->orderBy('CostPrice')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }else if ($_GET["trie"] == 'PrixCroissant') {
+                $items = Item::itemA()->where('FamilyId', $Id)->orderBy('CostPrice','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }
+        }else {
+            if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
+                $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->paginate(20);
+
+                $items = $this->getPrice($items);
+
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }
+            else if ($_GET["trie"] == 'PrixDecroissant') {
+                $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('CostPrice')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }else if ($_GET["trie"] == 'PrixCroissant') {
+                $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('CostPrice','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+            }
+        }
+
 
         $checked="";
         return view('product.home', compact('items', 'checked','Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
