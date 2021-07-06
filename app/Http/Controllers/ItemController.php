@@ -182,12 +182,39 @@ class ItemController extends Controller
      */
     public function index()
     {
-
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->paginate(20);
+        $number  = Item::itemA()->count();
+        $id_customer = '';
+        if (!is_null( Auth::user())) {
+            $id_customer = Auth::user()->Contact->Customer->Id;
+            $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
+            $prices = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
+            ->where('InclusionType','<>','128')
+            ->where('InclusionType','<>','32')
+            ->whereIn('PriceListId',function ($query) {
+                $query->select('PriceListId')
+                ->from('PriceListInclusionLine')
+                ->where('StartElementId','=','INF009')
+                ->where('inclusionType','128')
+                ->orWhere(function($query) {
+                    $query->where('StartElementId', '004')
+                          ->where('inclusionType', '=', '32');
+                });
+            })
+            ->get();
 
-        $items = $this->getPrice($items);
-        return view('product.home', compact('items', 'Families'));
+            foreach ($prices as $price) {
+                $tmp_value = DB::connection('sqlsrv')->table('PriceListCalculationLine')->select('DiscountValue')->where('PriceListId',$price->PriceListId)->first();
+
+                print_r($tmp_value->DiscountValue);
+            }
+
+
+        }
+
+
+        return view('product.home', compact('items', 'Families','number'));
     }
     public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
@@ -206,7 +233,7 @@ class ItemController extends Controller
         return view('product.show', compact('item'));
     }
 
-    public function emal(){
+    public function email(){
         Mail::to('mhwalid7@gmail.com')->send(new OrderMail());
         return "walid";
     }
