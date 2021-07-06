@@ -28,12 +28,10 @@ Route::get('/boutique', 'ItemController@index')->name('product.index');
 Route::post('/boutique', 'ItemController@trie')->name('product.trie');
 Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itembyCaption');
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
-Route::get('/boutique/{Id}', 'ItemController@show')->middleware('verified')->name('product.show');
+Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
 
-Route::post('/Boutique/Family/{Id}', 'ItemController@filters')->name('filter');
-
-
+Route::post('/Boutique/Family/S/{Id}', 'ItemController@filters')->name('filter');
 //le panier
 Route::get('/panier', 'Shop\CartController@index')->middleware('verified')->name('cart.index');
 Route::get('/panier', 'Shop\CartController@index')->name('cart.index')->middleware('auth');
@@ -60,8 +58,12 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('/banner/Update/{family}' ,'AdminController@familyBannerUpdate')->name('admin.banner.update.family');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+       Route::get('/ean', 'AdminController@ean')->name('admin.ean');
+     Route::post('/product', 'AdminController@product')->name('admin.product');
+     Route::post('/submitdata', 'AdminController@submitdata')->name('admin.submitdata');
     // Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');
     // Route::post('/register', 'Auth\AdminRegisterController@register')->name('admin.register.submit');
+
 
     //action on User
     Route::delete('/user/delete/{id}','AdminController@deleteUser')->name('admin.delete.user');
@@ -85,7 +87,6 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 ###################### test the connection #############
 
-Route::get('/conn', 'CustomerContoller@conn');
 
 //Item
 Route::get('generate-feature/{Id}','ItemController@feature');
@@ -99,6 +100,10 @@ Route::get('/contact','ItemController@contact')->name('contact');
 Route::get('/index','ItemController@index')->name('index');
 //payement
 Route::get('/payement','ItemController@payement')->name('payement');
+//qui
+Route::get('/Qui-Sommes-Nous','ItemController@qui')->name('qui');
 
 
 
+//test url
+Route::get('/conn', 'ItemController@emal');

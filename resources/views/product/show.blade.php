@@ -7,12 +7,19 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
-            <div class="col-12 mb-4 pb-4"  style="width: 488px; height: 300px;">
+
+            <div class="col-12 mb-4 pb-4" id="produitimage"  >
+
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                    <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
+                    @else
+                    <img src="{{asset('asset/img/img-indispo-480.jpg')}}"
+                    class="img-fluid z-depth-1 mr-8" id="image">
+                    @endif
                 </a>
               </figure>
             </div>
@@ -115,12 +122,9 @@
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
-
-  </div>
+      </div>
         @endif
-
         <hr>
-
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
             @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
@@ -139,7 +143,7 @@
                     @endif
                 </div>
             @endif
-
+            @auth
             <form action="{{ route('cart.store') }}" method="POST">
                 @csrf
 
@@ -148,12 +152,13 @@
                     value="1">
                 <input type="hidden" name="price" value={{ $item->CostPrice }}>
 
-                <button type="submit" class="btn  boutton "><i
+                <button type="submit" class="btn  boutton " id="btnshow"><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
 
             </form>
+            @endauth
             @else
-                    <button type="submit" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
+                    <button type="submit" id="btnshow" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
                     </button>
                 @endif
                 <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
@@ -173,14 +178,84 @@
 
             @endif
             </ul>
-        <button  id="plusinfo" class=" btn btn-dark btn-md mr-1 mb-2">Plus de détails</button>
-        <button  id="moinsinfo" class=" btn btn-dark btn-md mr-1 mb-2">Moins de détails</button>
+        <button  id="plusinfo" class=" btn btn-dark btn-md ml-4 mb-2">Plus de détails</button>
+        <button  id="moinsinfo" class=" btn btn-dark btn-md ml-4 mb-2">Moins de détails</button>
   </div>
 </div>
+  <!-- Creates the bootstrap modal where the image will appear -->
+  <div class="modal fade " id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
+    <div class="contents">
+        <div class="modal-dialog" id="placecarouspopup" >
+            <div class="modal-content" style="background-color:transparent;" >
+              <div class="modal-header" style="margin-bottom: -100px;
+              margin-top: -100px; border-bottom:none; ">
+
+
+        <div class="divCarousel" style="" >
+            <div class="divCarousel" style=" height: 0px;" >
+
+                <div id="carouselExampleCaptions" class="carousel divCarousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators " style=" bottom: 95%;">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="li"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class="activeli"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2" class="activeli1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3" class="activeli2"></li>
+                    </ol>
+                    <div class="carousel-inner" id="carouszoom" >
+                        <div class="carousel-item">
+                            <img class="d-block w-100" id="imgzoom"     data-src="" alt="First slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" data-holder-rendered="true" >
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" id="imgzoom"    alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium2.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active1">
+                            <img class="d-block w-100" id="imgzoom"    alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium3.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                        <div class="carousel-item active2">
+                            <img class="d-block w-100" id="imgzoom"  alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium4.jpg')}}" data-holder-rendered="true">
+                            <div class="carousel-caption d-none d-md-block">
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev" style="opacity: 1; ">
+                        <i class="fas fa-arrow-circle-left"></i>
+
+                        {{-- <span class="carousel-control-prev-icon" aria-hidden="true" style="opacity: 1; ";></span> --}}
+
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                        <i class="fas fa-arrow-circle-right"></i>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+            </div>
+        </div>
+
 
 
 <script>
 $('#moinsinfo').hide();
+if (0 == $('#datalist li:hidden').length) {
+                $('#plusinfo').hide();
+                $('#moinsinfo').hide();
+            }
+
+
     var thumbImage =document.querySelectorAll('.img-thumbnail');
               thumbImage.forEach((element) => element.addEventListener('mouseenter', changeImage));
              function changeImage(element){
@@ -210,8 +285,29 @@ $('#moinsinfo').hide();
                      }
                 });
              });
+
+
+
+
+
+      var x = window.matchMedia("(min-width: 480px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction)
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    $("#pop").on("click", function() {
+
+         $('#imagepreview').attr('src', $('#imagezoom').attr('src')); // here asign the image to the modal when the user click the enlarge link
+         $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+      });
+
+
+  } else {
+
+  }
+}
+
 </script>
 
 @endsection
-
-

@@ -1,0 +1,56 @@
+#qui{
+    flex-direction: column;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+
+
+}
+#quimargin{
+    margin-right: 15%;
+    width: 15%;
+    height: 15%;
+}
+#quimargin2{
+    width: 15%;
+    height: 15%;
+}
+#tailletextequi{
+    margin-bottom: 0px;
+}
+
+#textequi{
+    font-size: 20px;
+     max-width: 95%;
+}
+@media screen and (min-width: 0px) and (max-width: 461px) {
+    #textequi{
+        font-size: 10px;
+        max-width: 95%;
+    }
+    #tailletextequi{
+        font-size: 10px;
+        margin-bottom: 0px;
+    }
+    #tailletextequi2{
+        font-size: 10px;
+    }
+    #quimargin{
+        margin-right: 15%;
+        width: 35%;
+        height: 35%;
+    }
+    #quimargin2{
+        width: 35%;
+        height: 35%;
+    }
+    .boutton{
+        font-size: 11px;
+    }
+    #quihaut{
+        margin-top: 35%;
+    }
+
+
+
+}
