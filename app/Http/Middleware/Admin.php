@@ -21,7 +21,6 @@ class Admin
 
         if (Auth::guard('web')->check()) {
             return redirect(RouteServiceProvider::HOME);
-
         }
 
         return $next($request);

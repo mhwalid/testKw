@@ -16,16 +16,18 @@
            <li>
              <a href="#!" id="footerjaune" >Certifications</a>
            </li>
+
          </ul>
        </div>
        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
          <h5 >  Mon compte</h5>
          <ul class="list-unstyled mb-0 text-light">
              <li>
-                 <a href="#!" id="footerjaune" >Nouveau client</a>
+                 <a href="{{ route('register') }}" id="footerjaune" >Nouveau client</a>
                </li>
+
            <li>
-             <a href="#!"id="footerjaune" >Mon compte</a>
+             <a href="{{ route('contact.index') }}"id="footerjaune" >Mon compte</a>
            </li>
          </ul>
        </div>
@@ -57,6 +59,17 @@
                data-mdb-ripple-color="light" style="font-size: 3rem"
                ><i class="fab fa-facebook-f"></i
              ></a>
+
+
+             <!-- Mail -->
+             {{-- <a
+               class="btn btn-link btn-floating btn-lg text-dark m-1"
+               href="mailto:vente@kw-distribution.com"
+               role="button"
+               data-mdb-ripple-color="light" style="font-size: 3rem"
+               ><i class="fas fa-envelope"></i></a> --}}
+
+             <!-- Instagram -->
              <a
                class="btn btn-link btn-floating btn-lg text-dark mt-5"
                href="https://www.instagram.com/kwdistribution/?hl=fr"
@@ -72,7 +85,59 @@
                data-mdb-ripple-color="light" style="font-size: 3rem"
                ><i class="fab fa-linkedin"></i
              ></a>
+
+
+
+
+
        </div>
+       <!--Grid column-->
+     </div>
+     <!--Grid row-->
+   </div>
+   <!-- Grid container -->
+
+   <div class="container p-4">
+
+   <div class="row">
+     <!--Grid column-->
+     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+       <p >Copyright © 2021 Kw-distribution</p>
+
+     </div>
+     <!--Grid column-->
+
+     <!--Grid column-->
+     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+       <p>Politique de cookies</p>
+
+
+     </div>
+     <!--Grid column-->
+
+     <!--Grid column-->
+     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+       <p >C.G.V</p>
+
+     </div>
+     <!--Grid column-->
+
+     <!--Grid column-->
+     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+       <p>Mentions légales</p>
+
+
+       </ul>
+
      </div>
    </div>
-  </footer>
+
+   <!--Grid row-->
+ </div>
+
+
+
+ </footer>
+
+ <!-- Fin Footer -->
+

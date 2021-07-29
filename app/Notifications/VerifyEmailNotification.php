@@ -42,8 +42,13 @@ class VerifyEmailNotification extends VerifyEmail
     public function toMail($notifiable)
     {
         $verificationUrl = $this->verificationUrl($notifiable);
+        if ($notifiable->civility == "Monsieur") {
+            $name = "M.".$notifiable->name;
+        }else{
+            $name = "Mme.".$notifiable->name;
+        }
 
-        return (new MailMessage)->view('emails.verify_user', ['url' => $verificationUrl]);
+        return (new MailMessage)->subject('e-mail de vérification')->view('emails.verify_user', ['url' => $verificationUrl, 'name' => $name]);
     }
 
     /**

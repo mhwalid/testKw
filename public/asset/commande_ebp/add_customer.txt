@@ -1,2 +1,0 @@
-code;civility;adresseFac1;adresseFac2;codePostalFac;villeFac;contactCivilite;contactPrénom;contactNom;contactPhone;ContactMail;siteWeb;adressLiv1;adressLiv2;codePostalLiv;villeLiv;codepaysBanque;domiciliation;bban;bic;iban;Nom;Naf;siret;pays;VAT
-TES001;Auto-Entrepreneur;1 rue de test;;69000;Lyon;Monsieur;alix;test;0389131313;test@mailhog.local;;1 rue de test;;69000;Lyon;FR;BNP Paribas;30004000031234567890143;BNPAFRPP;FR7630004000031234567890143;TEST;0111Z;36252187900034;FR;FR00362521879

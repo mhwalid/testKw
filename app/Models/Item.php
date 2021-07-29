@@ -29,6 +29,10 @@ class Item extends Model
 
     public function ScopeItemA($query)
     {
+        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy('RealStock','desc');
+    }
+    public function ScopeItemNT($query)
+    {
         return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0);
     }
 

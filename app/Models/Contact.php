@@ -20,14 +20,17 @@ class Contact extends Model
         'ContactFields_Name',
         'ContactFields_FirstName',
         'ContactFields_Phone',
+        'ContactFields_CellPhone',
         'ContactFields_Email',
         'AssociatedCustomerId',
         'OtherAddressFields_Civility',
         'OtherAddressFields_ThirdName',
         'xx_passwd',
         'xx_birthday',
+        'IsWebContact',
     ];
     protected $hidden = [''];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class,'AssociatedCustomerId','Id');

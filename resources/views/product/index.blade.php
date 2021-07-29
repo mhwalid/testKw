@@ -6,6 +6,7 @@
 @section('home')
 
 {{-- Caroussel 1  --}}
+
     <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner" id="hg">
         <div class="carousel-item active">
@@ -104,6 +105,7 @@
 
         </div>
     </div>
+
 
 
         <div id="divpartenaire" style="display:flex; justify-content: center; ">

@@ -25,6 +25,9 @@
     <!-- Styles -->
     @yield('extra-css')
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/contact.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}" >
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet">

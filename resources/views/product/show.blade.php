@@ -48,7 +48,9 @@
         <h5>{{ $item->family->Caption ?? $item->FamilyId}}</h5>
         <p class="mb-2 text-muted text-uppercase small">{{ $item->DesComClear }}</p>
         @guest <p><em class=" ml-4 bg-warning">Connectez-vous pour voir les prix !</em></p> @else
-        <p><span class="mr-1"><strong>{{ number_format($item->CostPrice, 2) }} €</strong></span></p>
+            @if (!is_null(Auth::user()->email_verified_at) && Auth::user()->compte_actif ==1)
+                <p><span class="mr-1"><strong>{{ number_format($item->SalePriceVatExcluded, 2) }} €</strong></span></p>
+            @endif
         @endguest
         @if ($item->maincarac)
         <div class="scroller">
@@ -150,7 +152,7 @@
                 <input type="text" name="item_id" value="{{ $item->Id }}">
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
-                <input type="hidden" name="price" value={{ $item->CostPrice }}>
+                <input type="hidden" name="price" value={{ $item->SalePriceVatExcluded }}>
 
                 <button type="submit" class="btn  boutton " id="btnshow"><i
                     class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>

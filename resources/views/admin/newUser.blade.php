@@ -10,6 +10,7 @@
                         <tr>
                         <th scope="col">{{ __('Identity')}} </th>
                         <th scope="col">{{ __('Personal Phone Number')}} </th>
+                        <th scope="col">{{ __('Personal CellPhone Number')}} </th>
                         <th scope="col">{{ __('Compagny')}} </th>
                         <th scope="col">{{ __('Statut')}} </th>
                         <th scope="col">{{ __('Siret')}} </th>
@@ -30,6 +31,7 @@
                         <tr>
                             <td>{{ $user->civility }} {{ $user->name }} {{ $user->first_name }}</td>
                             <td>{{$user->phone }} </td>
+                            <td>{{$user->cell_phone }} </td>
                             <td>{{$user->compagny }} </td>
                             <td>{{$user->statut }} </td>
                             <td>{{$user->siret }} </td>
@@ -78,6 +80,7 @@
                         <tr>
                             <th scope="col">{{ __('Identity')}} </th>
                             <th scope="col">{{ __('Personal Phone Number')}} </th>
+                            <th scope="col">{{ __('Personal CellPhone Number')}} </th>
                             <th scope="col">{{ __('Compagny')}} </th>
                             <th scope="col">{{ __('Statut')}} </th>
                             <th scope="col">{{ __('Siret')}} </th>
@@ -98,6 +101,7 @@
                         <tr>
                             <td>{{ $user->civility }} {{ $user->name }} {{ $user->first_name }}</td>
                             <td>{{$user->phone }} </td>
+                            <td>{{$user->cell_phone }} </td>
                             <td>{{$user->compagny }} </td>
                             <td>{{$user->statut }} </td>
                             <td>{{$user->siret }} </td>

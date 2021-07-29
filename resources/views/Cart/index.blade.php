@@ -49,7 +49,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach (Cart::content() as $item)
                                     {{ $arrivage = false }}
 
@@ -72,12 +71,17 @@
 
                                         <td class="border-0 align-middle">{{ $item->price }}<strong></strong></td>
                                         <td class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
-                                        <td class="border-0 align-middle"> <select class="custom-select" name="qty" id="qty"
+                                        <td class="border-0 align-middle">
+                                            @php
+                                                $itemModel = $item->model;
+                                            @endphp
+                                            <select class="custom-select" name="qty" id="qty"
                                                 data-id="{{ $item->rowId }}"
-                                                data-stock="{{ intval($item->model->RealStock) }}"
-                                                data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
+                                                data-stock="{{ intval($itemModel->RealStock) }}"
+                                                data-arrivage="{{ intval($itemModel->arrivage->first()->Quantity ?? 0) }}">
 
-                                                @for ($i = 1; $i <= $item->model->RealStock; $i++)
+
+                                                @for ($i = 1; $i <= $itemModel->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
                                                         {{ $i }}
@@ -106,9 +110,10 @@
             </div>
 
             <div class="row py-5 p-4 bg-white rounded shadow-sm">
-                
+
                 <div class="col-lg-6">
                     <form class="mx-4" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
+
 
                     <div style="background-color: #D6D1C1" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
 
@@ -160,13 +165,13 @@
                                     class="text-muted">Tax</strong><strong>{{ Cart::tax() }}</strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong
                                     class="text-muted">Total</strong>
-                                <h5 class="font-weight-bold">{{ Cart::total() }} </h5> 
+                                <h5 class="font-weight-bold">{{ Cart::total() }} </h5>
                             </li>
                         </ul>
-                       
+
                     </div>
                 </div>
-                
+
             </div>
 
         </div>

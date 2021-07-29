@@ -1,2 +1,0 @@
-Civility;Name;FirstName;Phone;Email;typrContact;NomEntreprise;AssociatedCustomerId;xx_birthday
-Monsieur;test;alix2;0389131313;test3@mailhog.local;Client/Prospect;TEST;TES001;

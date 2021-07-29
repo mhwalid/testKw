@@ -16,7 +16,9 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+
 
 class ItemController extends Controller
 {
@@ -29,7 +31,8 @@ class ItemController extends Controller
         $price_item_famy = [];
         $hidden_item = [];
 
-        if (!is_null( Auth::user())) {
+        if (!is_null( Auth::user()) && !is_null(Auth::user()->email_verified_at) && Auth::user()->compte_actif ==1) {
+
             $id_customer = Auth::user()->Contact->Customer->Id;
             $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
             $prices_client = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
@@ -39,7 +42,7 @@ class ItemController extends Controller
                 $query->select('PriceListId')
                 ->from('PriceListInclusionLine')
                 ->where('StartElementId','=',$id_customer)
-                ->where('inclusionType','128');
+                ->where('InclusionType','128');
             })
             ->get();
 
@@ -50,7 +53,7 @@ class ItemController extends Controller
                 $query->select('PriceListId')
                 ->from('PriceListInclusionLine')
                 ->where('StartElementId', $id_customer_family)
-                ->where('inclusionType', '=', '32');
+                ->where('InclusionType', '=', '32');
             })
             ->get();
 
@@ -87,17 +90,17 @@ class ItemController extends Controller
                 if (array_key_exists($item->Id,$hidden_item) || array_key_exists($item->FamilyId,$hidden_item) || array_key_exists($item->SubFamilyId,$hidden_item))
                     $items->forget($key);
                 elseif (array_key_exists($item->Id,$price_item_client))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->Id])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->Id])/100);
                 elseif (array_key_exists($item->FamilyId,$price_item_client))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->FamilyId])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->FamilyId])/100);
                 elseif (array_key_exists($item->SubFamilyId,$price_item_client))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->SubFamilyId])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->SubFamilyId])/100);
                 elseif (array_key_exists($item->Id,$price_item_famy))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->Id])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->Id])/100);
                 elseif (array_key_exists($item->FamilyId,$price_item_famy))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->FamilyId])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->FamilyId])/100);
                 elseif (array_key_exists($item->SubFamilyId,$price_item_famy))
-                    $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->SubFamilyId])/100);
+                    $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->SubFamilyId])/100);
             }
         }
         return $items;
@@ -108,7 +111,7 @@ class ItemController extends Controller
         $price_item_client = [];
         $price_item_famy = [];
         $hidden_item = [];
-        if (!is_null( Auth::user())) {
+        if (!is_null( Auth::user()) && !is_null(Auth::user()->email_verified_at) && Auth::user()->compte_actif ==1) {
             $id_customer = Auth::user()->Contact->Customer->Id;
             $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
             $prices_client = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
@@ -161,20 +164,19 @@ class ItemController extends Controller
             }
 
             if (array_key_exists($item->Id,$price_item_client))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->Id])/100);
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->Id])/100);
             elseif (array_key_exists($item->FamilyId,$price_item_client))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->FamilyId])/100);
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->FamilyId])/100);
             elseif (array_key_exists($item->SubFamilyId,$price_item_client))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_client[$item->SubFamilyId])/100);
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_client[$item->SubFamilyId])/100);
             elseif (array_key_exists($item->Id,$price_item_famy))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->Id])/100);
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->Id])/100);
             elseif (array_key_exists($item->FamilyId,$price_item_famy))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->FamilyId])/100);
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->FamilyId])/100);
             elseif (array_key_exists($item->SubFamilyId,$price_item_famy))
-                $item->CostPrice = $item->CostPrice*((100-$price_item_famy[$item->SubFamilyId])/100);
-
-            return $item;
+                $item->SalePriceVatExcluded = $item->SalePriceVatExcluded*((100-$price_item_famy[$item->SubFamilyId])/100);
         }
+        return $item;
     }
     /**
      * Display a listing of the resource.
@@ -184,15 +186,23 @@ class ItemController extends Controller
     public function index()
     {
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+        // dd(Auth::guard('unconfirmed')->user());
         $items = Item::itemA()->paginate(20);
 
         if (!isset($_GET["stock"])) {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemA()->orderBy('CostPrice')->paginate(20);
+
+                $items = Item::itemNT()->orderBy('SalePriceVatExcluded')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemA()->orderBy('CostPrice','desc')->paginate(20);
+                $items = Item::itemNT()->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
             }
         }else {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
@@ -200,16 +210,17 @@ class ItemController extends Controller
                 $items = $this->getPrice($items);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemA()->where('RealStock','>','0')->orderBy('CostPrice')->paginate(20);
+
+                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
                 $items = $this->getPrice($items);
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemA()->where('RealStock','>','0')->orderBy('CostPrice','desc')->paginate(20);
-            $items = $this->getPrice($items);
+                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families'));
             }
         }
-        return view('product.home', compact('items', 'Families'));
-
-
+    }
 
     }
         
@@ -256,18 +267,31 @@ class ItemController extends Controller
                 $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemA()->where('FamilyId', $Id)->orderBy('CostPrice')->paginate(20);
+                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemA()->where('FamilyId', $Id)->orderBy('CostPrice','desc')->paginate(20);
+                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+
             }
         }else {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
                 $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->paginate(20);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-               $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('CostPrice')->paginate(20);
+                $items = Item::itemNT()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('CostPrice','desc')->paginate(20);
+                $items = Item::itemNT()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+
+                $items = $this->getPrice($items);
+                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }
         }
         $items = $this->getPrice($items);
@@ -287,7 +311,6 @@ class ItemController extends Controller
     {
         return view('product.qui');
     }
-
 
     public function search(Request $request)
     {
@@ -318,6 +341,7 @@ class ItemController extends Controller
             }
         }
     }
+
 
     public function filters(Request $rq){
         $Id=$rq->FamilyId;
@@ -357,6 +381,7 @@ class ItemController extends Controller
                 if(is_array($index) || is_object($index)){
                     foreach($index as $value){
                         $checked.= $value.";";
+
                     }
                    }else{
                     $checked.= $index.";";
