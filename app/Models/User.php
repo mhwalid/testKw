@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'civility',
         'first_name',
         'phone',
+        'cell_phone',
         'birthday',
         'newsletter',
         'adresse1',
@@ -33,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'city',
         'statut',
         'compagny',
+        'soc_email_compta',
         'siret',
         'ape',
         'vat_number',
@@ -67,14 +69,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Contact::class ,'IdUser','Id');
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class ,'have_customer','UniqueId');
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
     }
 
     public function Orders(){
-        return $this->hasMany(Order::class ,'InvoicingContactId','IdUser')->where('DocumentType','=', 2);   
+        return $this->hasMany(Order::class ,'InvoicingContactId','IdUser')->where('DocumentType','=', 2);
     }
 
-    
+
 }

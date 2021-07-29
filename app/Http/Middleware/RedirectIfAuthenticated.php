@@ -26,6 +26,10 @@ class RedirectIfAuthenticated
                 return redirect()->route('admin.dashboard');
             }
 
+            if ($guard == "ldap_admin" && Auth::guard($guard)->check()) {
+                return redirect()->route('admin.dashboard');
+            }
+
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }

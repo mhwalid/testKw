@@ -3,39 +3,48 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Ldap\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use LdapRecord\Container;
+use Illuminate\Support\Facades\Session;
 
 class AdminLoginController extends Controller
 {
+    use AuthenticatesUsers;
+
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->connection = Container::getConnection('default');
+        $this->middleware('guest:ldap_admin')->except('logout');
     }
 
     public function showLoginForm()
     {
-        return view('auth.admin_login');
+      return view('auth.admin_login');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return [
+            'mail' => $request->email,
+            'password' => $request->password,
+            'fallback' => [
+                'email' => $request->email,
+                'password' => $request->password,
+            ],
+        ];
     }
 
     public function login(Request $request)
     {
-
-        $data=$request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-            $admin = Admin::where('email' ,$data['email'])->first();
-
-            if(!is_null($admin)){
-               $login= Auth::guard('admin')->attempt(['email' => $request->email, 'password' =>$request->password]);
-                    if($login) {return redirect()->route('admin.dashboard');}
-                    else{ return redirect()->route('admin.login')->withErrors(['name' =>"Email ou mot de passe incorrect " ]);}
-            }
-            return redirect()->route('admin.login')->withErrors(['name' =>"Email ou mot de passe incorrect" ]);
-
-
+        if(Auth::guard('ldap_admin')->attempt($this->credentials($request))) {
+            return redirect()->route('admin.dashboard');
+        }
+        else{
+            return redirect()->route('admin.login')
+                ->withErrors(['name' =>"Email ou mot de passe incorrect " ]);
+        }
     }
 }

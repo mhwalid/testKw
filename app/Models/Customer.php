@@ -56,7 +56,7 @@ class Customer extends Model
 
     public function contact()
     {
-        return $this->hasMany(Contact::class,'Id','AssociatedCustomerId');
+        return $this->hasMany(Contact::class,'AssociatedCustomerId','Id');
     }
 
 }

@@ -118,7 +118,7 @@ ul {
 
 /*Fin Footer */
 
-/ Navbar /
+/* Navbar */
 
 /* #Nav{
     padding: 20px;
@@ -140,7 +140,7 @@ ul {
 }
 
 #search{
-    / float:left; /
+    /* float:left; */
     margin-left: 150px;
     width: 600px;;
     margin-top:7px;
@@ -149,9 +149,14 @@ ul {
 
 }
 
-/ Fin Navbar /
+.search{
+    /* float:left; */
+    width: 600px;
+}
 
-/ show /
+/* Fin Navbar */
+
+/* show */
 
 .mb-show{
     text-align:center;
@@ -162,7 +167,7 @@ ul {
     padding-top:20px; */
 }
 
-/ fin show /
+/* fin show */
 
 
 
@@ -203,7 +208,7 @@ body{
     list-style-type: none;
 }
 
-/ Carousel couleur fleche du zoom /
+/* Carousel couleur fleche du zoom */
 .carousel-control-next {
     filter: invert(100%);
     }
@@ -434,7 +439,7 @@ body{
       input[type=number] {
         border: 1px solid #ddd;
         text-align: center;
-        / font-size: 1.6em; /
+        /* font-size: 1.6em; */
         -moz-appearance: textfield;
       }
       input[type=number]::-webkit-outer-spin-button,
@@ -564,7 +569,7 @@ body{
 
   }
 
-   / The Transformation /
+   /* The Transformation */
   .item:hover  {
 
     transform: scale(1.1);

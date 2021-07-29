@@ -1,2 +1,0 @@
-/Database=C:\Users\walid\Documents\TEST_GESTION.ebp
-/ExportPdf=SaleInvoice;FA20171305;C:\laragon\www\test.pdf;6ba0611b-7352-4b1c-a548-7f287baadf90;

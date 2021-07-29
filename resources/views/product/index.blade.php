@@ -8,19 +8,14 @@
 {{-- Caroussel 1  --}}
     <div   id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/banner/Visuel_maquette.jpg')}}" alt="First slide">
-        </div>
-
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{asset('asset/banner/acceuil.jpg')}}" alt="First slide">
+            </div>
         </div>
 
   </div>
 
 {{-- premier caroussel --}}
-
-
-
-
 
     <div class="container-fluid">
 
@@ -182,13 +177,13 @@
     </div>
 
 
-        <div style="display:flex; justify-content: center; ">
-            <img style=" width: 200px; height: 300px; margin-bottom: 50px;" class="" src="{{asset('asset/img/Certification.svg')}}"
-            alt="Certification">
-            <h1  style=" padding-left: 40px; padding-top: 50px; width: 600px; font-family: 'Roboto', sans-serif; ">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
-            Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
+    <div style="display:flex; justify-content: center; ">
+        <img style=" width: 200px; height: 300px; margin-bottom: 50px;" class="" src="{{asset('asset/img/Certification.svg')}}"
+        alt="Certification">
+        <h1  style=" padding-left: 40px; padding-top: 50px; width: 600px; font-family: 'Roboto', sans-serif; ">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
+        Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
 
-        </div>
+    </div>
 
 
 

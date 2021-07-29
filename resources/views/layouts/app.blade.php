@@ -27,6 +27,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @yield('extra-css')
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/contact.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}" >
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">

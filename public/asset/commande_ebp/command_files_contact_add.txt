@@ -1,2 +1,0 @@
-/Database=C:\Users\alix\Documents\TEST_GESTION.ebp
-/Import=C:\laragon\www\testKw\public\asset\test\add_contact.txt;Contacts;addContact;stop

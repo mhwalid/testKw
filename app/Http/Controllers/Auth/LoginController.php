@@ -54,14 +54,36 @@ class LoginController extends Controller
             'email' => 'required|string',
             'password' => 'required|string',
         ]);
-            $user = User::where('email' ,$data['email'])->first();
 
-            if(!is_null($user)){
-               $login= Auth::attempt(['email' => $request->email, 'password' =>$request->password]);
-                    if($login) {return redirect()->intended(RouteServiceProvider::HOME);}
-                    else{ return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect " ]);}
+            if (Auth::attempt($data)) {
+                // dd(Auth::user()->customer->ActiveState);
+                if (is_null(Auth::user()->IdUser)) {
+                    return redirect()->intended(RouteServiceProvider::HOME);
+                }
+
+                if (Auth::user()->contact->IsWebContact == "1" ) {
+                    if (Auth::user()->customer->ActiveState == "0") {
+                        return redirect()->intended(RouteServiceProvider::HOME);
+                    }
+                    auth()->logout();
+                    return redirect()->route('login')->withErrors(['name' =>"Votre entreprise n'est pas active" ]);
+                }
+                auth()->logout();
+                return redirect()->route('login')->withErrors(['name' =>"votre compte n'est pas activé" ]);
             }
             return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect" ]);
+
+            //connexion via contact de sqlsvr (work in progress)
+            // if (Auth::guard('unconfirmed')->attempt($data)) {
+            //     return redirect()->intended(RouteServiceProvider::HOME);
+            // }elseif (Auth::attempt($data)) {
+            //     if (Auth::user()->IsWebContact == "1") {
+            //             return redirect()->intended(RouteServiceProvider::HOME);
+            //         }
+            //         auth()->logout();
+            //         return redirect()->route('login')->withErrors(['name' =>"votre compte n'est pas activé" ]);
+            // }
+            // return redirect()->route('login')->withErrors(['name' =>"Email ou mot de passe incorrect" ]);
     }
 
 }

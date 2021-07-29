@@ -67,7 +67,9 @@ class RegisterController extends Controller
             'webSite' => ['url','nullable'],
             'iban' => ['regex:/^[A-Z]{2}[0-9]{2}[0-9]{5}[0-9]{5}[0-9a-zA-Z]{11}[0-9]{2}$/','size:27','nullable'],
             'bic' => ['between:8,11','nullable'],
-            'compagnyId' => ['exists:App\Models\Customer,UniqueId','nullable']
+            'compagnyId' => ['exists:App\Models\Customer,UniqueId','nullable'],
+            'mailCompta' => ['nullable', 'string', 'email', 'max:255', 'unique:App\Models\Customer,xx_email_compta'],
+            'cellPhoneNumber' => ['required','numeric']
         ]);
     }
 
@@ -79,9 +81,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        $id_contact = Str::uuid();
-        $id_contact = strtoupper($id_contact);
+        // $id_contact = strtoupper($id_contact);
 
         if ($data['haveCustomer'] == 0) {
 
@@ -94,7 +94,7 @@ class RegisterController extends Controller
 
             //add document to public/asset/document/newCustomer/$id_contact
 
-            $target_dir = __DIR__."/../../../../public/asset/document/newCustomer/".$id_contact."/";
+            $target_dir = __DIR__."/../../../../public/asset/document/newCustomer/".$data['name']."".$data['firstName']."/";
             if (!is_dir($target_dir)) {
                 mkdir($target_dir);
             }
@@ -106,12 +106,12 @@ class RegisterController extends Controller
             move_uploaded_file($_FILES["kbis"]["tmp_name"],$target_file_kbis);
 
             return User::create([
-                'IdUser' => $id_contact,
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'first_name' => $data['firstName'],
                 'phone' => $data['phoneNumber'],
+                'cell_phone' => $data['cellPhoneNumber'],
                 'birthday' => $data['birthDate'],
                 'civility' => $data['civility'],
                 'newsletter' => $data['newsletter'],
@@ -121,6 +121,7 @@ class RegisterController extends Controller
                 'city' => 'vide',
                 'statut' => $data['formeJuridique'],
                 'compagny' => $data['socialReason'],
+                'soc_email_compta' => $data['mailCompta'],
                 'siret' => $data['siret'],
                 'ape' => $data['ape'],
                 'vat_number' => $vat_number,
@@ -148,12 +149,12 @@ class RegisterController extends Controller
             $bank_info = DB::connection('sqlsrv')->table('ThirdBankAccountDetail')->where('CustomerId',$customer->Id)->first();
 
             return User::create([
-                'IdUser' => $id_contact,
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'first_name' => $data['firstName'],
                 'phone' => $data['phoneNumber'],
+                'cell_phone' => $data['cellPhoneNumber'],
                 'birthday' => $data['birthDate'],
                 'civility' => $data['civility'],
                 'newsletter' => $data['newsletter'],
@@ -163,6 +164,7 @@ class RegisterController extends Controller
                 'city' => 'vide',
                 'statut' => $customer->Civility,
                 'compagny' => $customer->Name,
+                'soc_email_compta' => $customer->xx_email_compta,
                 'siret' => $customer->xx_siret ,
                 'ape' => $customer->NAF,
                 'vat_number' => $customer->IntracommunityVATNumber,
@@ -204,6 +206,5 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
                         ?: redirect()->route('verification.notice');
-
     }
 }

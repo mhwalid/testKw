@@ -8,9 +8,9 @@
 
 <div class="container-fluid">
     @if (($re[0] == 'Family'))
-        <img id="imgcatégorie" src="{{asset('asset/banner/'.$family[0].'.jpg')}}" alt="Certification">
+        <img id="imgcatégorie" src="{{asset('asset/banner/'.$family[0].'.jpg')}}" alt="kwd_banner_produit">
     @else
-        <img id="imgcatégorie" src="{{asset('asset/banner/allItem.jpg')}}" alt="Certification">
+        <img id="imgcatégorie" src="{{asset('asset/banner/allItem.jpg')}}" alt="kwd_banner_allItem">
     @endif
 </div>
 
@@ -88,13 +88,13 @@
                     </div>
                     <a id="Catégorie" href="{{ route('product.show', $item->Id) }}"> <strong class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
                         @auth
-                            <h5 style="position: absolute; margin-left:991px" class="mb-0">{{ number_format($item->CostPrice, 2) }}€</h5>
+                            <h5 style="position: absolute; margin-left:991px" class="mb-0">{{ number_format($item->SalePriceVatExcluded, 2) }}€</h5>
                         @endauth
                         @if ($item->RealStock>0)
                             <form action="{{ route('cart.store') }}" method="POST" >
                                 @csrf
                                 <input type="hidden" name="item_id" value="{{ $item->Id }}">
-                                <input type="hidden" name="price" value={{ $item->CostPrice }}>
+                                <input type="hidden" name="price" value={{ $item->SalePriceVatExcluded }}>
                                 <input type="hidden" name="quantity" value="1">
                                 <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">
                                     <img style="width: 20px; height:20px; "   class="" src="{{asset('asset/img/Ajouter_au_panier.svg')}}" alt="Certification"></button>

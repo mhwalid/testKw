@@ -50,13 +50,13 @@
                     test+='</div>\
                         <a id="Catégorie" href='+pathId+'/'+ret[key].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[key].Caption +'</strong> </a>\
                         @auth\
-                        <h5 style="position: absolute; margin-left:991px" class="mb-0"> '+ Math.round(parseFloat(ret[key].CostPrice)*100)/100 +'€</h5>\
+                        <h5 style="position: absolute; margin-left:991px" class="mb-0"> '+ Math.round(parseFloat(ret[key].SalePriceVatExcluded)*100)/100 +'€</h5>\
                         @endauth'
                     if(ret[key].RealStock>0){
                         test+='<form action="{{ route('cart.store') }}" method="POST" >\
                                 @csrf\
                                 <input type="hidden" name="item_id" value="'+ret[key].Id+'">\
-                                <input type="hidden" name="price" value='+ Math.round(parseFloat(ret[key].CostPrice)*100)/100 +'>\
+                                <input type="hidden" name="price" value='+ Math.round(parseFloat(ret[key].SalePriceVatExcluded)*100)/100 +'>\
                                 <input type="hidden" name="quantity" value="1">\
                                 <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">\
                                     <img style="width: 20px; height:20px; "   class="" src='+pathImgCart+' alt="Certification"></button>\
