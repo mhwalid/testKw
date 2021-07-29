@@ -39,6 +39,7 @@ input[type="password"],
 input[type="date"],
 input[type="tel"],
 select.form-control {
+
   background: transparent;
   border: none;
   border-bottom: 1px solid #D6D1C1;
@@ -121,3 +122,65 @@ label.buttonFile input[type="file"] {
     color:#D6D1C1;
     margin-left: 30px;
 }
+
+@media screen and (min-width: 0px) and (max-width: 772px) {
+    .titrePrinc::before
+  {
+      content:"";
+      flex:1 1;
+      background:#D6D1C1;
+      height:1px;
+      align-self: center;
+      margin: 10px 10px 10px 10px;
+
+    }
+    .titrePrinc::after {
+      content:"";
+      flex:1 1;
+      background:#D6D1C1;
+      height:1px;
+      align-self: center;
+      margin: 10px 20px 10px 10px;
+
+    }
+
+.titrePrinc{
+    font-family: 'Poppins', sans-serif;
+    display:flex;
+    font-size: 18px;
+    color: #21201b;
+
+}
+.textTitle{
+    margin-top: 10%;
+    font-size: 20px;
+}
+#margtop4{
+    margin-top: 18%;
+
+}
+#textCB{
+    font-size: 20px;
+}
+
+ }
+ @media screen and (min-width: 0px) and (max-width: 480px) {
+     #margregistertop{
+         margin-top: 35%;
+     }
+     .titrePrinc{
+        font-family: 'Poppins', sans-serif;
+        display:flex;
+        font-size: 13px;
+        color: #21201b;
+        width: 120%;
+    }
+    #taillecritureregister{
+        font-size: 11px;
+    }
+    #registerla{
+        width: 130%;
+    }
+
+ }
+

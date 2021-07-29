@@ -123,5 +123,14 @@ Route::get('/index','ItemController@index')->name('index');
 Route::get('/payement','ItemController@payement')->name('payement');
 //qui
 Route::get('/Qui-Sommes-Nous','ItemController@qui')->name('qui');
+
+//kw
+Route::get('/kwInfo','ItemController@kw')->name('kw');
+//certicifation
+Route::get('/certification','ItemController@certification')->name('certification');
+//mail
+Route::get('/mail','ItemController@mail')->name('mail');
+
 //test url
 Route::get('/testmail', 'MailController@ordeR');
+

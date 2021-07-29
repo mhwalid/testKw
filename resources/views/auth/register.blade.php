@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<div class="container" id="margregistertop">
 
     <div class="titre">
         <h1 class="titrePrinc row justify-content-center">{{__('Créez votre compte Kw-distribution')}} </h1>
-        <p class="row justify-content-center fw-light">{{__('Ce site est exclusivement réservé aux professionnels')}}.</p>
+        <p id="taillecritureregister" class="row justify-content-center fw-light">{{__('Ce site est exclusivement réservé aux professionnels')}}.</p>
+
+
     </div>
 
     <div class="nationalityChoice">
@@ -25,18 +28,19 @@
     </div>
 
     <div id="contact_form">
-        <form action="{{ route('register.foreign')}} "  method="POST">
+       <form action="{{ route('register.foreign')}} "  method="POST">
             @csrf
+            <div style="column-gap: 10%;"class="row justify-content-center mt-5">
 
-            <div class="row justify-content-center mt-5">
+                <div class="col-8 col-lg-7" id="registerRequestCard">
 
-                <div class="col-6" id="registerRequestCard">
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">1</span>{{__('Contact') }} </h2>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12 ">
+                        <div class="col-12 ">
+
                             <label for="contact_civility" class="text-md-right">{{ __('Civilité') }} :</label>
                             <select id="contact_civility" name="contact_civility" class="dropdownSelect form-control form-select custom-select" aria-label="Default select example">
                                 <option selected value="Monsieur">M.</option>
@@ -46,7 +50,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="contact_name" class="text-md-right">{{ __('Name') }} :</label>
                             <input id="contact_name" type="text" class="form-control @error('contact_name') is-invalid @enderror" name="contact_name" value="{{ old('contact_name') }}" required autocomplete="name" autofocus>
 
@@ -59,7 +65,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-12">
+
                             <label for="contact_firstName" class="text-md-right">{{ __('First Name') }} :</label>
                             <input id="contact_firstName" type="text" class="form-control @error('contact_firstName') is-invalid @enderror" name="contact_firstName" value="{{ old('contact_firstName') }}" required autocomplete="name" autofocus>
 
@@ -72,7 +79,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-12">
+
                             <label for="contact_email" class="text-md-right">{{ __('Email Address') }} :</label>
                             <input id="contact_email" type="email" class="form-control @error('contact_email') is-invalid @enderror" name="contact_email" value="{{ old('contact_email') }}" required autocomplete="email">
 
@@ -85,7 +93,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="contact_phoneNumber" class="text-md-right">{{ __('Phone Number') }} :</label>
                             <input id="contact_phoneNumber" type="tel" class="form-control @error('phoneNcontact_phoneNumberumber') is-invalid @enderror" name="contact_phoneNumber" required>
 
@@ -98,7 +108,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="contact_compagny_name" class="text-md-right">{{ __('Compagny Name') }} :</label>
                             <input id="contact_compagny_name" type="text" class="form-control @error('contact_compagny_name') is-invalid @enderror" name="contact_compagny_name"  value="{{ old('contact_compagny_name') }}" required>
 
@@ -111,7 +123,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="contact_country" class="text-md-left">{{ __('Country') }} :</label>
                             <input id="contact_country" type="text" class="form-control @error('contact_country') is-invalid @enderror" value="{{ old('contact_country') }}" name="contact_country" required>
 
@@ -124,9 +138,11 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
-                            <label for="contact_message" class="text-md-right">{{ __('Message') }} :</label>
-                            <textarea id="contact_message" type="date" class="form-control @error('contact_message') is-invalid @enderror" name="contact_message" value="{{ old('contact_message') }}"></textarea>
+
+                        <div class="col-12">
+                            <label  for="contact_message" class="text-md-right">{{ __('Message') }} :</label>
+                            <textarea style="box-shadow: none; border-color: #D6D1C1;" id="contact_message" type="date" class="form-control @error('contact_message') is-invalid @enderror" name="contact_message" value="{{ old('contact_message') }}"></textarea>
+
                             @error('contact_message')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -140,7 +156,9 @@
 
             <div class="row justify-content-center">
                 <div class="form-group row">
-                    <div class="col-md-12">
+
+                    <div class="col-12">
+
                         <button type="submit" onclick="display()" class="btn boutton">
                             {{ __('Envoyer') }}
                         </button>
@@ -154,15 +172,19 @@
         <form method="POST"  enctype="multipart/form-data" action="{{ route('register') }}">
             @csrf
 
-            <div class="row justify-content-center mt-5">
-                <div class="col-12 col-md-6" id="personalData">
+
+            <div style="    column-gap: 10%;" class="row justify-content-center mt-5">
+                <div class="col-8 col-md-5" id="personalData">
                     <div class="formTitle position-relative">
-                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">1</span>{{__('Information Personnelles') }} </h2>
+                        <h2  class="textTitle"><span class="titleNumber position-absolute top-100 left-100">1</span>{{__('Informations personnelles') }} </h2>
+
                     </div>
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="civility" class="text-md-right">{{ __('Civilité') }} :</label>
                             <select id="civility" name="civility" class="dropdownSelect form-control form-select custom-select" aria-label="Default select example">
                                 <option selected value="Monsieur">M.</option>
@@ -173,7 +195,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="name" class="text-md-right">{{ __('Nom') }} :</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
@@ -187,7 +211,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="firstName" class="text-md-right">{{ __('Prénom') }} :</label>
                             <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{ old('firstName') }}" required autocomplete="name" autofocus>
 
@@ -201,7 +227,9 @@
 
                     <div class="form-group row">
 
-                    <div class="col-md-12">
+
+                    <div class="col-12">
+
                             <label for="email" class="text-md-right">{{ __('Adresse mail') }} :</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Votre e-mail" required autocomplete="email">
 
@@ -214,8 +242,7 @@
                     </div>
 
                     <div class="form-group row">
-
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <label for="password" class="text-md-right">{{ __('Mot de passe') }} :</label>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Choississez votre mot de passe" required autocomplete="new-password">
 
@@ -229,7 +256,8 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
                             <label for="password-confirm" class="text-md-right">{{ __('Confirmé mot de passe') }} :</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirmez votre mot de passe" autocomplete="new-password">
                         </div>
@@ -237,16 +265,17 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
-                            <label for="birthDate" class="text-md-right">{{ __('Date de naissance') }} *:</label>
+                        <div class="col-12">
+                            <label for="birthDate" class="text-md-right">{{ __('Date de naissance') }} :*</label>
+
                             <span style="color: #D6D1C1; font-family: 'Roboto',sans-serif;" class="optionel text-md-left">{{ __('Optionnel') }}</span>
                             <input id="birthDate" type="date" class="form-control @error('birthDate') is-invalid @enderror" name="birthDate" value="{{ old('birthDate') }}">
                         </div>
                     </div>
 
                     <div class="form-group row">
+                        <div class="col-12">
 
-                        <div class="col-md-12">
                             <label for="phoneNumber" class="text-md-right">{{ __('Numéro de téléphone') }} :</label>
                             <input id="phoneNumber" type="tel" class="form-control @error('phoneNumber') is-invalid @enderror" name="phoneNumber" placeholder="ex : 0389121212" required>
 
@@ -258,9 +287,10 @@
                         </div>
                     </div>
 
+
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <label for="cellPhoneNumber" class="text-md-right">{{ __('Numéro de portable') }} :</label>
                             <input id="cellPhoneNumber" type="tel" class="form-control @error('cellPhoneNumber') is-invalid @enderror" name="cellPhoneNumber" placeholder="ex : 0689121212" required>
 
@@ -276,23 +306,27 @@
                         <input type="hidden" name="newsletter" value="0">
                         <input type="checkbox" class="form-check-input" id="newsletter" name="newsletter" value="1" onchange="display()">
                         <label class="col-md-12 col-check-label text-md-left" for="newsletter">{{ __('newsletter')}} </label>
+
                     </div>
 
                     <div class="form-group form-check">
                         <input type="hidden" name="haveCustomer" value="0">
                         <input type="checkbox" class="form-check-input" id="haveCustomer" name="haveCustomer" value="1" onchange="display()">
-                        <label class="col-md-12 col-check-label text-md-left" for="haveCustomer">{{ __('Est ce que votre entreprise est déja cliente ?')}} </label>
+                        <label class="col-12 col-check-label text-md-left" id="registerla" for="haveCustomer">{{ __('Votre entreprise est-elle déjà cliente ?')}} </label>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6" id="compagnyDataCard">
+                <div class="col-8 col-md-5" id="compagnyDataCard">
                     <div class="formTitle position-relative">
-                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Information entreprise') }} </h2>
+                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Informations entreprise') }} </h2>
+
                     </div>
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="siret" class="text-md-right">{{ __('Numéro de Siret') }} :</label>
                             <input id="siret" type="text" class="form-control @error('siret') is-invalid @enderror" name="siret" value="{{ old('siret') }}" placeholder="ex : 36252187900034" required autocomplete="" autofocus>
 
@@ -306,7 +340,9 @@
                     </div>
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="name" class="text-md-right">{{ __('Forme Juridique') }} :</label>
                             <select id="formeJuridique" name="formeJuridique" class="dropdownSelect form-control form-select custom-select" aria-label="Default select example">
                                 <option selected value="Auto-Entrepreneur">Auto-Entrepreneur</option>
@@ -321,7 +357,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="socialReason" class="text-md-right">{{ __('Raison sociale') }} :</label>
                             <input id="socialReason" type="text" class="form-control @error('socialReason') is-invalid @enderror" name="socialReason" value="{{ old('socialReason') }}" placeholder="Nom de votre société" required autofocus>
 
@@ -335,7 +373,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="ape" class="text-md-right">{{ __('APE') }} :</label>
                             <input id="ape" type="text" class="form-control @error('ape') is-invalid @enderror" name="ape" value="{{ old('ape') }}" placeholder="ex : 1234Z" required autofocus>
 
@@ -349,7 +389,8 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
                             <label for="mailCompta" class="text-md-right">{{ __('Adresse mail comptabilité') }} :</label>
                             <input id="mailCompta" type="email" class="form-control @error('mailCompta') is-invalid @enderror" name="mailCompta" value="{{ old('mailCompta') }}" placeholder="L'adresse mail de votre service comptabilité" autofocus>
 
@@ -364,6 +405,7 @@
                     <div class="form-group row">
 
                         <div class="col-md-12">
+
                             <label for="webSite" class="text-md-right">{{ __('Site web') }} *:</label>
                             <span style="color: #D6D1C1; font-family: 'Roboto',sans-serif;" class="optionel text-md-left">{{ __('Optionnel') }}</span>
                             <input id="webSite" type="url" class="form-control @error('webSite') is-invalid @enderror" name="webSite" value="{{ old('webSite') }}" placeholder="https://exemple.com" pattern="https://.*" autofocus>
@@ -377,11 +419,13 @@
                     </div>
 
                     <div class="form-group row">
-                        <h3 class="col-md-12 text-md-left">{{ __('Coordonnées bancaires') }} :</h3>
+
+                        <h3 id="textCB" class="col-12 text-md-left">{{ __('Coordonnées bancaires') }} :</h3>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-12">
+
                             <label for="domiciliation" class="text-md-right">{{ __('Domiciliation') }} :</label>
                             <input id="domiciliation" type="text" class="form-control @error('domiciliation') is-invalid @enderror" name="domiciliation" value="{{ old('domiciliation') }}" required autofocus>
 
@@ -395,7 +439,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="iban" class="text-md-right">{{ __('IBAN') }} :</label>
                             <input id="iban" type="text" class="form-control @error('iban') is-invalid @enderror" name="iban" value="{{ old('iban') }}" placeholder="ex : FR1420041010050500013M02606" required autofocus>
 
@@ -409,7 +455,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="bic" class="text-md-right">{{ __('BIC') }} :</label>
                             <input id="bic" type="text" class="form-control @error('bic') is-invalid @enderror" name="bic" value="{{ old('bic') }}" placeholder="ex : ABNAFRPP" required autofocus>
 
@@ -422,7 +470,8 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6" id="compagny">
+                <div class="col-12 col-md-5" id="compagny">
+
 
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">2</span>{{__('Votre entreprise') }} </h2>
@@ -436,7 +485,9 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-12">
+
+                        <div class="col-12">
+
                             <label for="compagnyId" class="text-md-right">{{ __('Id de votre entreprise') }} :</label>
                             <input id="compagnyId" type="text" class="form-control @error('compagnyId') is-invalid @enderror" name="compagnyId" value="{{ old('compagnyId') }}" placeholder="ex : 2f776d04-c9f9-11eb-b8bc-0242ac130003" required autofocus>
 
@@ -450,7 +501,9 @@
 
                     <div class="row justify-content-center">
                         <div class="form-group row">
-                            <div class="col-md-12">
+
+                            <div class="col-12">
+
                                 <button type="submit" onclick="display()" class="btn boutton">
                                     {{ __('Envoyer') }}
                                 </button>
@@ -460,8 +513,10 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-6" id="adress">
+
+            <div style="column-gap: 10%;"class="row justify-content-center mt-5">
+                <div class="col-8 col-md-5" id="adress">
+
 
                     <div class="formTitle position-relative">
                         <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">3</span>{{__('Adresse de facturation') }} </h2>
@@ -469,9 +524,10 @@
 
                     <div class="invoicingAdress">
 
+
                         <div class="form-group row">
 
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <label for="invoicingAdress" class="text-md-right">{{ __('Adresse') }} :</label>
                                 <input id="invoicingAdress" type="text" class="form-control @error('invoicingAdress') is-invalid @enderror" name="invoicingAdress" value="{{ old('invoicingAdress') }}" placeholder="Votre adresse de facturation" required autofocus>
 
@@ -485,11 +541,12 @@
 
                         <div class="form-group row">
 
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <label for="invoicingAdressNext" class="text-md-right">{{ __('Adresse (suite)') }} :</label>
                                 <input id="invoicingAdressNext" type="text" class="form-control @error('invoicingAdressNext') is-invalid @enderror" name="invoicingAdressNext" value="{{ old('invoicingAdressNext') }}" autofocus>
 
                                 @error('invoicingAdressNext')
+
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -499,11 +556,19 @@
 
                         <div class="form-group row">
 
-                            <div class="col-md-12">
+
+                            <div class="col-12">
+                                <label for="invoicingAdressNext" class="text-md-right">{{ __('Adresse (suite)') }} :</label>
+                                <input id="invoicingAdressNext" type="text" class="form-control @error('invoicingAdressNext') is-invalid @enderror" name="invoicingAdressNext" value="{{ old('invoicingAdressNext') }}" autofocus>
+
+                                @error('invoicingAdressNext')
+
+                            <div class="col-12">
                                 <label for="invoivingZipCode" class="text-md-right">{{ __('Code Postale') }} :</label>
                                 <input id="invoivingZipCode" type="text" class="form-control @error('invoivingZipCode') is-invalid @enderror" name="invoivingZipCode" placeholder="ex : 69000" value="{{ old('invoivingZipCode') }}" autofocus required>
 
                                 @error('invoivingZipCode')
+
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -513,11 +578,19 @@
 
                         <div class="form-group row">
 
-                            <div class="col-md-12">
+
+                            <div class="col-12">
+                                <label for="invoivingZipCode" class="text-md-right">{{ __('Code Postale') }} :</label>
+                                <input id="invoivingZipCode" type="text" class="form-control @error('invoivingZipCode') is-invalid @enderror" name="invoivingZipCode" placeholder="ex : 69000" value="{{ old('invoivingZipCode') }}" autofocus required>
+
+                                @error('invoivingZipCode')
+
+                            <div class="col-12">
                                 <label for="invoicingCity" class="text-md-right">{{ __('Ville') }} :</label>
                                 <input id="invoicingCity" type="text" class="form-control @error('invoicingCity') is-invalid @enderror" name="invoicingCity" value="{{ old('invoicingCity') }}" autofocus required>
 
                                 @error('city')
+
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -527,7 +600,30 @@
 
                         <div class="form-group row">
 
-                            <div class="col-md-12">
+                            <div class="col-12">
+                                <label for="invoicingCity" class="text-md-right">{{ __('Ville') }} :</label>
+                                <input id="invoicingCity" type="text" class="form-control @error('invoicingCity') is-invalid @enderror" name="invoicingCity" value="{{ old('invoicingCity') }}" autofocus required>
+
+                                @error('city')
+
+                            <div class="col-12">
+                                <label for="invoicingPhoneNumber" class="text-md-right">{{ __('Numéro de téléphone') }} :</label>
+                                <input id="invoicingPhoneNumber" type="tel" class="form-control @error('invoicingPhoneNumber') is-invalid @enderror" name="invoicingPhoneNumber" placeholder="ex : 0389121212" value="{{ old('invoicingPhoneNumber') }}" autofocus required>
+
+                                @error('invoicingPhoneNumber')
+
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+
+                        <div class="form-group row">
+
+                            <div class="col-12">
                                 <label for="invoicingPhoneNumber" class="text-md-right">{{ __('Numéro de téléphone') }} :</label>
                                 <input id="invoicingPhoneNumber" type="tel" class="form-control @error('invoicingPhoneNumber') is-invalid @enderror" name="invoicingPhoneNumber" placeholder="ex : 0389121212" value="{{ old('invoicingPhoneNumber') }}" autofocus required>
 
@@ -548,6 +644,18 @@
                             <div class="form-group form-check">
                                 <input type="hidden" name="sameDeliveryInvoicing" value="0">
                                 <input type="checkbox" class="form-check-input" id="sameDeliveryInvoicing" name="sameDeliveryInvoicing" value="1" onchange="display()">
+                                <label class="col-12 col-check-label text-md-left" for="sameDeliveryInvoicing">{{ __('Identique à celle de facturation')}} </label>
+                            </div>
+                        </div>
+
+                    <div class="delivery">
+                        <div class="deliveryTitle">
+                            <div class="formTitle position-relative">
+                                <h2 class="textTitle">{{__('Adresse de livraison') }} </h2>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="hidden" name="sameDeliveryInvoicing" value="0">
+                                <input type="checkbox" class="form-check-input" id="sameDeliveryInvoicing" name="sameDeliveryInvoicing" value="1" onchange="display()">
                                 <label class="col-md-12 col-check-label text-md-left" for="sameDeliveryInvoicing">{{ __('Identique à celle de facturation')}} </label>
                             </div>
                         </div>
@@ -556,7 +664,8 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-12">
+                                <div class="col-12">
+
                                     <label for="deliveryAdressInput" class="text-md-right">{{ __('Adresse') }} :</label>
                                     <input id="deliveryAdressInput" type="text" class="form-control @error('deliveryAdressInput') is-invalid @enderror" name="deliveryAdressInput" placeholder="Adresse de livraison" value="{{ old('deliveryAdressInput') }}" required autofocus>
 
@@ -570,7 +679,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="deliveryAdressNext" class="text-md-right">{{ __('Adresse (Suite)') }} :</label>
                                     <input id="deliveryAdressNext" type="text" class="form-control @error('deliveryAdressNext') is-invalid @enderror" name="deliveryAdressNext" value="{{ old('deliveryAdressNext') }}" autofocus>
 
@@ -584,7 +693,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="deliveryZipCode" class="text-md-right">{{ __('Code Postale') }} :</label>
                                     <input id="deliveryZipCode" type="text" class="form-control @error('deliveryZipCode') is-invalid @enderror" name="deliveryZipCode" value="{{ old('deliveryZipCode') }}" placeholder="ex : 69000" autofocus required>
 
@@ -598,7 +707,8 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-12">
+
+                                <div class="col-12">
                                     <label for="deliveryCity" class="text-md-right">{{ __('Ville') }} :</label>
                                     <input id="deliveryCity" type="text" class="form-control @error('deliveryCity') is-invalid @enderror" name="deliveryCity" value="{{ old('deliveryCity') }}" autofocus required>
 
@@ -616,14 +726,16 @@
 
                 </div>
 
-                <div class="col-md-6" id="document">
+
+                <div class="col-8 col-md-5" id="document">
 
                     <div class="formTitle position-relative">
-                        <h2 class="textTitle"><span class="titleNumber position-absolute top-100 left-100">4</span>{{__('Documents') }} </h2>
+                        <h2 class="textTitle" id="margtop4"><span class="titleNumber position-absolute top-100 left-100">4</span>{{__('Documents') }} </h2>
                     </div>
 
                     <div class="">
-                        <div class="row mb-4">
+                        <div class="row  ml-1 mb-4">
+
                             <i>Veuillez télécharger les CGV et nous les transmettre signées via le formulaire ci-dessous</i>
                         </div>
 
@@ -668,7 +780,9 @@
 
                             <label for="kbis" class="col-md-5 col-form-label text-md-left">{{ __('Extrait KBIS / Registre INSEE') }} :</label>
 
-                            <label class="buttonFile position-relative">
+
+                            <label class="buttonFile position-relative" style="height: 29px;">
+
                                 <span class="falseLabel">{{__('Parcourir')}}</span>
                                 <input id="kbis" type="file" class="form-control-file @error('kbis') is-invalid @enderror" name="kbis" accept=".pdf" onchange="changeFile(3)" required />
                             </label>
@@ -684,7 +798,9 @@
 
                         <div class="row justify-content-center">
                             <div class="form-group row">
-                                <div class="col-md-12">
+
+                                <div class="col-12">
+
                                     <button type="submit" onclick="display()" class="btn boutton">
                                         {{ __('Envoyer') }}
                                     </button>
@@ -786,7 +902,6 @@
                 $("#iban").attr("required",false);
                 $("#bic").attr("required",false);
                 $("#mailCompta").attr("required",false);
-
                 //hide adress card
                 $("#adress").hide();
                 $("#invoicingAdress").attr("required",false);

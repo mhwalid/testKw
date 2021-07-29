@@ -1,7 +1,7 @@
 body{
     margin: 0px;
     padding: 0px;
-    font-family: Avenir, sans-serif;
+    font-family: roboto;
     background-color: white;
 
 }
@@ -9,6 +9,8 @@ body{
     border-radius: 20px;
     background-color: #FFD600;
     color: black;
+    box-shadow: none !important;
+    outline: 0 !important;
 
 }
 /************ BACK-TO-TOP ************/
@@ -33,6 +35,12 @@ body{
     display: flex;
     align-items: stretch;
 }
+#allignheader{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
 @media screen and (min-width: 0px) and (max-width: 481px) {
 #navpour{
     display:none;
@@ -42,8 +50,11 @@ body{
         display:none;
     }
     #search{
-        width: 450%;
-    margin-bottom: 30%;
+        width: 160%;
+
+    }
+    #headerlon{
+        margin-bottom: 3%;
     }
 }
 @media screen and (min-width: 481px) and (max-width:2561px) {
@@ -53,4 +64,5 @@ body{
     #visiblemobile{
         display: none;
     }
+
 }

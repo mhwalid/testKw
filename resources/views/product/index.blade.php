@@ -26,12 +26,14 @@
             @foreach ($news as $new)
         <div class="item itemcar">
 
+
             @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
             <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
             @else
             <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
             @endif
             <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
+
         </div>
 
         @endforeach
@@ -46,10 +48,12 @@
             <div class="item itemcar">
                 @if (File::exists('asset/item/images/'.$prom->Id.'/Medium1.jpg'))
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$prom->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+
                 @else
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
                     <h4 class="card-title col-5 col-sm-6  col-md-9" id="ecrituretailleindex">{{ $prom->Caption }}</h4>
+
             </div>
             @endforeach
         </div>
@@ -58,6 +62,20 @@
 
 {{-- Caroussel 3 --}}
     <div id="mv"  style=" background-color: #D6D1C1; " class="container-fluid w-100 m-md-0">
+{{--
+        <p class="news pt-2">Nos meilleures ventes</p>
+
+
+        <div   id="encadrement" class=" owl-two owl-carousel">
+            @foreach ($bestsell as $sell)
+
+            <div  id="item3">
+                <div id="item4" class="item">
+                <a href="{{ route('product.show', $sell->item->Id) }}"><img id="itemcarouss" class=" card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                    <h4 class="card-title col-12 col-lg-9 col-sm-8  col-md-9" id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+                </div>
+                </div>
+--}}
         <p class="news">Nos meilleures ventes</p>
         <div   id="encadrement" class=" owl-two owl-carousel">
             @foreach ($bestsell as $sell)
@@ -72,6 +90,7 @@
 
 
             </div>
+
             @endforeach
 
         </div>
@@ -80,7 +99,7 @@
     {{-- Caroussel4 --}}
 
 
-    <p class="news">
+    <p class="news mt-3">
       Nos partenaires
     </p>
 
@@ -111,7 +130,7 @@
         <div id="divpartenaire" style="display:flex; justify-content: center; ">
             <img id="imgpart"  class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
-            <h1  id="ecritpart">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
+            <h1 class="col-sm-6" id="ecritpart">En plus de certains partenariats, nous sommes<strong> distributeur officiel.</strong>
             Cette preuve de <strong>qualité</strong> est pour nous primordiale, pour répondre au mieux à <strong>vos besoins.</strong></h1>
             <img id="imgpart2"  class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
@@ -132,13 +151,22 @@ $('.owl-one').owlCarousel({
     responsiveClass:true,
     responsive:{
         0:{
-            items:1,
+            items:2,
+            nav:true
+        },
+        500:{
+            items:2,
             nav:true
         },
         600:{
+            items:2,
+            nav:true
+        },
+        700:{
             items:3,
             nav:true
         },
+
         1000:{
             items:5,
             nav:true,
@@ -159,7 +187,7 @@ $('.owl-two').owlCarousel({
             items:1,
             nav:true
         },
-        500:{
+        310:{
             items:2,
             nav:true
         },

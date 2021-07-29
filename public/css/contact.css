@@ -45,11 +45,11 @@ input{
     }
 
     #contacttexte{
-        font-size: 12px;
-        line-height: 8px;
+        font-size: 12px!important;
+        line-height: 8px!important;
     }
     #contacttexte1{
-        font-size: 12px;
+        font-size: 12px!important;
 
     }
     #ptittextecontact{
@@ -74,6 +74,7 @@ input{
         align-items: center;
     }
 
+
 }
 @media screen and (min-width: 481px) and (max-width: 1150px) {
     #contactinvisiblemobile{
@@ -89,17 +90,39 @@ input{
         border-radius: 30px;
         width: 80%;
         }
+        #contacttexte{
+            font-size: 15px;
+            line-height: 12px;
+        }
+        #contacttexte1{
+            font-size: 15px;
+        }
 
-    #contactkw{
-        margin-bottom: 7%;
-    }
+        #ptittextecontact{
+            font-size: 14px;
+             color: #21201B;
+              margin-top:6px;
+               margin-bottom:6px;
+        }
+        #ptittextecontact1{
+            font-size: 15px;
+             color: #21201B;
+              margin-top:6px;
+               margin-bottom:6px;
+        }
 
-    #contacttexte{
-        font-size: 15px;
-        line-height: 12px;
+
     }
-    #contacttexte1{
-        font-size: 15px;
+    @media screen and (min-width: 730px) and (max-width: 1150px) {
+        #contactvisiblemobile{
+            display: flex;
+            flex-direction: row;
+            align-content: stretch;
+            justify-content: space-around;
+            align-items: center;
+            column-gap: 30px;
+        }
+
 
     }
     #ptittextecontact{
@@ -128,7 +151,20 @@ input{
     #contactvisiblemobile{
         display: none;
 
-    }
+
+            #contacte{
+                justify-content: center;
+                margin-top: 2%;
+                margin-bottom: 3%;
+            }
+
+           #msgcontactimg{
+            /* margin-left: 5%; */
+             margin-bottom: 20px;
+              border-radius: 30px;
+              width: 80%;
+           }
+
 
     #contacte{
         justify-content: center;
@@ -147,19 +183,38 @@ input{
     #contacttexte1{
         font-size: 20px;
 
-    }
-    #ptittextecontact{
-        font-size: 18px;
-        color: #21201B;
-        margin-top:10px;
-        margin-bottom:10px;
-    }
-    #ptittextecontact1{
-        font-size: 15px;
-        color: #21201B;
-        margin-top:10px;
-        margin-bottom:10px;
-    }
+
+        }
 
 
-}
+        @media screen and (min-width: 481px) and (max-width: 720px) {
+
+        #contacttexte{
+            font-size: 13px;
+            line-height: 8px;
+        }
+        #contacttexte1{
+            font-size: 13px;
+
+        }
+        #ptittextecontact{
+            font-size: 13px;
+             color: #21201B;
+              margin-top:10px;
+               margin-bottom:10px;
+        }
+        #ptittextecontact1{
+            font-size: 13px;
+             color: #21201B;
+              margin-top:10px;
+               margin-bottom:10px;
+        }
+        #contacttail{
+        flex: 0 0 83.3333333333%;
+        max-width: 83.3333333333%
+        }
+
+
+
+        }
+

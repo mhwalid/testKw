@@ -311,6 +311,18 @@ class ItemController extends Controller
     {
         return view('product.qui');
     }
+    public function kw()
+    {
+        return view('product.kw');
+    }
+    public function certification()
+    {
+        return view('product.certification');
+    }
+    public function mail()
+    {
+        return view('product.mail');
+    }
 
     public function search(Request $request)
     {

@@ -8,6 +8,7 @@
     justify-content:left;
     color: black;
     border: none;
+    width: max-content;
 }
 
 #rond{
@@ -75,6 +76,7 @@
 #headingEleven{
     background-color: #D6D1C1;
 }
+
 .BouttonReinitialiser{
     background-color: black;
     color: #FFD600;
@@ -117,6 +119,9 @@
     justify-content: center;
     margin-left:auto;
     justify-content: space-between;
+
+    align-items: center;
+
     padding-left: 50px;
     margin-left:10%;
     border-radius: 200px;
@@ -156,7 +161,7 @@
 }
 #longfilter{
     width: 250px;
-     min-height:2000px;
+
 }
 @media screen and (min-width: 481px) and (max-width: 768px) {
     #barreprix{
@@ -178,8 +183,8 @@
     }
 
     #longfilter{
-        width: 188px;
-         min-height:2000px;
+        width: 215px;
+
     }
     #filter_o{
         font-size: 10px;
@@ -191,11 +196,11 @@
         justify-content: center;
         margin-left:auto;
         justify-content: space-between;
+        align-items: center;
         padding-left: 5%;
         border-radius: 200px;
         margin-bottom: 10px;
         padding-right: 50px;
-        height: fit-content;
         margin-right: 0px;
         margin-left: 0px;
     }
