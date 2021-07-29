@@ -28,21 +28,44 @@
                 const ret = response.data.data
                 let results = document.querySelector('#results')
                 results.innerHTML = ''
-                let test='' 
-                    for (let i = 0; i < ret.length; i++) {
+                let test=''
+                Object.keys(ret).forEach(key => {
                     let Card = document.createElement('div');
                     var pathcart="{{ route('cart.store') }}";
-                     var pathId="{{ route('product.index') }}";
-                  test+='<div class=" p-4 d-flex border rounded overflow-hidden flex-md-row mb-4 shadow-sm  " id="test">\
-                <a href='+pathId+'/'+ret[i].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[i].Caption +'</strong> </a>\
-                <h5 style="position: absolute; margin-left:991px" class="mb-0">'+ parseFloat(ret[i].CostPrice) +'€</h5>'
-                    if(ret[i].RealStock>0){
-                    test+='<form action='+pathcart+' method="POST" style="position: absolute; margin-left:921px"> <input   name="_token" value="'+csrf+'" type="hidden"> <input type="hidden" name="item_id" value="'+ret[i].Id+'"><input type="hidden" name="quantity" value="1"><button type="submit" class="btn btn-success"> <i class="fa fa-shopping-cart mr-2"></i></button></form>'
+                    var pathId="{{ route('product.index') }}";
+
+                    var pathImage = "{{ asset('asset/item/images/') }}/"+ret[key].Id+"/Cart1.jpg ";
+                    var pathImgStock = "{{asset('asset/img/en_stock.svg')}}";
+                    var pathImgNStock = "{{asset('asset/img/plus_en_stock.svg')}}";
+                    var pathImgCart = "{{asset('asset/img/Ajouter_au_panier.svg')}}"
+                    test+='<div class="   border-bottom  overflow-hidden flex-md-row mb-4  " id="test">\
+                        <div>\
+                        <img style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"\
+                        src='+pathImage+' alt=" "\
+                        class="bd-placeholder-img">'
+                    if (ret[key].RealStock>0) {
+                        test+='<p>En stock <img style=" width: 15px; height: 15px;"   src='+pathImgStock+'></p>'
+                    }else{
+                        test+='<p>En stock <img style=" width: 15px; height: 15px;"   src='+pathImgNStock+'></p>'
+                    }
+                    test+='</div>\
+                        <a id="Catégorie" href='+pathId+'/'+ret[key].Id+'><strong class="d-inline-block mb-2 text-primary">'+ ret[key].Caption +'</strong> </a>\
+                        @auth\
+                        <h5 style="position: absolute; margin-left:991px" class="mb-0"> '+ Math.round(parseFloat(ret[key].SalePriceVatExcluded)*100)/100 +'€</h5>\
+                        @endauth'
+                    if(ret[key].RealStock>0){
+                        test+='<form action="{{ route('cart.store') }}" method="POST" >\
+                                @csrf\
+                                <input type="hidden" name="item_id" value="'+ret[key].Id+'">\
+                                <input type="hidden" name="price" value='+ Math.round(parseFloat(ret[key].SalePriceVatExcluded)*100)/100 +'>\
+                                <input type="hidden" name="quantity" value="1">\
+                                <button style="background-color: #FFD600; border-radius:20px;     padding-right: 0px;   padding-left: 0px;  padding-top: 0px; padding-bottom: 0px; height: 34px; width: 50px; " type="submit" id="panier" class="btn  ">\
+                                    <img style="width: 20px; height:20px; "   class="" src='+pathImgCart+' alt="Certification"></button>\
+                                </form>'
                     }
                     test+='</div>';
-             }
-             results.innerHTML=test
-                
+                });
+                results.innerHTML=test
             })
             .catch(function(error) {
                 console.log(error);

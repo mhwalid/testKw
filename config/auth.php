@@ -38,13 +38,24 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            // 'provider' => 'users',
+            'provider' => 'unconfirmed',
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'ldap_admin' => [
+            'driver' => 'session',
+            'provider' => 'ldap_admin',
         ],
     ],
 
@@ -68,6 +79,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            'model' => App\Models\Contact::class,
+        ],
+
+        'unconfirmed' => [
+            'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
 
@@ -75,6 +91,28 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'ldap_admin'=>[
+            'driver' => 'ldap',
+            'model' => App\Ldap\Admin::class,
+            'rules' => [],
+            'database' => [
+                'model' => App\Models\Admin::class,
+                'sync_passwords' => true,
+                'sync_attributes' => [
+                    'name' => 'cn',
+                    'email' => 'mail',
+                ],
+                'sync_existing' => [
+                    'email' => 'mail',
+                ],
+            ],
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*

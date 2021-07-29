@@ -16,7 +16,7 @@ class Item extends Model
 
 
     public $timestamps = false;
-    protected $fillable = ['RealStock', 'Id','FamilyId'];
+    protected $fillable = ['RealStock', 'Id','FamilyId','BarCode','SubFamilyId','Caption','DesComClear','UniqueId'];
 
     public function family()
     {
@@ -29,7 +29,11 @@ class Item extends Model
 
     public function ScopeItemA($query)
     {
-        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy("sysCreatedDate", 'desc');
+        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0)->orderBy('RealStock','desc');
+    }
+    public function ScopeItemNT($query)
+    {
+        return $query->where('SalePriceVatExcluded', '>', 0)->where('ActiveState', '=', 0)->where('ItemType', '=', 0);
     }
 
     public static function search($search)

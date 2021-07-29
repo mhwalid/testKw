@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \LdapRecord\Laravel\Middleware\WindowsAuthenticate::class,
         ],
 
         'api' => [
@@ -62,5 +63,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'direction' => \App\Http\Middleware\Direction::class,
+        'maincontact' => \App\Http\Middleware\MainContact::class,
+        'contact' => \App\Http\Middleware\Contact::class,
     ];
 }

@@ -6,10 +6,11 @@
 @section('home')
 
 {{-- Caroussel 1  --}}
+
     <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner" id="hg">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/img/Visuel maquette.jpg')}}" alt="First slide">
+            <img class="d-block w-100" src="{{asset('asset/banner/Visuel_maquette.jpg')}}" alt="First slide">
         </div>
 
         </div>
@@ -21,32 +22,38 @@
     <div class="container-fluid">
 
         <p style="margin-top: 20px;" class="news">Les nouveautés</p>
-
-
-         <div   id="ty"  class=" owl-two owl-carousel">
+         <div  id="ty"  class=" owl-two owl-carousel">
             @foreach ($news as $new)
-
-
         <div class="item itemcar">
-            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss"  class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                <h4 class="card-title col-12 col-sm-8 col-lg-7" id="ecrituretailleindex" >{{ $new->Caption }}</h4>
+
+
+            @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
+            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+            @else
+            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+            @endif
+            <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
+
         </div>
+
         @endforeach
         </div>
     </div>
     {{-- Caroussel 2  --}}
     <div class="container-fluid">
-
         <p class="news">  Des promotions à ne pas louper !</p>
-
 
          <div  id="ty2" class=" owl-two owl-carousel">
             @foreach ($promotions as $prom)
-
-
             <div class="item itemcar">
+                @if (File::exists('asset/item/images/'.$prom->Id.'/Medium1.jpg'))
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$prom->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                    <h4 class="card-title col-12 col-sm-8 col-lg-7" id="ecrituretailleindex" >{{ $prom->Caption }}</h4>
+
+                @else
+                <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                @endif
+                    <h4 class="card-title col-5 col-sm-6  col-md-9" id="ecrituretailleindex">{{ $prom->Caption }}</h4>
+
             </div>
             @endforeach
         </div>
@@ -54,9 +61,8 @@
 
 
 {{-- Caroussel 3 --}}
-
     <div id="mv"  style=" background-color: #D6D1C1; " class="container-fluid w-100 m-md-0">
-
+{{--
         <p class="news pt-2">Nos meilleures ventes</p>
 
 
@@ -69,6 +75,22 @@
                     <h4 class="card-title col-12 col-lg-9 col-sm-8  col-md-9" id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
                 </div>
                 </div>
+--}}
+        <p class="news">Nos meilleures ventes</p>
+        <div   id="encadrement" class=" owl-two owl-carousel">
+            @foreach ($bestsell as $sell)
+            <div class="item" id="item3">
+
+                @if (File::exists('asset/item/images/'.$sell->item->Id.'/Medium1.jpg'))
+                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                @else
+                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                @endif
+                    <h4 class="card-title col-5 col-sm-6  col-md-9 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+
+
+            </div>
+
             @endforeach
 
         </div>
@@ -102,6 +124,7 @@
 
         </div>
     </div>
+
 
 
         <div id="divpartenaire" style="display:flex; justify-content: center; ">
@@ -170,7 +193,7 @@ $('.owl-two').owlCarousel({
         },
 
         600:{
-            items:3,
+            items:2,
             nav:false
         },
         1000:{

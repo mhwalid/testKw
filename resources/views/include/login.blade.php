@@ -1,4 +1,27 @@
 
+    <!-- Authentication Links -->
+    <ul class="d-flex" style="padding: 0px; margin: 0px; ">
+        @guest<div class="item">
+            <li style="list-style: none;" class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}" style="color:black;"><i class="fas fa-user-circle"></i>  {{ __('Login') }}</a>
+            </li></div>
+
+            @if (Route::has('register'))
+                <div class="item">
+                    <li style="list-style: none" class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}" style="color:black;">{{ __('Register') }}</a>
+                    </li>
+                </div>
+            @endif
+        @else
+
+            <li style="list-style: none"s class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    {{-- <a class="dropdown-item" href="{{ route('Customer.orders') }}">Mes commandes</a> --}}
 
 
     <ul class="d-flex col-lg-12 col-md-12 " id="headerlon" >
@@ -90,10 +113,18 @@
                     {{ __('Déconnexion') }}
                 </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
+                    @if (!is_null(Auth::user()->IdUser) && Auth::user()->contact->IsMainInvoicing == "1")
+                        <a class="dropdown-item" href="{{ route('contact.compagny') }} ">{{__('Mon entreprise')}}</a>
+                    @endif
 
-                </form>
+
+                    <a class="dropdown-item" href="{{ route('contact.index') }} ">{{__('Mon compte')}}</a>
+
+                    <a  class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
 
             </div>
         </li></div>
@@ -102,10 +133,11 @@
             <li id="loginli"style="list-style: none;" class="nav-item">
             <a id="allignheader" style="text-decoration: none; color: black;" href="{{ route('cart.index') }}"> <img style="padding-right: 8%;" id="imgheader" src="{{asset('asset/img/mon_panier_header.svg')}}" alt=""> <p id="invisible">{{ __('Mon panier') }} </p></a>
         </li> </div>
-
-
-
-    @endguest
-
-    </ul>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+        @endguest
+        </ul>
 

@@ -7,12 +7,19 @@
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
+
             <div class="col-12 mb-4 pb-4" id="produitimage"  >
+
               <figure class="view overlay rounded z-depth-1 main-img" >
 
                 <a href="#" id="pop">
-                  <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                    <img src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}"
                     class="img-fluid z-depth-1" id="image">
+                    @else
+                    <img src="{{asset('asset/img/img-indispo-480.jpg')}}"
+                    class="img-fluid z-depth-1 mr-8" id="image">
+                    @endif
                 </a>
               </figure>
             </div>
@@ -40,9 +47,16 @@
 
         <h5>{{ $item->family->Caption ?? $item->FamilyId}}</h5>
         <p class="mb-2 text-muted text-uppercase small">{{ $item->DesComClear }}</p>
+
         @guest <div id="barreprix" class="ml-0">
             <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p></div> @else
         <p><span class="mr-1"><strong>{{ number_format($item->CostPrice, 2) }} €</strong></span></p>
+{{--
+        @guest <p><em class=" ml-4 bg-warning">Connectez-vous pour voir les prix !</em></p> @else
+            @if (!is_null(Auth::user()->email_verified_at) && Auth::user()->compte_actif ==1)
+                <p><span class="mr-1"><strong>{{ number_format($item->SalePriceVatExcluded, 2) }} €</strong></span></p>
+            @endif
+--}}
         @endguest
         @if ($item->maincarac)
         <div class="scroller">
@@ -116,10 +130,8 @@
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
-
-  </div>
+      </div>
         @endif
-
         <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
             <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
@@ -139,18 +151,20 @@
                     @endif
                 </div>
             @endif
-
+            @auth
             <form action="{{ route('cart.store') }}" method="POST">
                 @csrf
 
                 <input type="text" name="item_id" value="{{ $item->Id }}">
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
+                <input type="hidden" name="price" value={{ $item->SalePriceVatExcluded }}>
 
                 <button type="submit" class="btn mb-2 mt-2  boutton " id="btnshow"><i
                     class="fas fa-shopping-cart  pr-2"></i> Ajouter au panier</button>
 
             </form>
+            @endauth
             @else
             <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus en stock.svg')}}"></p>
 
@@ -180,13 +194,11 @@
 </div>
   <!-- Creates the bootstrap modal where the image will appear -->
 
+
   @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
   <div class="modal fade " id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
 
 @endif
-
-
-
 
     <div class="contents">
         <div class="modal-dialog" id="placecarouspopup" >
@@ -267,22 +279,15 @@
                     </a>
                     @endif
                 </div>
-
-
-
             </div>
-
-
         </div>
-
-
         </div>
-
 
     </div>
 
             </div>
         </div>
+
 
 
 <script>
@@ -326,13 +331,16 @@ if (0 == $('#datalist li:hidden').length) {
 
 
 
+
       var x = window.matchMedia("(min-width: 600px)")
+
 myFunction(x) // Call listener function at run time
 x.addListener(myFunction)
 
 function myFunction(x) {
   if (x.matches) { // If media query matches
     $("#pop").on("click", function() {
+
          $('#imagepreview').attr('src', $('#imagezoom').attr('src')); // here asign the image to the modal when the user click the enlarge link
          $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
       });

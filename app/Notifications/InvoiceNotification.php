@@ -41,9 +41,11 @@ class InvoiceNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        ->greeting('Bonjour!')
+        ->subject(__('Bienvenue chez WaHagsb , Votre achat a bien éte effectuer' . $notifiable->name))
+        ->line('Merci de nous choisir.')
+        ->action('Pour voir voter commende', url('/customer'))
+        ->line('Thank you for using our application!');
     }
 
     /**

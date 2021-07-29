@@ -6,7 +6,9 @@
    color:  #21201B;
 
 }
+
 @media screen and (min-width: 1100px) and (max-width: 2600px) {
+
     #imgordi2{
         display: none;
     }
@@ -77,7 +79,9 @@
     height:40px;
   }
 
-  @media screen and (min-width: 0px) and (max-width: 481px) {
+
+  @media screen and (min-width: 0px) and (max-width: 480px) {
+
 
 
     #imgheader{
@@ -108,6 +112,7 @@
     #imgordi{
         display: none;
     }
+
 
     .loge{
         font-size: 11px;
@@ -178,9 +183,6 @@
 
 
     }
-
-
-
     .loge{
         margin: 0;
     }
@@ -228,3 +230,4 @@
 
 
 }
+

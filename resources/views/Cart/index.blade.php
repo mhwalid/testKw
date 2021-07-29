@@ -57,7 +57,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach (Cart::content() as $item)
                                     {{ $arrivage = false }}
 
@@ -77,16 +76,21 @@
                                             </div>
 
                                         </td>
-
-
                                         <td id="taillepanier"id="invisiblepanier" scope="col" class="border-0 align-middle">{{ $item->price }}<strong></strong></td>
                                         <td scope="col"id="taillepanier" class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
                                         <td scope="col" class="border-0 align-middle"> <select id="taillepanier" class="custom-select" name="qty" id="qty"
-                                                data-id="{{ $item->rowId }}"
-                                                data-stock="{{ intval($item->model->RealStock) }}"
-                                                data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
 
-                                                @for ($i = 1; $i <= $item->model->RealStock; $i++)
+                                            @php
+                                                $itemModel = $item->model;
+                                            @endphp
+                                            <select class="custom-select" name="qty" id="qty"
+
+                                                data-id="{{ $item->rowId }}"
+                                                data-stock="{{ intval($itemModel->RealStock) }}"
+                                                data-arrivage="{{ intval($itemModel->arrivage->first()->Quantity ?? 0) }}">
+
+
+                                                @for ($i = 1; $i <= $itemModel->RealStock; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ $item->qty == $i ? 'selected' : '' }}>
                                                         {{ $i }}
@@ -117,8 +121,10 @@
             <div class="row py-5 p-4 bg-white rounded shadow-sm">
 
                 <div class="col-lg-6">
+
                     <form class="" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
                     <div style="background-color: #D6D1C1; width:max-content;" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
+
                     <div class="p-4">
                         <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
                         <div class="input-group mb-4 border  p-2 d-flex flex-column">
@@ -149,6 +155,7 @@
                             box below</p>
                         <textarea name="" cols="30" rows="2" class="form-control"></textarea>
                     </div> --}}
+
                     <button style="max-width: fit-content;"  type="submit" class="btn boutton col-6 mb-3">Procédez au règlement</button>
                 </form>
 
@@ -183,7 +190,7 @@
 @section('extra-js')
 @include('include.Searchitem')
 
-    <script>
+<script>
         var qty = document.querySelectorAll('#qty');
         Array.from(qty).forEach((element) => {
             element.addEventListener('change', function() {
@@ -210,7 +217,6 @@
                 });
             });
         });
-
 
 
     </script>
@@ -244,4 +250,5 @@
 }
 
 </style>
+
 @endsection
