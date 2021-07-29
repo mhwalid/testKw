@@ -174,7 +174,19 @@ class AdminController extends Controller
     public function product(request $request)
     {
         $ean=$request->search_ean;
-        return view('admin.product',compact('ean'));
+        $id_item= Db::connection('sqlsrv')->table('Item')
+        ->select('Id')
+        ->where('BarCode', $ean)
+        ->get();
+        $family_id= Db::connection('sqlsrv')->table('Item')
+        ->select('FamilyId')
+        ->where('BarCode', $ean)
+        ->get();
+        $sub_family= Db::connection('sqlsrv')->table('Item')
+        ->select('SubFamilyId')
+        ->where('BarCode', $ean)
+        ->get();
+        return view('admin.product',compact('ean','id_item','family_id','sub_family'));
     }
 
     public function submitdata(request $request)
@@ -186,9 +198,9 @@ class AdminController extends Controller
         // $data=$request->validate([
         //     'iditem' => ['required', 'string','unique:App\Models\Item,Id'],
         // ]);
-            $iditem= Db::connection('mysql')->table('main_carac')
-            ->select('id_item')
-            ->where('id_item', $_POST["iditem"])
+            $iditem= Db::connection('sqlsrv')->table('Item')
+            ->select('Id')
+            ->where('Id', $_POST["iditem"])
             ->count();
 
            if($iditem==0){

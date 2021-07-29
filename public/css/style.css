@@ -1,8 +1,6 @@
 
 .fa-shopping-cart{
-
     color:black;
-
 }
 .fa-user-circle{
     color:black;
@@ -23,7 +21,6 @@
 
 .dropdown-header{
     color: blue;
-
 }
 /*header*/
 #item{
@@ -40,7 +37,5 @@
         margin-top:7px;
         border-color:  #21201b;
         border-radius: 30px;
-
-
     }
  }

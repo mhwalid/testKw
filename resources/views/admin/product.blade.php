@@ -144,6 +144,7 @@
                     </td>
                 </tr>
                 <tr>
+                    {{-- {{dd($id_item)}} --}}
                     <td>
                         <div class="form-group">
                             <label for="ean13" class="form-label">Code EAN</label>
@@ -153,7 +154,7 @@
                     <td>
                         <div class="form-group">
                             <label for="iditem" class="form-label">ID Item</label>
-                            <input type="text"  class="form-control" required id="iditem" name="iditem">
+                            <input type="text"  class="form-control" required id="iditem" name="iditem" value="{{$id_item[0]->Id}}">
                         </div>
                     </td>
                     <td>

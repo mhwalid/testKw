@@ -30,8 +30,7 @@ Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itemb
 Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
-
-Route::post('/Boutique/Family/S/{Id}', 'ItemController@filters')->name('filter');
+Route::post('/Boutiqu/Family/{Id}', 'ItemController@filters')->name('filter');
 //le panier
 Route::get('/panier', 'Shop\CartController@index')->middleware('verified')->name('cart.index');
 Route::get('/panier', 'Shop\CartController@index')->name('cart.index')->middleware('auth');
@@ -106,4 +105,4 @@ Route::get('/Qui-Sommes-Nous','ItemController@qui')->name('qui');
 
 
 //test url
-Route::get('/conn', 'ItemController@emal');
+Route::get('/testmail', 'MailController@ordeR');

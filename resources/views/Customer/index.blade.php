@@ -6,7 +6,6 @@
         
         <div class="col-sm-6">
         <div class="card">
-          
             <div class="card-body">
               <div class="d-flex justify-content-between">
               <h6 class="card-text ">{{$order->Id}} </h6>

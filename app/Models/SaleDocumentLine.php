@@ -23,6 +23,7 @@ class SaleDocumentLine extends Model
     public function ScopeSale($query)
     {
         return $query->select('ItemId')
+        ->whereNotNull('ItemId')
         ->whereRaw('sysCreatedDate > DATEADD(MONTH,-8,GETDATE())')
         ->groupBy('ItemId')
         ->orderBy(DB::raw('count(ItemId)'), 'DESC');

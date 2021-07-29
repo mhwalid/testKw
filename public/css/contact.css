@@ -116,7 +116,6 @@ input{
     @media screen and (min-width: 1150px) and (max-width: 2561px) {
         #contactvisiblemobile{
             display: none;
-
             }
 
             #contacte{
@@ -135,7 +134,6 @@ input{
         }
         #contacttexte1{
             font-size: 20px;
-
         }
         #ptittextecontact{
             font-size: 18px;
@@ -150,4 +148,4 @@ input{
                margin-bottom:10px;
         }
 
-        }
+}

@@ -9,7 +9,7 @@
             <a  style="text-decoration: none; color: black;"class="nav-link1" href="{{ route('login') }}" style="color:black;"><img id="imgheader" src="{{asset('asset/img/bonhomme_mon_compte.svg')}}" alt=""> <p id="invisible"> {{ __('Mon compte') }}</p></a>
         </li></div>
         <div id="ite8" class="item" style="z-index: 9" >
-            <a style="text-decoration: none; color: black;" href="{{ route('cart.index') }}"> <img id="imgheader" src="{{asset('asset/img/mon_panier_header.svg')}}" alt=""> <p id="invisible">{{ __('Mon panier') }} </p></a>
+            <a style="text-decoration: none; color: black;" href="{{ route('cart.index') }}"> <img id="imgheader" src="{{asset('asset/img/mon_panier_header.svg')}}" alt=""> <p id="invisible">{{ __('Mon panier') }} <em>{{Cart::content()->count()}}</em> </p></a>
         </div>
     @else
         <li style="list-style: none"s class="nav-item dropdown">

@@ -15,7 +15,7 @@ class Order extends Model
     protected $hidden = [''];
     
     public function user(){
-
+          
         return $this->hasMany(User::class, 'id', 'id');
     }
     public function oderLine(){
