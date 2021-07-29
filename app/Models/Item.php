@@ -16,7 +16,7 @@ class Item extends Model
 
 
     public $timestamps = false;
-    protected $fillable = ['RealStock', 'Id','FamilyId'];
+    protected $fillable = ['RealStock', 'Id','FamilyId','BarCode','SubFamilyId','Caption','DesComClear','UniqueId'];
 
     public function family()
     {
@@ -51,3 +51,4 @@ class Item extends Model
         return $this->hasOne(MainCarac::class,'id_item', 'Id');
     }
 }
+

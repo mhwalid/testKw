@@ -23,6 +23,7 @@ class Order extends Model
     public function customer(){
 
         return $this->belongsTo(Customer::class, 'CustomerId', 'Id');
+
     }
 
     public function oderLine(){

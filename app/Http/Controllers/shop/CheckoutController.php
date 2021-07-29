@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Contact;
 use App\Models\Item;
 use Exception;
@@ -10,6 +11,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\TryCatch;
 use Throwable;
@@ -80,22 +82,10 @@ class CheckoutController extends Controller
         $exec = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\storage\app\Cmd\cmd_Commande.txt"';
         exec($exec);
         Session::flash('success', 'Votre commande a été traitée avec succès');
+        Mail::to(Auth::user()->email)->send(new OrderMail(Auth::user()->name));
         return view('Checkout.thankyou');
         Cart::destroy();
 
-       
-       
-        // if ($this->notvalibel()) {
-        //     Session::flash('error', 'la quantité existe plus dans le stock ');
-        //     return response()->json(['success' => false], 400);
-        // }
-    //    return $data = $rq->json()->all();
-    //     $this->updatestock();
-    //     if ($this->updatestock()) {
-    //         
-    //     } else {
-    //         
-    //     }
     }
 
 

@@ -9,6 +9,8 @@ use App\Models\Contact;
 use App\Models\Customer;
 use App\Models\Family;
 use App\Models\Admin as Admin;
+use App\Models\Item;
+use App\Models\MainCarac;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use LdapRecord\Container;
@@ -191,7 +193,6 @@ class AdminController extends Controller
         $user->sendEmailVerificationNotification();
         return redirect()->route('admin.dashboard')->with('success', 'Un mail de vérification a été renvoyer .');
     }
-
     public function contactList()
     {
         if (isset($_GET['search']) && isset($_GET['actif'])) {
@@ -514,5 +515,122 @@ class AdminController extends Controller
         // fclose($stderr);
         // fclose($stream);
         // ssh2_disconnect($connection);
+    }
+
+    public function ean()
+    {
+        return view('admin.ean');
+    }
+
+    public function product(request $request)
+    {
+        $ean=$request->search_ean;
+        $id_item= Db::connection('sqlsrv')->table('Item')
+        ->select('Id')
+        ->where('BarCode', $ean)
+        ->get();
+        $family_id= Db::connection('sqlsrv')->table('Item')
+        ->select('FamilyId')
+        ->where('BarCode', $ean)
+        ->get();
+        $sub_family= Db::connection('sqlsrv')->table('Item')
+        ->select('SubFamilyId')
+        ->where('BarCode', $ean)
+        ->get();
+        return view('admin.product',compact('ean','id_item','family_id','sub_family'));
+    }
+
+    public function submitdata(request $request)
+    {
+        
+
+        $uuid= (string) Str::orderedUuid();
+
+        // $data=$request->validate([
+        //     'iditem' => ['required', 'string','unique:App\Models\Item,Id'],
+        // ]);
+            $iditem= Db::connection('sqlsrv')->table('Item')
+            ->select('Id')
+            ->where('Id', $_POST["iditem"])
+            ->count();
+
+           if($iditem==0){
+
+         Item::create([
+            'Id'=>$_POST["iditem"],
+            'FamilyId'=>$_POST["family"],
+            'BarCode'=>$_POST["ean13"],
+            'SubFamilyId'=>$_POST["subfamily"],
+            'Caption'=>$_POST["title"],
+            'DesComClear'=>$_POST["title"],
+            'UniqueId'=>$uuid,
+        ]);
+
+        MainCarac::create([
+            'id_item'=>$_POST["iditem"],
+            'code_bar'=>$_POST["ean13"],
+            'family'=>$_POST["family"],
+            'subfamily'=>$_POST["subfamily"],
+            'description'=>$_POST["descom"],
+            'marque'=>$_POST["fabricant"],
+            'taille_ecran'=>$_POST["taille_ecran"],
+            'resolution_ecran'=>$_POST["resolution_ecran"],
+            'fam_proc'=>$_POST["famille_proc"],
+            'mod_proc'=>$_POST["modele_proc"],
+            'sock_proc'=>$_POST["socket_proc"],
+            'os'=>$_POST["syst_exploit"],
+            'ssd'=>$_POST["ssd"],
+            'stockage'=>$_POST["stockage"],
+            'memoire'=>$_POST["memoire"],
+            'puissance'=>$_POST["puissance"],
+            'frequ_memoire'=>$_POST["freq_memoire"],
+            'cg'=>$_POST["cg"],
+            'chipset'=>$_POST["chipset"],
+            'ram'=>$_POST["ram"],
+            'gpu'=>$_POST["gpu"],
+            'nb_barrette'=>$_POST["nb_barrette"],
+        ]);
+
+        }else{
+            Item::where('Id',$_POST["iditem"])
+            ->update([
+                'FamilyId'=>$_POST["family"],
+            'BarCode'=>$_POST["ean13"],
+            'SubFamilyId'=>$_POST["subfamily"],
+            'Caption'=>$_POST["title"],
+            'DesComClear'=>$_POST["title"],
+            'UniqueId'=>$uuid,
+            ]);
+
+            MainCarac::where('id_item',$_POST["iditem"])
+            ->update([
+                'code_bar'=>$_POST["ean13"],
+                'family'=>$_POST["family"],
+                'subfamily'=>$_POST["subfamily"],
+                'description'=>$_POST["descom"],
+                'marque'=>$_POST["fabricant"],
+                'taille_ecran'=>$_POST["taille_ecran"],
+                'resolution_ecran'=>$_POST["resolution_ecran"],
+                'fam_proc'=>$_POST["famille_proc"],
+                'mod_proc'=>$_POST["modele_proc"],
+                'sock_proc'=>$_POST["socket_proc"],
+                'os'=>$_POST["syst_exploit"],
+                'ssd'=>$_POST["ssd"],
+                'stockage'=>$_POST["stockage"],
+                'memoire'=>$_POST["memoire"],
+                'puissance'=>$_POST["puissance"],
+                'frequ_memoire'=>$_POST["freq_memoire"],
+                'cg'=>$_POST["cg"],
+                'chipset'=>$_POST["chipset"],
+                'ram'=>$_POST["ram"],
+                'gpu'=>$_POST["gpu"],
+                'nb_barrette'=>$_POST["nb_barrette"],
+            ]);
+        }
+
+
+        // $items = Item::itemA();
+        return view('admin.submitdata',compact('iditem'));
+
     }
 }

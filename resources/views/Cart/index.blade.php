@@ -21,28 +21,29 @@
 
 
     <div class="pb-5">
+    <p class="news">Panier</p>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
 
                     <!-- Shopping cart table -->
-                    <div class="table-responsive">
-                        <table class="table">
+                    <div class="table-responsive" style="border-radius: 200px;">
+                        <table class="table" style=" margin-bottom: 0px;">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="border-0 bg-light">
+                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
                                         <div class="p-2  text-uppercase">Produit</div>
                                     </th>
-                                    <th scope="col" class="border-0 bg-light">
+                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
                                         <div class="py-2 text-uppercase">Prix</div>
                                     </th>
-                                    <th scope="col" class="border-0 bg-light">
+                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
                                         <div class="py-2 text-uppercase">Sous-Total</div>
                                     </th>
-                                    <th scope="col" class="border-0 bg-light">
+                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
                                         <div class="py-2 text-uppercase">Quantité</div>
                                     </th>
-                                    <th scope="col" class="border-0 bg-light">
+                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
                                         <div class="py-2 text-uppercase">Supprimer</div>
                                     </th>
                                 </tr>
@@ -112,43 +113,48 @@
 
                 <div class="col-lg-6">
                     <form class="mx-4" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
-                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">mode de paiement</div>
-                        <div class="p-4">
-                            <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
-                            <div class="input-group mb-4 border  p-2 d-flex flex-column">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="carte" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                    Carte bancaire
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="virement">
-                                    <label class="form-check-label" for="exampleRadios2">
-                                    Virement bancaire
-                                    </label>
-                                </div>
-                                <div class="form-check ">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="retrait" >
-                                    <label class="form-check-label" for="exampleRadios3">
-                                        Retrait bancaire
-                                    </label>
-                                </div>
-                            </div>
+
+
+                    <div style="background-color: #D6D1C1" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
+
+                    <div class="p-4">
+                        <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
+                        <div class="input-group mb-4 border  p-2 d-flex flex-column">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="carte" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Carte bancaire 
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="virement">
+                                <label class="form-check-label" for="exampleRadios2">
+                                   Virement bancaire
+                                </label>
+                              </div>
+                              <div class="form-check ">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="retrait" >
+                                <label class="form-check-label" for="exampleRadios3">
+                                    Retrait bancaire
+                                </label>
+                              </div>
                         </div>
-                        {{-- <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller
-                        </div>
-                        <div class="p-4">
-                            <p class="font-italic mb-4">If you have some information for the seller you can leave them in the
-                                box below</p>
-                            <textarea name="" cols="30" rows="2" class="form-control"></textarea>
-                        </div> --}}
-                        <button  type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</button>
-                    </form>
+                    </div>
+                    {{-- <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller
+                    </div>
+                    <div class="p-4">
+                        <p class="font-italic mb-4">If you have some information for the seller you can leave them in the
+                            box below</p>
+                        <textarea name="" cols="30" rows="2" class="form-control"></textarea>
+                    </div> --}}
+
+                    <button  type="submit" class="btn boutton col-6 ">Procédez au règlement</button>
+
+                </form>
 
                 </div>
                 <div class="col-lg-6">
-                    <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+                    <div style="background-color: #D6D1C1" class="bg-red rounded-pill px-4 py-3 text-uppercase font-weight-bold">Récapitulatif de la commande </div>
                     <div class="p-4">
                         <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have
                             entered.</p>
@@ -177,7 +183,7 @@
 @section('extra-js')
 @include('include.Searchitem')
 
-    <script>
+<script>
         var qty = document.querySelectorAll('#qty');
         Array.from(qty).forEach((element) => {
             element.addEventListener('change', function() {
@@ -205,5 +211,5 @@
             });
         });
 
-    </script>
+</script>
 @endsection

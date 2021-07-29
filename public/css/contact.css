@@ -1,29 +1,33 @@
 #contactecouleur{
     color: black;
 }
-
 input[type="text"].contact,
 input[type="url"].contact,
 input[type="email"].contact,
 input[type="password"].contact,
 input[type="date"].contact,
-input[type="tel"].contact
-{
+input[type="tel"].contact,
+input{
+
     box-shadow: none;
     outline: 0;
 }
 
 #ptittextecontact{
     font-size: 18px;
+
     color: #21201B;
     margin-top:10px;
     margin-bottom:10px;
+
 }
 
 
 @media screen and (min-width: 0px) and (max-width: 481px) {
+
     #contactinvisiblemobile{
         display: none;
+
     }
     #contacte{
         margin-top: 35%;
@@ -36,7 +40,6 @@ input[type="tel"].contact
         border-radius: 30px;
         width: 80%;
     }
-
     #contactkw{
         margin-bottom: 7%;
     }
@@ -51,6 +54,7 @@ input[type="tel"].contact
     }
     #ptittextecontact{
         font-size: 10px;
+
         color: #21201B;
         margin-top:6px;
         margin-bottom:6px;
@@ -60,6 +64,7 @@ input[type="tel"].contact
         color: #21201B;
         margin-top:6px;
         margin-bottom:6px;
+
     }
     #contactvisiblemobile{
         display: flex;
@@ -74,7 +79,6 @@ input[type="tel"].contact
     #contactinvisiblemobile{
         display: none;
     }
-
     #contacte{
         justify-content: space-around;
     }
@@ -156,5 +160,6 @@ input[type="tel"].contact
         margin-top:10px;
         margin-bottom:10px;
     }
+
 
 }

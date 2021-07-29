@@ -12,14 +12,13 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct(Request $request)
+
+    private $name;
+
+    public function __construct($name)
     {
-        $this->request = $request;
+        $this->name = $name;
+
     }
 
     /**
@@ -29,6 +28,6 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.mail');
+        return $this->from('walid@kw-distribution.com')->view('mail.Order',['name' => $this->name]);
     }
 }

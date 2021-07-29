@@ -1,3 +1,4 @@
+
 Footer /
 
 /* footer {
@@ -129,24 +130,19 @@ ul {
 } */
 
 
-
 .fa-shopping-cart{
-
     color:black;
-
 }
 .fa-user-circle{
     color:black;
 }
 
 #search{
-    /* float:left; */
-    margin-left: 150px;
-    width: 600px;;
+    margin-left: 0px;
+    width: 80%;
     margin-top:7px;
-    border-color: #f0ad4e;
+    border-color:  #21201b;
     border-radius: 30px;
-
 }
 
 .search{
@@ -178,31 +174,20 @@ ul {
 }
 #datalist tr {
     border: 1px solid #aaa;
+
 }
 
 /*************** NavBar************************************/
 
 .dropdown-header{
     color: blue;
-
 }
-/*menu horizontale*/
-.row1{
- display: flex;
-justify-content: center;
-background-color: #969281;
-height: 50px;
-
+/*header*/
+#item{
+    margin-right: 10%;
 
 }
 
-body{
-    margin: 0px;
-    padding: 0px;
-    font-family: Avenir, sans-serif;
-    background-color: white;
-
-}
 /*menu horizontale pour enlever puce */
 .row ul {
     list-style-type: none;
@@ -396,14 +381,15 @@ body{
 
     .right .item {
         padding: 0.3rem 0
+
     }
 
-    .right {
-        background-color: #ffffff;
-        padding: 2vh
+    #search{
+        width: 80%;
+        margin-top:7px;
+        border-color:  #21201b;
+        border-radius: 30px;
     }
-
-
 
     .lower {
         line-height: 2
@@ -871,5 +857,6 @@ a[aria-label="« Previous"] {
     overflow: auto;
 
   }
+
 
 

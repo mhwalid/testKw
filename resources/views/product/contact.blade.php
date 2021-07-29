@@ -93,6 +93,7 @@
                         <i id="ptittextecontact"  class="fas fa-envelope"></i> <a href="mailto:vente@kw-distribution.com" id="contactecouleur">vente@kw-distribution.com</a>
                     </li>
 
+
                     <li class="col-12 pb-1 pb-sm-1 pb-md-3" id="contacttexte1">
                         <i id="ptittextecontact" class="fas fa-phone-alt"></i> <a href="tel:0486800800" id="contactecouleur">04 86 80 08 00</a>
                     </li>

@@ -1,3 +1,4 @@
+
     <!-- Authentication Links -->
     <ul class="d-flex" style="padding: 0px; margin: 0px; ">
         @guest<div class="item">
@@ -42,3 +43,4 @@
         @endguest
 
         </ul>
+

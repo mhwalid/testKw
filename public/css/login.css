@@ -5,7 +5,9 @@
     justify-content: center;
     display: flex;
 }
-@media screen and (min-width: 481px) and (max-width: 2600px) {
+
+@media screen and (min-width: 650px) and (max-width: 2600px) {
+
     #imgordi2{
         display: none;
     }
@@ -67,7 +69,9 @@
     height:40px;
   }
 
+
   @media screen and (min-width: 0px) and (max-width: 480px) {
+
 
 
     #imgheader{
@@ -94,7 +98,40 @@
     #imgordi{
         display: none;
     }
-    /* #imgordi2{
 
-    } */
+    #imgordi2{
+
+    }
+  }
+  @media screen and (min-width: 481px) and (max-width: 650px) {
+    #imgheader{
+        width: 20px;
+        height:20px;
+      }
+      #log{
+
+        width: 350px;
+      height: 510px;
+    }
+    .news1{
+        font-family: 'Poppins', sans-serif;
+        display:flex;
+        font-size: 15px;
+        color: #21201b;
+        width: 100%;
+    }
+    #allignlogin{
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #imgordi{
+        display: none;
+    }
+    #imgordi2{
+
+    }
+  }
+
+
   }

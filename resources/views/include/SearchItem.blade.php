@@ -33,6 +33,7 @@
                     let Card = document.createElement('div');
                     var pathcart="{{ route('cart.store') }}";
                     var pathId="{{ route('product.index') }}";
+
                     var pathImage = "{{ asset('asset/item/images/') }}/"+ret[key].Id+"/Cart1.jpg ";
                     var pathImgStock = "{{asset('asset/img/en_stock.svg')}}";
                     var pathImgNStock = "{{asset('asset/img/plus_en_stock.svg')}}";

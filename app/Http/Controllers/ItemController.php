@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderMail;
 use App\Models\Contact;
 use App\Models\Family;
 use App\Models\Item;
+use App\Models\SaleDocumentLine;
 use App\Models\MainCarac;
 use App\Models\SubFamily;
 use App\Models\User;
@@ -15,16 +17,22 @@ use Barryvdh\DomPDF;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 
 class ItemController extends Controller
 {
     private function getPrice($items)
     {
+        // $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
+        // $items = Item::itemA()->paginate(20);
+        $id_customer = '';
         $price_item_client = [];
         $price_item_famy = [];
         $hidden_item = [];
+
         if (!is_null( Auth::user()) && !is_null(Auth::user()->email_verified_at) && Auth::user()->compte_actif ==1) {
+
             $id_customer = Auth::user()->Contact->Customer->Id;
             $id_customer_family = Auth::user()->Contact->Customer->FamilyId;
             $prices_client = DB::connection('sqlsrv')->table('PriceListInclusionLine')->select('PriceListId','StartElementId')
@@ -179,16 +187,13 @@ class ItemController extends Controller
     {
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         // dd(Auth::guard('unconfirmed')->user());
+        $items = Item::itemA()->paginate(20);
 
         if (!isset($_GET["stock"])) {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
-                $items = Item::itemA()->paginate(20);
-
-                $items = $this->getPrice($items);
-
-                return view('product.home', compact('items', 'Families'));
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
+
                 $items = Item::itemNT()->orderBy('SalePriceVatExcluded')->paginate(20);
 
                 $items = $this->getPrice($items);
@@ -202,16 +207,12 @@ class ItemController extends Controller
         }else {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
                 $items = Item::itemA()->where('RealStock','>','0')->paginate(20);
-
                 $items = $this->getPrice($items);
-
-                return view('product.home', compact('items', 'Families'));
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
 
+                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
                 $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded','desc')->paginate(20);
 
@@ -221,104 +222,49 @@ class ItemController extends Controller
         }
     }
 
+    }
+        
     public function home(){
         $Families = Family::all()->groupBy('MainIntervener');
-        return view('product.index' ,compact('Families'));
-    }
+        $news = Item::itemA()->take(10)->get();
+        $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
+        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
+         return view('product.index' ,compact('Families','news','promotions','bestsell'));
+     }
 
     public function show($id)
     {
-
         $item = Item::itemA()->find($id);
-        $item = $this->getPriceOneitem($item);
+        if(Auth::check()){
+       $item = $this->getPriceOneitem($item); }
         return view('product.show', compact('item'));
     }
 
+    public function email(){
+        Mail::to('mhwalid7@gmail.com')->send(new OrderMail());
+        return "walid";
+    }
 
     public function itembyCaption($Id)
     {
-
-        $marques = Db::connection('mysql')->table('main_carac')
-        ->select('marque')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $memoire= Db::connection('mysql')->table('main_carac')
-        ->select('memoire')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $taille_ecran= Db::connection('mysql')->table('main_carac')
-        ->select('taille_ecran')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $ssd= Db::connection('mysql')->table('main_carac')
-        ->select('ssd')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $os= Db::connection('mysql')->table('main_carac')
-        ->select('os')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $chipset= Db::connection('mysql')->table('main_carac')
-        ->select('chipset')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $fam_proc= Db::connection('mysql')->table('main_carac')
-        ->select('fam_proc')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $sock_proc= Db::connection('mysql')->table('main_carac')
-        ->select('sock_proc')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $gpu= Db::connection('mysql')->table('main_carac')
-        ->select('gpu')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $puissance= Db::connection('mysql')->table('main_carac')
-        ->select('puissance')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $frequ_mem= Db::connection('mysql')->table('main_carac')
-        ->select('frequ_memoire')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
-        $nb_barrette= Db::connection('mysql')->table('main_carac')
-        ->select('nb_barrette')
-        ->distinct()
-        ->where('family', $Id)
-        ->get();
-
+        $marques = Db::connection('mysql')->table('main_carac')->select('marque')->distinct()->where('family', $Id)->get();
+        $memoire= Db::connection('mysql')->table('main_carac')->select('memoire')->distinct()->where('family', $Id)->get();
+        $taille_ecran= Db::connection('mysql')->table('main_carac')->select('taille_ecran')->distinct()->where('family', $Id)->get();
+        $ssd= Db::connection('mysql')->table('main_carac')->select('ssd')->distinct()->where('family', $Id)->get();
+        $os= Db::connection('mysql')->table('main_carac')->select('os')->distinct()->where('family', $Id)->get();
+        $chipset= Db::connection('mysql')->table('main_carac')->select('chipset')->distinct()->where('family', $Id)->get();
+        $fam_proc= Db::connection('mysql')->table('main_carac')->select('fam_proc')->distinct()->where('family', $Id)->get();
+        $sock_proc= Db::connection('mysql')->table('main_carac')->select('sock_proc')->distinct()->where('family', $Id)->get();
+        $gpu= Db::connection('mysql')->table('main_carac')->select('gpu')->distinct()->where('family', $Id)->get();
+        $puissance= Db::connection('mysql')->table('main_carac')->select('puissance')->distinct()->where('family', $Id)->get();
+        $frequ_mem= Db::connection('mysql')->table('main_carac')->select('frequ_memoire')->distinct()->where('family', $Id)->get();
+        $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
         $Families = Family::all()->groupBy('MainIntervener');
-
+        $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
+        
         if (!isset($_GET["stock"])) {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
                 $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
-
-                $items = $this->getPrice($items);
-
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
                 $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
@@ -330,14 +276,11 @@ class ItemController extends Controller
 
                 $items = $this->getPrice($items);
                 return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
+
             }
         }else {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
                 $items = Item::itemA()->where('RealStock','>','0')->where('FamilyId', $Id)->paginate(20);
-
-                $items = $this->getPrice($items);
-
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
                 $items = Item::itemNT()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
@@ -351,25 +294,22 @@ class ItemController extends Controller
                 return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }
         }
-
+        $items = $this->getPrice($items);
+        $checked="";
+        return view('product.home', compact('items', 'checked','Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
     }
-    public function itembysubFamily($Id)
-    {
-        $Families = Family::all()->groupBy('MainIntervener');
-        $items  = Item::itemA()->where('SubFamilyId', $Id)->paginate(20);
-        $items = $this->getPrice($items);;
-
-        return view('product.home', compact('items', 'Families'));
-        // return response()->json($items);
-    }
-
     public function contact()
     {
         return view('product.contact');
     }
+
     public function payement()
     {
         return view('product.payement');
+    }
+    public function qui()
+    {
+        return view('product.qui');
     }
 
     public function search(Request $request)
@@ -386,7 +326,7 @@ class ItemController extends Controller
             $items = $this->getPrice($items);
             return $items;
         } else {
-            if ($pieces[1] == "Family") {
+           if ($pieces[1] == "Family") {
                 $con = $pieces[2];
                 $items = Item::itemA()
                 ->where('FamilyId',$con)
@@ -402,316 +342,211 @@ class ItemController extends Controller
         }
     }
 
-    public function filters(Request $rq)
-    {
 
-        $items=Item::itemA();
-        if($rq->marque_id) $items->where('');
+    public function filters(Request $rq){
+        $Id=$rq->FamilyId;
+        $marques = Db::connection('mysql')->table('main_carac')->select('marque')->distinct()->where('family', $Id)->get();
+        $memoire= Db::connection('mysql')->table('main_carac')->select('memoire')->distinct()->where('family', $Id)->get();
+        $taille_ecran= Db::connection('mysql')->table('main_carac')->select('taille_ecran')->distinct()->where('family', $Id)->get();
+        $ssd= Db::connection('mysql')->table('main_carac')->select('ssd')->distinct()->where('family', $Id)->get();
+        $os= Db::connection('mysql')->table('main_carac')->select('os')->distinct()->where('family', $Id)->get();
+        $chipset= Db::connection('mysql')->table('main_carac')->select('chipset')->distinct()->where('family', $Id)->get();
+        $fam_proc= Db::connection('mysql')->table('main_carac')->select('fam_proc')->distinct()->where('family', $Id)->get();
+        $sock_proc= Db::connection('mysql')->table('main_carac')->select('sock_proc')->distinct()->where('family', $Id)->get();
+        $gpu= Db::connection('mysql')->table('main_carac')->select('gpu')->distinct()->where('family', $Id)->get();
+        $puissance= Db::connection('mysql')->table('main_carac')->select('puissance')->distinct()->where('family', $Id)->get();
+        $frequ_mem= Db::connection('mysql')->table('main_carac')->select('frequ_memoire')->distinct()->where('family', $Id)->get();
+        $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
+        $Families = Family::all()->groupBy('MainIntervener');
+        $fmarques = $rq->marques;
+        $fmemoire = $rq->memoire;
+        $ftaille_ecran = $rq->taille_ecran;  
+        $fssd = $rq->ssd;  
+        $fos = $rq->os;  
+        $ffam_proc = $rq->fam_proc;  
+        $fsock_proc = $rq->sock_proc;  
+        $fgpu = $rq->gpu;  
+        $fchipset = $rq->chipset;  
+        $fpuissance = $rq->puissance;  
+        $ffrequ_mem = $rq->frequ_mem;  
+        $fnb_barrette = $rq->nb_barrette;
+        $url= (explode('/', $rq->url)); 
+        $MainCarac = DB::Table('main_carac')->where('family', $Id);
+        $checked="";
+        // return dd($rq->all());
+        $i=0;
+        foreach($rq->all() as $index){
+            $i++;
+            if($i >=5){
+                if(is_array($index) || is_object($index)){
+                    foreach($index as $value){
+                        $checked.= $value.";";
 
-        return $rq;
-    }
-
-
-    public function filter(Request $request)
-    {
-        $ram = $request->ram;
-        $v = $request->value;
-        $url = $request->url;
-        $pieces = explode("/", $url);
-
-
-
-        //  pour filter par capacite
-        // if(count($pieces)==1){
-        //         $items = DB::table('Item');
-
-        //         if(isset($request->ram)){
-
-        //             if(count($request->ram)==1){
-        //                 $q=$request->ram[0];
-        //                 $items =  $items->where('xx_categorie1',$q);
-
-        //             }
-        //             if(count($request->ram)==2){
-        //                 $q=$request->ram[0];
-        //                 $q1=$request->ram[1];
-        //                 $items =  $items->where('xx_categorie1',$q)
-        //                                     ->orWhere('xx_categorie1',$q1)
-        //                                         ;
-        //             }
-        //             if(count($request->ram)==3){
-        //                 $q=$request->ram[0];
-        //                 $q1=$request->ram[1];
-        //                 $q2=$request->ram[2];
-        //                 $items =   $items->where('xx_categorie1', $q)
-        //                                                 ->orWhere('xx_categorie1',$q1)
-        //                                                 ->orWhere('xx_categorie1',$q2);
-
-        //             }
-        //         }
-        //         if(isset($request->proc)){
-        //             if(count($request->Stockage)==1){
-        //                 $q=$request->Stockage[0];
-        //                 $items =  $items->where('xx_categorie2',$q);
-
-        //             }
-        //             if(count($request->Stockage)==2){
-        //                 $q=$request->Stockage[0];
-        //                  $q1=$request->Stockage[1];
-        //                  $items =  $items->where('xx_categorie2',$q)
-        //                                     ->orWhere('xx_categorie2',$q1);
-        //             }
-        //             if(count($request->Stockage)==3){
-        //                 $q=$request->Stockage[0];
-        //                 $q1=$request->Stockage[1];
-        //                 $q2=$request->Stockage[2];
-        //                 $items =   $items->where('xx_categorie2',$q)
-        //                                                 ->orWhere('xx_categorie2',$q1)
-        //                                                 ->orWhere('xx_categorie2',$q2);
-        //             }
-        //          }
-        //         if(isset($request->proc)){
-        //             if(count($request->proc)==1){
-        //                 $q=$request->proc[0];
-        //                 $items =  $items->where('localizableCaption_2',$q);
-
-        //             }
-        //             if(count($request->proc)==2){
-        //                 $q=$request->proc[0];
-        //                  $q1=$request->proc[1];
-        //                  $items =  $items->where('localizableCaption_2',$q)
-        //                                     ->orWhere('localizableCaption_2',$q);
-        //             }
-        //             if(count($request->proc)==3){
-        //                 $q=$request->proc[0];
-        //                 $q1=$request->proc[1];
-        //                 $q2=$request->proc[2];
-        //                 $items =   $items->where('localizableCaption_2',$q)
-        //                                                 ->orWhere('localizableCaption_2',$q)
-        //                                                 ->orWhere('localizableCaption_2',$q);
-        //             }
-        //          }
-
-        //     return $items->paginate(300);
-
-        // }else
-        // {
-
-        if ($request->ram || $request->Stockage || $request->proc || $request->disque || $request->mrq || $request->CGType || $request->size) {
-            if ($pieces[1] == "SubFamily") {
-                $con = $pieces[2];
-                $items = Item::itemA()->where('SubFamilyId', 'like', "%$con%");
-                if (isset($request->ram)) {
-                    if (count($request->ram) == 1) {
-                        $q = $request->ram[0];
-                        $items =  $items->where('xx_categorie1', $q);
                     }
-                    if (count($request->ram) == 2) {
-                        $q = $request->ram[0];
-                        $q1 = $request->ram[1];
-                        $items =  $items->where('xx_categorie1', $q)
-                            ->orWhere('xx_categorie1', $q1);
+                   }else{
+                    $checked.= $index.";";
+                   }
+              }
+         }
+        // return $test = DB::Table('main_carac')->select('id_item')->where('marque','ASUS')->orwhere('marque','msi')->get();
+        if(isset($rq->marques)){
+                $MainCarac->where(function ($query) use ($fmarques){
+                    foreach($fmarques as $index =>$mar){
+                         if($index ==0){
+                            $query->where('marque',$mar);
+                           }else{
+                            $query->orwhere('marque',$mar);
+                           }
                     }
-                    if (count($request->ram) == 3) {
-                        $q = $request->ram[0];
-                        $q1 = $request->ram[1];
-                        $q2 = $request->ram[2];
-                        $items =   $items->where('xx_categorie1', $q)
-                            ->orWhere('xx_categorie1', $q1)
-                            ->orWhere('xx_categorie1', $q2);
-                    }
-                }
-                if (isset($request->Stockage)) {
-
-                    if (count($request->Stockage) == 1) {
-                        $q = $request->Stockage[0];
-                        $items =  $items->where('xx_categorie2', $q);
-                    }
-                    if (count($request->Stockage) == 2) {
-                        $q = $request->Stockage[0];
-                        $q1 = $request->Stockage[1];
-                        $items =  $items->where('xx_categorie2', $q)
-                            ->orWhere('xx_categorie2', $q1);
-                    }
-                    if (count($request->Stockage) == 3) {
-                        $q = $request->Stockage[0];
-                        $q1 = $request->Stockage[1];
-                        $q2 = $request->Stockage[2];
-                        $items =   $items->where('xx_categorie2', $q)
-                            ->orWhere('xx_categorie2', $q1)
-                            ->orWhere('xx_categorie2', $q2);
-                    }
-                }
-
-                if (isset($request->proc)) {
-                    if (count($request->proc) == 1) {
-                        $q = $request->proc[0];
-                        $items =  $items->where('localizableCaption_2', $q);
-                    }
-                    if (count($request->proc) == 2) {
-                        $q = $request->proc[0];
-                        $q1 = $request->proc[1];
-                        $items =  $items->where('localizableCaption_2', $q)
-                            ->orWhere('localizableCaption_2', $q1);
-                    }
-                    if (count($request->proc) == 3) {
-                        $q = $request->proc[0];
-                        $q1 = $request->proc[1];
-                        $q2 = $request->proc[2];
-                        $items =   $items->where('localizableCaption_2', $q)
-                            ->orWhere('localizableCaption_2', $q1)
-                            ->orWhere('localizableCaption_2', $q2);
-                    }
-                }
-                if (count($request->disque) > 0) {
-                    $q = $request->disque[0];
-                    $items =  $items->where('xx_categorie3', 'like', $q);
-                }
-                if (count($request->CGType) > 0) {
-                    $q = $request->CGType[0];
-                    $items =  $items->where('localizableCaption_3', 'like', $q);
-                }
-
-                return $items->paginate(390);
-            } elseif ($pieces[1] == "Family") {
-                $con = $pieces[2];
-                $items = Item::itemA()
-                    ->where('FamilyId', 'like', "%$con%");
-                if (isset($request->ram)) {
-                    if (count($request->ram) == 0) {
-                        $items = Item::itemA()->where('FamilyId', 'like', "%$con%");
-                    }
-                    if (count($request->ram) == 1) {
-                        $q = $request->ram[0];
-                        $items =  $items->where('xx_categorie1', $q);
-                    }
-                    if (count($request->ram) == 2) {
-                        $q = $request->ram[0];
-                        $q1 = $request->ram[1];
-                        $items =  $items->where('xx_categorie1', $q)
-                            ->orWhere('xx_categorie1', $q1);
-                    }
-                    if (count($request->ram) == 3) {
-                        $q = $request->ram[0];
-                        $q1 = $request->ram[1];
-                        $q2 = $request->ram[2];
-                        $items =   $items->where('xx_categorie1', $q)
-                            ->orWhere('xx_categorie1', $q1)
-                            ->orWhere('xx_categorie1', $q2);
-                    }
-                }
-                if (isset($request->Stockage)) {
-                    if (count($request->Stockage) == 1) {
-                        $q = $request->Stockage[0];
-                        $items =  $items->where('xx_categorie2', $q);
-                    }
-                    if (count($request->Stockage) == 2) {
-                        $q = $request->Stockage[0];
-                        $q1 = $request->Stockage[1];
-                        $items =  $items->where('xx_categorie2', $q)
-                            ->orWhere('xx_categorie2', $q1);
-                    }
-                    if (count($request->Stockage) == 3) {
-                        $q = $request->Stockage[0];
-                        $q1 = $request->Stockage[1];
-                        $q2 = $request->Stockage[2];
-                        $items =   $items->where('xx_categorie2', $q)
-                            ->orWhere('xx_categorie2', $q1)
-                            ->orWhere('xx_categorie2', $q2);
-                    }
-                }
-                if (isset($request->proc)) {
-                    if (count($request->proc) == 1) {
-                        $q = $request->proc[0];
-                        $items =  $items->where('localizableCaption_2', $q);
-                    }
-                    if (count($request->proc) == 2) {
-                        $q = $request->proc[0];
-                        $q1 = $request->proc[1];
-                        $items =  $items->where('localizableCaption_2', $q)
-                            ->orWhere('localizableCaption_2', $q);
-                    }
-                    if (count($request->proc) == 3) {
-                        $q = $request->proc[0];
-                        $q1 = $request->proc[1];
-                        $q2 = $request->proc[2];
-                        $items =   $items->where('localizableCaption_2', $q)
-                            ->orWhere('localizableCaption_2', $q)
-                            ->orWhere('localizableCaption_2', $q);
-                    }
-                }
-                if (count($request->disque) > 0) {
-                    $q = $request->disque[0];
-                    $items =  $items->where('xx_categorie3', 'like', $q);
-                }
-                if (count($request->mrq) > 0) {
-                    $q = $request->mrq[0];
-                    $items =  $items->where('SubFamilyId', 'like', "%$q%");
-                }
-                if (count($request->CGType) > 0) {
-                    $q = $request->CGType[0];
-                    $items =  $items->where('localizableCaption_3', 'like', $q);
-                }
-                if (count($request->size) > 0) {
-                    $q = $request->size[0];
-                    $items =  $items->where('localizableCaption_4', 'like', $q);
-                }
-
-
-
-                return $items->paginate(208);
-            }
+                    return  $query;
+             });
         }
+        if(isset($rq->memoire)){
+            $MainCarac->where(function ($query) use ($fmemoire){
+                foreach($fmemoire as $index =>$mem){
+                     if($index ==0){
+                        $query->where('memoire',$mem);
+                       }else{
+                        $query->orwhere('memoire',$mem);
+                       }
+                }
+                return  $query;
+            });
+        }
+        if(isset($rq->taille_ecran)){
+            $MainCarac->where(function ($query) use ($ftaille_ecran){
+                foreach($ftaille_ecran as $index =>$value){
+                     if($index ==0){
+                        $query->where('taille_ecran',$value);
+                       }else{
+                        $query->orwhere('taille_ecran',$value);
+                       }
+                }
+                return  $query;
+            });
+        }
+        if(isset($rq->ssd)){
+            $MainCarac->where(function ($query) use ($fssd){
+                foreach($fssd as $index =>$value){
+                     if($index ==0){
+                        $query->where('ssd',$value);
+                       }else{
+                        $query->orwhere('ssd',$value);
+                       }
+                }
+                return  $query;
+            });
+        }
+        if(isset($rq->os)){
+            $MainCarac->where(function ($query) use ($fos){
+                foreach($fos as $index =>$value){
+                     if($index ==0){
+                        $query->where('os',$value);
+                       }else{
+                        $query->orwhere('os',$value);
+                       }
+                }
+                return  $query;
+            });
+        }
+        if(isset($rq->fam_proc)){
+            $MainCarac->where(function ($query) use ($ffam_proc){
+                foreach($ffam_proc as $index =>$value){
+                     if($index ==0){
+                        $query->where('fam_proc',$value);
+                       }else{
+                        $query->orwhere('fam_proc',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->sock_proc)){
+            $MainCarac->where(function ($query) use ($fsock_proc){
+                foreach($fsock_proc as $index =>$value){
+                     if($index ==0){
+                        $query->where('sock_proc',$value);
+                       }else{
+                        $query->orwhere('sock_proc',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->gpu)){
+            $MainCarac->where(function ($query) use ($fgpu){
+                foreach($fgpu as $index =>$value){
+                     if($index ==0){
+                        $query->where('gpu',$value);
+                       }else{
+                        $query->orwhere('gpu',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->chipset)){
+            $MainCarac->where(function ($query) use ($fchipset){
+                foreach($fchipset as $index =>$value){
+                     if($index ==0){
+                        $query->where('chipset',$value);
+                       }else{
+                        $query->orwhere('chipset',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->puissance)){
+            $MainCarac->where(function ($query) use ($fpuissance){
+                foreach($fpuissance as $index =>$value){
+                     if($index ==0){
+                        $query->where('puissance',$value);
+                       }else{
+                        $query->orwhere('puissance',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->frequ_mem)){
+            $MainCarac->where(function ($query) use ($ffrequ_mem){
+                foreach($ffrequ_mem as $index =>$value){
+                     if($index ==0){
+                        $query->where('frequ_memoire',$value);
+                       }else{
+                        $query->orwhere('frequ_memoire',$value);
+                       }
+                }
+                return  $query;
+            });
+        }    
+        if(isset($rq->nb_barrette)){
+            $MainCarac->where(function ($query) use ($fnb_barrette){
+                foreach($fnb_barrette as $index =>$value){
+                     if($index ==0){
+                        $query->where('nb_barrette',$value);
+                       }else{
+                        $query->orwhere('nb_barrette',$value);
+                       }
+                }
+                return  $query;
+            });
+        }     
+        $MainCarac= $MainCarac->pluck('id_item');
+        $items= Item::itemA()->whereIn('Id', $MainCarac)->paginate(20);
+        return view('product.home', compact('items','checked', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
     }
-
-
-    //     if(isset($_POST["action"]))
-    // {
-    // $query = "
-    // SELECT * FROM product WHERE product_status = '1'
-    // ";
-    // if(isset($_POST["minimum_price"], $_POST["maximum_price"]) && !empty($_POST["minimum_price"]) && !empty($_POST["maximum_price"]))
-    // {
-    // $query .= "
-    // AND product_price BETWEEN '".$_POST["minimum_price"]."' AND '".$_POST["maximum_price"]."'
-    // ";
-    // }
-    // if(isset($_POST["brand"]))
-    // {
-    // $brand_filter = implode("','", $_POST["brand"]);
-    // $query .= "
-    // AND product_brand IN('".$brand_filter."')
-    // ";
-    // }
-    // if(isset($_POST["ram"]))
-    // {
-    // $ram_filter = implode("','", $_POST["ram"]);
-    // $query .= "
-    // AND product_ram IN('".$ram_filter."')
-    // ";
-    // }
-    // if(isset($_POST["storage"]))
-    // {
-    // $storage_filter = implode("','", $_POST["storage"]);
-    // $query .= "
-    // AND product_storage IN('".$storage_filter."')
-    // ";
-    // }
-
     public function feature($id){
         $item = Item::find($id);
         $arrivage = Db::connection('sqlsrv')->table('PurchaseDocumentLine')->select('PurchaseDocumentLine.Quantity', 'PurchaseDocumentLine.DeliveryDate', 'item.Id')->join('item', 'item.Id', '=', 'PurchaseDocumentLine.ItemId')->where('item.Id', $id)->whereRaw('DeliveryDate > SYSDATETIME()')->first();
         $data = [
             'item' => $item,
             'arrivage' => $arrivage,
-
         ];
-
         $pdf = PDF::loadView('product.itempdf', $data);
-
         return $pdf->stream($id.'.pdf');
-
     }
 
-
 }
+
