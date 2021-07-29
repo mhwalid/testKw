@@ -1,25 +1,31 @@
 
 
 
-#allignlogin{
-    justify-content: center;
-    display: flex;
+#invisible{
+   margin-bottom: 0%;
+   color:  #21201B;
+
 }
-@media screen and (min-width: 650px) and (max-width: 2600px) {
+@media screen and (min-width: 1100px) and (max-width: 2600px) {
     #imgordi2{
         display: none;
     }
 }
+
 #log1{
     border-top: none;
     border-left: none;
     border-right: none;
-    border-color: #898281;
+
     border-width: thin;
-    box-shadow: 0.1em 0.1em 0.1em 0.1em #21201b;
+
 
 }
 
+#allignlogin{
+    justify-content: center;
+    display: flex;
+}
 #log{
     margin-top: 7%;
     width: 350px;
@@ -64,6 +70,10 @@
   }
   #imgheader{
     width: 40px;
+    height:30px;
+  }
+  #imgheader1{
+    width: 40px;
     height:40px;
   }
 
@@ -71,6 +81,10 @@
 
 
     #imgheader{
+        width: 21px;
+        height:21px;
+      }
+      #imgheader1{
         width: 20px;
         height:20px;
       }
@@ -94,14 +108,24 @@
     #imgordi{
         display: none;
     }
-    #imgordi2{
 
+    .loge{
+        font-size: 11px;
     }
+
   }
   @media screen and (min-width: 481px) and (max-width: 650px) {
+
     #imgheader{
+        width: 65px;
+        height: 22px;
+      }
+
+      #imgheader1{
         width: 20px;
         height:20px;
+        margin-left: 200%;
+
       }
       #log{
 
@@ -123,9 +147,84 @@
     #imgordi{
         display: none;
     }
+
+  }
+
+
+  @media screen and (min-width: 650px) and (max-width: 1100px) {
+
+    #log{
+
+        width: 350px;
+      height: 350px;
+    }
+    #allignlogin{
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
     #imgordi2{
+        display: none;
+    }
+
+
+    #log1{
+        border-top: none;
+        border-left: none;
+        border-right: none;
+
+        border-width: thin;
+
 
     }
-  }
 
-  }
+
+
+    .loge{
+        margin: 0;
+    }
+    .news1::before
+    {
+        content:"";
+        flex:1 1;
+        background:#D6D1C1;
+        height:1px;
+        align-self: center;
+        margin: 10px 10px 10px 10px;
+
+        }
+        .news1::after {
+        content:"";
+        flex:1 1;
+        background:#D6D1C1;
+        height:1px;
+        align-self: center;
+        margin: 10px 20px 10px 10px;
+
+        }
+
+    .news1{
+        font-family: 'Poppins', sans-serif;
+        display:flex;
+        font-size: 28px;
+        color: #21201b;
+        width: 100%;
+    }
+
+
+    #log1::placeholder {
+        color: #969281!important;
+
+    }
+    #imgheader{
+        width: 40px;
+        height:30px;
+    }
+    #imgheader1{
+        width: 40px;
+        height:40px;
+    }
+
+
+}

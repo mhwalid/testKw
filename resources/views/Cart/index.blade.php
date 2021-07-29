@@ -24,28 +24,36 @@
     <p class="news">Panier</p>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                <div class="col-lg-12 p-3  mb-5">
 
                     <!-- Shopping cart table -->
-                    <div class="table-responsive" style="border-radius: 200px;">
-                        <table class="table" style=" margin-bottom: 0px;">
+                    <div class="table-responsive" >
+                        <table class="table" style=" margin-bottom: 0px;" id="mobilechange">
                             <thead>
                                 <tr>
                                     <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
-                                        <div class="p-2  text-uppercase">Produit</div>
+
+                                     Produit
+
+                                    </th>
+                                    <th id="invisiblepanier" scope="col" style="background-color: #D6D1C1" class="border-0 ">
+                                     Prix
                                     </th>
                                     <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
-                                        <div class="py-2 text-uppercase">Prix</div>
+                                    Sous-Total
                                     </th>
-                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
-                                        <div class="py-2 text-uppercase">Sous-Total</div>
+                                    <th id="invisiblepanier" scope="col" style="background-color: #D6D1C1" class="border-0 ">
+                                      Quantité
                                     </th>
-                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
-                                        <div class="py-2 text-uppercase">Quantité</div>
+                                    <th id="visiblepanier" scope="col" style="background-color: #D6D1C1" class="border-0 ">
+                                        Qté
+                                      </th>
+                                    <th id="invisiblepanier" scope="col" style="background-color: #D6D1C1" class="border-0 ">
+                                     Supprimer
                                     </th>
-                                    <th scope="col" style="background-color: #D6D1C1" class="border-0 ">
-                                        <div class="py-2 text-uppercase">Supprimer</div>
-                                    </th>
+                                    <th id="visiblepanier" scope="col" style="background-color: #D6D1C1" class="border-0 ">
+
+                                       </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,12 +62,12 @@
                                     {{ $arrivage = false }}
 
                                     <tr>
-                                        <th scope="row" class="border-0">
-                                            <div class="p-2">
-                                                <img src="{{asset('asset/item/images/'.$item->id.'/Cart1.jpg')}}"
+                                        <td scope="row" class="border-0">
+                                            <div class="p-2" style="      align-items: center;  display: inline-flex;     column-gap: 15px;">
+                                                <img id="invisiblepanier1" src="{{asset('asset/item/images/'.$item->id.'/Cart1.jpg')}}"
                                                     alt="" width="70" class="img-fluid rounded shadow-sm">
-                                                <div class="ml-3 d-inline-block align-middle">
-                                                    <h6 class="mb-0"> <a href="{{ route('product.show', $item->id) }}"
+                                                <div id="taillepanier" class=" d-inline-block align-middle">
+                                                    <h6 id="taillepanier" class="mb-0"> <a href="{{ route('product.show', $item->id) }}"
                                                             class="text-dark d-inline-block align-middle">{{ $item->name }}</a>
                                                     </h6>
                                                     <span
@@ -67,12 +75,13 @@
                                                         Watches</span>
                                                 </div>
                                             </div>
-                                        </th>
+
+                                        </td>
 
 
-                                        <td class="border-0 align-middle">{{ $item->price }}<strong></strong></td>
-                                        <td class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
-                                        <td class="border-0 align-middle"> <select class="custom-select" name="qty" id="qty"
+                                        <td id="taillepanier"id="invisiblepanier" scope="col" class="border-0 align-middle">{{ $item->price }}<strong></strong></td>
+                                        <td scope="col"id="taillepanier" class="border-0 align-middle">{{ $item->subtotal() }}<strong></strong></td>
+                                        <td scope="col" class="border-0 align-middle"> <select id="taillepanier" class="custom-select" name="qty" id="qty"
                                                 data-id="{{ $item->rowId }}"
                                                 data-stock="{{ intval($item->model->RealStock) }}"
                                                 data-arrivage="{{ intval($item->model->arrivage->first()->Quantity ?? 0) }}">
@@ -87,11 +96,11 @@
                                                 @endfor
                                             </select>
                                         </td>
-                                        <td class="border-0 align-middle">
+                                        <td scope="col"  class="border-0 align-middle">
                                             <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-dark"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" style=" margin-left: 30%; border: none;" class="text-dark"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -106,17 +115,17 @@
             </div>
 
             <div class="row py-5 p-4 bg-white rounded shadow-sm">
-                
+
                 <div class="col-lg-6">
-                    <form class="mx-4" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
-                    <div style="background-color: #D6D1C1" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
+                    <form class="" action="{{ route('checkout.index', 'test') }}" method="post">    {{ csrf_field() }}
+                    <div style="background-color: #D6D1C1; width:max-content;" class=" rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mode de paiement</div>
                     <div class="p-4">
                         <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
                         <div class="input-group mb-4 border  p-2 d-flex flex-column">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="carte" checked>
                                 <label class="form-check-label" for="exampleRadios1">
-                                  Carte bancaire 
+                                  Carte bancaire
                                 </label>
                               </div>
                               <div class="form-check">
@@ -140,12 +149,12 @@
                             box below</p>
                         <textarea name="" cols="30" rows="2" class="form-control"></textarea>
                     </div> --}}
-                    <button  type="submit" class="btn boutton col-6 ">Procédez au règlement</button>
+                    <button style="max-width: fit-content;"  type="submit" class="btn boutton col-6 mb-3">Procédez au règlement</button>
                 </form>
 
                 </div>
                 <div class="col-lg-6">
-                    <div style="background-color: #D6D1C1" class="bg-red rounded-pill px-4 py-3 text-uppercase font-weight-bold">Récapitulatif de la commande </div>
+                    <div style="     max-width: fit-content; background-color: #D6D1C1" class="bg-red rounded-pill px-4 py-3 text-uppercase font-weight-bold">Récapitulatif </div>
                     <div class="p-4">
                         <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have
                             entered.</p>
@@ -153,16 +162,16 @@
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">
                                     Subtotal </strong><strong>{{ Cart::subtotal() }}</strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong
-                                    class="text-muted">Tax</strong><strong>{{ Cart::tax() }}</strong></li>
+                                    class="text-muted">TVA</strong><strong>{{ Cart::tax() }}</strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong
                                     class="text-muted">Total</strong>
-                                <h5 class="font-weight-bold">{{ Cart::total() }} </h5> 
+                                <h5 class="font-weight-bold">{{ Cart::total() }} </h5>
                             </li>
                         </ul>
-                       
+
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
@@ -202,5 +211,37 @@
             });
         });
 
+
+
     </script>
+<style>
+
+@media screen and (min-width: 0px) and (max-width:  600px) {
+    #invisiblepanier{
+        display: none;
+    }
+    .custom-select{
+    width: 140%;
+}
+    #taillepanier{
+        font-size: 10px;
+    }
+
+}
+@media screen and (min-width: 600px) and (max-width:  2600px) {
+    #visiblepanier{
+        display: none;
+    }
+    .custom-select{
+    width: 90%;
+}
+
+}
+@media screen and (min-width: 0px) and (max-width:  770px) {
+    #invisiblepanier1{
+        display: none;
+    }
+}
+
+</style>
 @endsection

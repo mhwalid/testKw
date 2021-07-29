@@ -1,10 +1,11 @@
 
 /*Titre*/
 
+
 .news{
     font-family: 'Poppins', sans-serif;
     display:flex;
-    font-size: 40px;
+    font-size: 30px;
     color: #21201b;
     width: 100%;
 }
@@ -21,23 +22,26 @@ span[aria-label="Next"] {
   }
 /*ZOOM carousel page index et couleur noir et blanc*/
 
-.item1 {
-    transition: transform .5s, filter 0.5s ease-in-out;
-    filter: grayscale(100%);
+
+  @media screen and (min-width:1000px) and (max-width:2600px) {
+    .item1 {
+        transition: transform .5s, filter 0.5s ease-in-out;
+        filter: grayscale(100%);
+      }
+      .item1:hover  {
+        filter: grayscale(0);
+        transform: scale(1.1);
+      }
+
   }
 
 
-  .item1:hover  {
-    filter: grayscale(0);
-    transform: scale(1.1);
-  }
   #ty{
       height: 320px;
   }
   #ty2{
     height: 320px;
 }
-
 
 
 
@@ -80,23 +84,35 @@ span[aria-label="Next"] {
 #itemcarouss{
     width: 200px;
     height: 200px;
+    padding-top: 10%;
 }
 
 
 
 .itemcar{
-
-    width: 450px;
-    height: 400px;
-    margin: auto;
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 #item3{
     background-color: white;
-    width: 350px;
     height: 310px;
-    padding: 30px;
+    display: flex;
+    padding-top: 5%;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+}
+#item4{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 #encadrement{
@@ -105,18 +121,19 @@ span[aria-label="Next"] {
 
 #ecritpart{
     padding-left: 40px;
-    padding-top: 50px;
+    padding-top: 2%;
     width: 600px;
     font-family: 'Roboto', sans-serif;
+    font-size: 160%;
 }
 #ecrituretailleindex{
     font-size: 11px;
 
 }
 #imgpart{
-    width: 200px;
-     height: 300px;
-      margin-bottom: 50px;
+    width: 8%;
+    height: 11%;
+    margin-bottom: 50px;
 }
 
 #divpartenaire{
@@ -128,6 +145,14 @@ span[aria-label="Next"] {
         display: none;
     }
 }
+@media screen and (min-width:775px) and (max-width:1450px) {
+    #imgpart{
+        width: 14%;
+        height: 11%;
+        margin-bottom: 50px;
+    }
+}
+
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
     #ecritpart{
@@ -157,28 +182,33 @@ span[aria-label="Next"] {
     .news{
 
 
-        font-size: 15px;
+        font-size: 22px;
         margin-bottom: 0px;
 
 
     }
 
     #par{
-
-        height: 100px;
+        width: 230px;
+        height: 85px;
     }
 
     #ecritpart{
 
-        padding-top : 30px;
+        padding-top : 70px;
     }
 
     #item3{
 
             background-color: white;
             height: 250px;
-            padding: 30px;
+            display: flex;
             width: auto;
+            flex-direction: column;
+            align-content: space-between;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 12%;
     }
     #mv{
         width: 635px;
@@ -199,9 +229,7 @@ span[aria-label="Next"] {
 
 
 
-    .itemcar {
-        margin-left: 15%;
-    }
+
     #itemcarouss{
         width: 150px;
         height: 150px;
@@ -216,10 +244,10 @@ span[aria-label="Next"] {
 
   @media screen and (min-width: 0px) and (max-width: 481px) {
 
-    #hg{
-       margin-top: 20%;
-   }
 
+    #hg{
+        margin-top: 15%;
+    }
 
    #imgpart2{
     width: 40%;
@@ -242,6 +270,7 @@ span[aria-label="Next"] {
         align-items: stretch;
     }
 
+
     #ecritpart{
         padding-left: 0px;
         padding-top: 0px;
@@ -249,25 +278,17 @@ span[aria-label="Next"] {
         margin-left: 8%;
     }
     .news{
-        font-size: 15px;
+        font-size: 14px;
     }
     #itemcarouss{
-        width: 150px;
+        width: 140px;
         height: 150px;
     }
-    .itemcar {
-        margin-left: 25%;
-        /* display: flex;
-        flex-direction: column;
-
-
-        align-content: center;
-        justify-content: space-around;
-
-        flex-wrap: wrap;
-        align-items: stretch; */
-
+    #par{
+        width: 145px;
+        height: 82px;
     }
+
     #ecrituretailleindex{
         font-size: 10px;
 
@@ -294,6 +315,7 @@ span[aria-label="Next"] {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    padding-top: 5%;
 }
 
   }

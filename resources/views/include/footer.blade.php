@@ -2,25 +2,13 @@
 {{-- id="footer" --}}
 <footer style="background-color: #969281 ; " class=" text-center text-lg-start text-light"  >
  <!-- Grid container -->
- <div class="container-fluid p-4">
+ <div class="container-fluid p-md-4  pt-4">
     <!--Grid row-->
     <div class="row">
       <!--Grid column-->
       <div class="col-lg-3 col-md-6 mb-4 mb-md-0 ">
-        <h5 >Produit</h5>
+        <h5 id="footerjaune" ><a href="{{ route('certification') }}" id="footerjaune">Certifications</a></h5>
 
-        <ul class="list-unstyled mb-0 ">
-          <li >
-            <a id="footerjaune" href="#!"  >Nouveaux produits</a>
-          </li>
-          <li>
-            <a href="#!" id="footerjaune" >Meilleures ventes</a>
-          </li>
-          <li>
-            <a href="#!" id="footerjaune" >Certifications</a>
-          </li>
-
-        </ul>
       </div>
       <!--Grid column-->
 
@@ -43,10 +31,10 @@
 
       <!--Grid column-->
       <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-md-5 mt-lg-0  ">
-        <h5 id="footerjaune">Kw-distribution</h5>
+        <h5 id="footerjaune"><a href="{{ route('kw') }}" id="footerjaune">Kw-distribution</a></h5>
 
         <ul class="list-unstyled mb-0">
-          <li>
+          <li id="footerpad">
             <i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/place/12t+Avenue+Eug%C3%A8ne+H%C3%A9naff,+69120+Vaulx-en-Velin/data=!4m2!3m1!1s0x47f4c0f1865b7ab1:0x25f997f1e5d4679e?sa=X&ved=2ahUKEwitstTSjfbwAhWwx4UKHXJyA40Q8gEwAHoECAoQAQ" id="footerjaune">12T Avenue Eugène Hénaff, 69120 Vaulx-en-Velin</a>
           </li>
           <li>
@@ -74,7 +62,7 @@
 
             <!-- Facebook -->
             <a
-              class="btn btn-link btn-floating btn-lg text-dark mt-5 "
+              class="btn btn-link btn-floating btn-lg text-dark mt-lg-5 mt-md-5 "
               href="https://fr-fr.facebook.com/kwdistribution/"
               role="button"
               data-mdb-ripple-color="light" style="font-size: 3rem"
@@ -91,7 +79,7 @@
 
             <!-- Instagram -->
             <a
-              class="btn btn-link btn-floating btn-lg text-dark mt-5"
+              class="btn btn-link btn-floating btn-lg text-dark mt-lg-5 mt-md-5"
               href="https://www.instagram.com/kwdistribution/?hl=fr"
               role="button"
               data-mdb-ripple-color="light" style="font-size: 3rem"
@@ -100,7 +88,7 @@
 
             <!-- Linkedin -->
             <a
-              class="btn btn-link btn-floating btn-lg text-dark mt-5"
+              class="btn btn-link btn-floating btn-lg text-dark mt-lg-5 mt-md-5"
               href="https://www.linkedin.com/company/kw-distribution/?originalSubdomain=fr"
               role="button"
               data-mdb-ripple-color="light" style="font-size: 3rem"
@@ -117,7 +105,7 @@
   </div>
   <!-- Grid container -->
 
-  <div class="container p-4">
+  <div class="container-fluid ">
 
   <div class="row">
     <!--Grid column-->

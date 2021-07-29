@@ -1,41 +1,42 @@
-<div   id="filter"  >
+<div   id="filter" style="z-index: 2" >
 
     <div  id="longfilter" >
         {{-- <form style="" action="{{ route('filter') }}" method="POST" class="form-inline ml-auto"
             onsubmit="traitForm(a)" id="filter"> --}}
             <div style=" background-color: #D6D1C1; border-radius: 20px; " class="list-group"   >
                 @php
-
-
                     $re = explode('_', last(request()->segments()));
-
                 @endphp
 
-                    <div  id="accordion" style="  display:flex; flex-direction:column;"  >
+                    <div  id="accordionOne" style="  display:flex; flex-direction:column;"  >
                         <ul  style="background-color: #D6D1C1;  border-radius: 20px;     list-style-type: none;"  id="datalist">
                         {{-- Titre --}}
 
-                        <li  > <div id="rond" style=" border-radius: 200px; right:19%;"   class="card my-0">
-                            <div class="card-header" id="heading">
-                              <h4 lass="mb-0">
+                        <li>
+                            <div id="rond" style=" border-radius: 200px; right:19%;"   class="card my-0">
+                             <div class="card-header" id="heading">
+                              <h4 style="font-family: poppins;" class="mb-0">
 
                                    <strong> Filtres</strong>
 
-                              </h5>
+                              </h4>
                             </div>
-
-                          </div></li>
+                          </div>
+                        </li>
 
                     @if(count($marques)>1)
-                       <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
-                            <div  class="card-header"  id="heading">
+                       <li >
+                            <div id="rond"   class="card my-0" >
+
+                             <div  class="card-header"  id="heading">
                               <h5  class="mb-0">
-                                <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                                <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse">
                                   Marque <i class="fas fa-sort-down ml-2"></i>
                                 </button>
                               </h5>
                             </div>
-                            <div id="collapse" class="collapse " aria-labelledby="heading" data-parent="#accordion">
+
+                            <div id="collapse" class="collapse " aria-labelledby="heading" data-parent="#accordionOne">
                               <div class="card-body d-flex flex-column col-12 " >
                                 @foreach ($marques as $marque)
                                 @if($marque->marque!="")
@@ -47,13 +48,15 @@
                                 @endforeach
                               </div>
                             </div>
-                          </div></li>
+
+                          </div>
+                        </li>
                           @endif
 
 
                         {{-- 1 --}}
                         @if(count($memoire)>1)
-                        <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                        <li >  <div id="rond"   class="card my-0" >
                              <div  class="card-header"  id="headingOne">
                                <h5  class="mb-0">
                                  <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -61,7 +64,7 @@
                                  </button>
                                </h5>
                              </div>
-                             <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+                             <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionOne">
                                <div class="card-body d-flex flex-column  col-12 " >
                                  @foreach ($memoire as $mem)
                                  @if($mem->memoire!="")
@@ -78,7 +81,7 @@
                         {{-- 2 --}}
 
                         @if(count($taille_ecran)>1)
-                        <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                        <li >  <div id="rond"   class="card my-0" >
                              <div  class="card-header"  id="headingTwo">
                                <h5  class="mb-0">
                                  <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -86,13 +89,13 @@
                                  </button>
                                </h5>
                              </div>
-                             <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+                             <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionOne">
                                <div class="card-body d-flex flex-column  col-12" >
                                 @foreach ($taille_ecran as $ecran)
                                 @if($ecran->taille_ecran!="")
                                    <label>
                                      <input  id="checkbox" type="checkbox" class="filter_all disque" value="SSD">
-                                     {{$ecran->taille_ecran}}"
+                                     {{$ecran->taille_ecran}}
                                  </label>
                                  @endif
                                  @endforeach
@@ -102,7 +105,7 @@
                            @endif
                         {{-- 3 --}}
                         @if(count($ssd)>1)
-                        <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                        <li >  <div id="rond"   class="card my-0" >
                              <div  class="card-header"  id="headingThree">
                                <h5  class="mb-0">
                                  <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -110,7 +113,7 @@
                                  </button>
                                </h5>
                              </div>
-                             <div id="collapseThree" class="collapse " aria-labelledby="headingThree" data-parent="#accordion">
+                             <div id="collapseThree" class="collapse " aria-labelledby="headingThree" data-parent="#accordionOne">
                                <div class="  d-flex flex-column col-12 " >
                                 @foreach ($ssd as $ss)
                                 @if($ss->ssd!="")
@@ -126,7 +129,7 @@
                            @endif
                       {{-- 4 --}}
                       @if(count($os)>1)
-                        <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                        <li >  <div id="rond"   class="card my-0" >
                              <div  class="card-header" style="background-color: transparent; "  id="headingFour">
                                <h5  class="mb-0">
                                  <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -134,7 +137,7 @@
                                  </button>
                                </h5>
                              </div>
-                             <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordion">
+                             <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordionOne">
                                <div class="card-body d-flex flex-column  col-12 " >
                                 @foreach ($os as $syst)
                                 @if($syst->os!="")
@@ -150,7 +153,7 @@
                            @endif
                      {{-- 5 --}}
                      @if(count($chipset)>1)
-                     <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                     <li >  <div id="rond"   class="card my-0" >
                           <div  class="card-header"  id="headingFive">
                             <h5  class="mb-0">
                               <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -158,7 +161,7 @@
                               </button>
                             </h5>
                           </div>
-                          <div id="collapseFive" class="collapse " aria-labelledby="headingFive" data-parent="#accordion">
+                          <div id="collapseFive" class="collapse " aria-labelledby="headingFive" data-parent="#accordionOne">
                             <div class="card-body d-flex flex-column  col-12 " >
                                 @foreach ($chipset as $chip)
                                 @if($chip->chipset!="")
@@ -174,7 +177,7 @@
                         @endif
                       {{-- 6 --}}
                       @if(count($fam_proc)>1)
-                      <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                      <li >  <div id="rond"   class="card my-0" >
                            <div  class="card-header"  id="headingSix">
                              <h5  class="mb-0">
                                <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
@@ -182,7 +185,7 @@
                                </button>
                              </h5>
                            </div>
-                           <div id="collapseSix" class="collapse " aria-labelledby="headingSix" data-parent="#accordion">
+                           <div id="collapseSix" class="collapse " aria-labelledby="headingSix" data-parent="#accordionOne">
                              <div class="card-body d-flex flex-column  col-12 " >
                                 @foreach ($fam_proc as $fam)
                                 @if($fam->fam_proc!="")
@@ -198,7 +201,7 @@
                          @endif
                       {{-- 7 --}}
                       @if(count($sock_proc)>1)
-                      <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                      <li >  <div id="rond"   class="card my-0" >
                            <div  class="card-header"  id="headingSeven">
                              <h5  class="mb-0">
                                <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
@@ -206,7 +209,7 @@
                                </button>
                              </h5>
                            </div>
-                           <div id="collapseSeven" class="collapse " aria-labelledby="headingSeven" data-parent="#accordion">
+                           <div id="collapseSeven" class="collapse " aria-labelledby="headingSeven" data-parent="#accordionOne">
                              <div class="card-body d-flex flex-column  col-12 " >
                                 @foreach ($sock_proc as $sock)
                                 @if($sock->sock_proc!="")
@@ -222,7 +225,7 @@
                          @endif
                          {{-- 8 --}}
                          @if(count($gpu)>1)
-                         <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                         <li >  <div id="rond"   class="card my-0" >
                               <div  class="card-header"  id="headingEight">
                                 <h5  class="mb-0">
                                   <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
@@ -230,7 +233,7 @@
                                   </button>
                                 </h5>
                               </div>
-                              <div id="collapseEight" class="collapse " aria-labelledby="headingEight" data-parent="#accordion">
+                              <div id="collapseEight" class="collapse " aria-labelledby="headingEight" data-parent="#accordionOne">
                                 <div class="card-body d-flex flex-column  col-12" >
                                     @foreach ($gpu as $gp)
                                     @if($gp->gpu!="")
@@ -246,7 +249,7 @@
                             @endif
                             {{-- 9 --}}
                             @if(count($puissance)>1)
-                            <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                            <li >  <div id="rond"   class="card my-0" >
                                  <div  class="card-header"  id="headingNine">
                                    <h5  class="mb-0">
                                      <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
@@ -254,7 +257,7 @@
                                      </button>
                                    </h5>
                                  </div>
-                                 <div id="collapseNine" class="collapse " aria-labelledby="headingNine" data-parent="#accordion">
+                                 <div id="collapseNine" class="collapse " aria-labelledby="headingNine" data-parent="#accordionOne">
                                    <div class="card-body d-flex flex-column  col-12 " >
                                     @foreach ($puissance as $pow)
                                     @if($pow->puissance!="")
@@ -270,7 +273,7 @@
                                @endif
                                {{-- 10 --}}
                                @if(count($frequ_mem)>1)
-                               <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                               <li >  <div id="rond"   class="card my-0" >
                                     <div  class="card-header"  id="headingTen">
                                       <h5  class="mb-0">
                                         <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
@@ -278,7 +281,7 @@
                                         </button>
                                       </h5>
                                     </div>
-                                    <div id="collapseTen" class="collapse " aria-labelledby="headingTen" data-parent="#accordion">
+                                    <div id="collapseTen" class="collapse " aria-labelledby="headingTen" data-parent="#accordionOne">
                                       <div class="card-body d-flex flex-column  col-12 " >
                                         @foreach ($frequ_mem as $freq)
                                         @if($freq->frequ_memoire!="")
@@ -294,7 +297,7 @@
                                   @endif
                                   {{-- 11 --}}
                                   @if(count($nb_barrette)>1)
-                                  <li >  <div id="rond" style="border-radius: 200px;  right:19%;"  class="card my-0" >
+                                  <li >  <div id="rond"   class="card my-0" >
                                        <div  class="card-header"  id="headingEleven">
                                          <h5  class="mb-0">
                                            <button id="FilterBoutton"  class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
@@ -302,7 +305,7 @@
                                            </button>
                                          </h5>
                                        </div>
-                                       <div id="collapseEleven" class="collapse " aria-labelledby="headingEleven" data-parent="#accordion">
+                                       <div id="collapseEleven" class="collapse " aria-labelledby="headingEleven" data-parent="#accordionOne">
                                          <div class="card-body d-flex flex-column  col-12 " >
                                             @foreach ($nb_barrette as $barrette)
                                             @if($barrette->nb_barrette!="")
@@ -341,10 +344,7 @@
             }
 
 
-    if (0 == $('#datalist li:visible').length) {
-            $('#accordion').hide();
 
-           }
 
 
                     $(function () {
@@ -358,7 +358,7 @@
                    });
                    $(function () {
                        $('#moinsinfo').click(function () {
-                           $('#datalist li:visible ').slice(3, 9).hide();
+                           $('#datalist li:visible ').slice(3, 11).hide();
                            if ($('#datalist li').length !== $('#datalist li:visible').length) {
                                $('#plusinfo').show();
                               $('#moinsinfo').hide();

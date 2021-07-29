@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="mb-5 ">
+<section class="">
 
-    <div id="show" class="row">
+    <div id="show" class="row m-lg-5 m-md-5 m-0">
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="mdb-lightbox">
           <div class="row product-gallery mx-1">
@@ -16,8 +16,8 @@
                 </a>
               </figure>
             </div>
-            <div class="col-12 mt-4 " style="padding-top: 82px">
-              <div class="row mt-4  pt-4  ">
+            <div class="col-12 mt-4 " id="paddingshow">
+              <div class="row mt-4  pt-4 ">
                 @for ($i = 1; $i < 5; $i++)
                   @if (File::exists('asset/item/images/'.$item->Id.'/Medium'.$i.'.jpg'))
 
@@ -40,53 +40,54 @@
 
         <h5>{{ $item->family->Caption ?? $item->FamilyId}}</h5>
         <p class="mb-2 text-muted text-uppercase small">{{ $item->DesComClear }}</p>
-        @guest <p><em class=" ml-4 bg-warning">Connectez-vous pour voir les prix !</em></p> @else
+        @guest <div id="barreprix" class="ml-0">
+            <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p></div> @else
         <p><span class="mr-1"><strong>{{ number_format($item->CostPrice, 2) }} €</strong></span></p>
         @endguest
         @if ($item->maincarac)
         <div class="scroller">
           @if ($item->maincarac->marque!='')
-        <ul class="">
+        <ul class="pl-0">
           <li  scope="row"><strong>Marque  </strong> {{ $item->maincarac->marque }}</li>
         </ul>
         @endif
         @if ($item->maincarac->taille_ecran!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Taille écran en cm </strong>{{ $item->maincarac->taille_ecran }}</th>
         </ul>
         @endif
         @if ($item->maincarac->fam_proc!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Famille de processeur   </strong>{{ $item->maincarac->fam_proc }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->mod_proc!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Modèle de processeur  </strong>{{ $item->maincarac->mod_proc }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->sock_proc!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Socket processeur  </strong>{{ $item->maincarac->sock_proc }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->syst_exploitation!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Système d'exploitation  </strong>{{ $item->maincarac->syst_exploitation }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->ssd!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>SSD  </strong>{{ $item->maincarac->ssd }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->stockage!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Stockage  </strong>{{ $item->maincarac->stockage }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->memoire!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Mémoire  </strong>{{ $item->maincarac->memoire }}</ul>
         </ul>
         @endif
@@ -96,7 +97,7 @@
         </ul>
         @endif
         @if ($item->maincarac->frequ_memoire!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Fréquence mémoire  </strong>{{ $item->maincarac->frequ_memoire }}</ul>
         </ul>
         @endif
@@ -106,12 +107,12 @@
         </ul>
         @endif
         @if ($item->maincarac->chipset!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>Chipset  </strong>{{ $item->maincarac->chipset }}</ul>
         </ul>
         @endif
         @if ($item->maincarac->ram!='')
-        <ul>
+        <ul class="pl-0">
           <th class="pl-0 w-25" scope="row"><strong>RAM  </strong>{{ $item->maincarac->ram }}</ul>
         </ul>
         @endif
@@ -146,18 +147,20 @@
                 <input type="number" name="quantity" max="{{ number_format($item->RealStock, 0) }}" min="1"
                     value="1">
 
-                <button type="submit" class="btn  boutton " id="btnshow"><i
-                    class="fas fa-shopping-cart pr-2"></i> Ajouter au panier</button>
+                <button type="submit" class="btn mb-2 mt-2  boutton " id="btnshow"><i
+                    class="fas fa-shopping-cart  pr-2"></i> Ajouter au panier</button>
 
             </form>
             @else
-                    <button type="submit" id="btnshow" class="btn btn-warning boutton" disabled="disabled"> Pas disponible pour le moment
-                    </button>
+            <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus en stock.svg')}}"></p>
+
                 @endif
                 <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
       </div>
     </div>
-    <p class="pt-4 mt-4">{{ $item->maincarac->description ?? "" }}</p>
+    <div class="container">
+    <p class="pt-4 mt-4 col-12   ">{{ $item->maincarac->description ?? "" }}</p>
+</div>
   </section>
 
   <div class="container">
@@ -171,14 +174,16 @@
 
             @endif
             </ul>
-        <button  id="plusinfo" class=" btn btn-dark btn-md ml-4 mb-2">Plus de détails</button>
-        <button  id="moinsinfo" class=" btn btn-dark btn-md ml-4 mb-2">Moins de détails</button>
+        <button  id="plusinfo" class=" btn boutton btn-md ml-4 mb-2">Plus de détails</button>
+        <button  id="moinsinfo" class=" btn boutton btn-md ml-4 mb-2">Moins de détails</button>
   </div>
 </div>
   <!-- Creates the bootstrap modal where the image will appear -->
+
+  @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
   <div class="modal fade " id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
 
-
+@endif
 
 
 
@@ -195,37 +200,61 @@
 
                 <div id="carouselExampleCaptions" class="carousel divCarousel slide" data-ride="carousel" data-interval="false">
                     <ol class="carousel-indicators " style=" bottom: 95%;">
-                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="li"></li>
-                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class="activeli"></li>
-                        <li data-target="#carouselExampleCaptions" data-slide-to="2" class="activeli1"></li>
-                        <li data-target="#carouselExampleCaptions" data-slide-to="3" class="activeli2"></li>
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg'))
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1" class="li1"></li>
+                        @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium2.jpg'))
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2" class="li2"></li>
+                        @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium3.jpg'))
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3" class="li3"></li>
+                        @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium4.jpg'))
+                        <li data-target="#carouselExampleCaptions" data-slide-to="4" class="li4"></li>
+                        @endif
                     </ol>
+
                     <div class="carousel-inner" id="carouszoom" >
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium1.jpg') && (File::exists('asset/item/images/'.$item->Id.'/Medium2.jpg')))
                         <div class="carousel-item">
                             <img class="d-block w-100" id="imgzoom"     data-src="" alt="First slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" data-holder-rendered="true" >
                             <div class="carousel-caption d-none d-md-block">
-
                             </div>
                         </div>
+                        @else
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" id="imgzoom"     data-src="" alt="First slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium1.jpg')}}" data-holder-rendered="true" >
+                            <div class="carousel-caption d-none d-md-block">
+                            </div>
+                        </div>
+                       @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium2.jpg'))
                         <div class="carousel-item active">
                             <img class="d-block w-100" id="imgzoom"    alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium2.jpg')}}" data-holder-rendered="true">
                             <div class="carousel-caption d-none d-md-block">
-
                             </div>
                         </div>
+                        @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium3.jpg'))
                         <div class="carousel-item active1">
                             <img class="d-block w-100" id="imgzoom"    alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium3.jpg')}}" data-holder-rendered="true">
                             <div class="carousel-caption d-none d-md-block">
 
                             </div>
                         </div>
+                        @endif
+                        @if (File::exists('asset/item/images/'.$item->Id.'/Medium4.jpg'))
                         <div class="carousel-item active2">
                             <img class="d-block w-100" id="imgzoom"  alt="Second slide" src="{{asset('asset/item/images/'.$item->Id.'/Medium4.jpg')}}" data-holder-rendered="true">
                             <div class="carousel-caption d-none d-md-block">
 
                             </div>
                         </div>
+                        @endif
                     </div>
+                    @if (File::exists('asset/item/images/'.$item->Id.'/Medium2.jpg'))
+
+
                     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev" style="opacity: 1; ">
                         <i class="fas fa-arrow-circle-left"></i>
 
@@ -236,6 +265,7 @@
                         <i class="fas fa-arrow-circle-right"></i>
 
                     </a>
+                    @endif
                 </div>
 
 
@@ -250,6 +280,7 @@
 
 
     </div>
+
             </div>
         </div>
 
@@ -295,7 +326,7 @@ if (0 == $('#datalist li:hidden').length) {
 
 
 
-      var x = window.matchMedia("(min-width: 480px)")
+      var x = window.matchMedia("(min-width: 600px)")
 myFunction(x) // Call listener function at run time
 x.addListener(myFunction)
 
@@ -311,7 +342,7 @@ function myFunction(x) {
 
   }
 }
-
+$('#imagemodal').hide();
 </script>
 
 @endsection

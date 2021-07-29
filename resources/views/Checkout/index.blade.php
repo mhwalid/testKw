@@ -7,8 +7,8 @@
         <div class="col-md-12">
             <a href="{{ route('cart.index') }}" class="btn btn-sm btn-secondary mt-3">Revenir au panier</a>
             <div class="row">
-                <div class="col-md-6 mx-auto">
-                    <h4 class="text-center pt-5">Procéder au paiement</h4>
+                <div class="col-md-6  mx-auto">
+                    <h4 class="text-center pt-5 ">Procéder au paiement</h4>
                     <form action="{{ route('checkout.store') }}" method="POST" class="my-4" id="payment-form">
                         @csrf
                         <div id="card-element">

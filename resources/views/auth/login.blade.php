@@ -25,7 +25,9 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <h2 class="sr-only">Login Form</h2>
-            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="illustration">
+                <i class="icon ion-ios-locked-outline"></i>
+            </div>
             <p class="loge">E-mail :</p>
             <div  class="form-group">
                     <input id="log1" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -34,7 +36,8 @@
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror</div>
+                    @enderror
+            </div>
             <p class="loge">Mot de passe :</p>
             <div   class="form-group"><input id="log1" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
@@ -42,12 +45,15 @@
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
-                @enderror</div>
+                @enderror
+            </div>
             <div style="display:flex; justify-content:center;">
-            <div class="form-group col-12" style="margin-left: 15%;">
+            <div class="form-group col-12" style="display: flex; flex-direction: column; align-items: center;">
                 <button class="btn boutton w-75 mb-2">Se connecter</button>
                 <a  href="{{ route('register') }}" class="btn boutton w-75 mb-2">Créer un compte</a>
-                <div  style="margin-left: 15%;"><a style="color: #FFD600;" href="#">mot de passe oublié?</a></div>
+                <div>
+                    <a style="color: #FFD600;" href="#"><p class="loge">mot de passe oublié?</p></a>
+                </div>
             </div>
             </div>
             {{-- <div id="imgordi2" style="width: 40%; height: 40%;">

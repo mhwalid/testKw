@@ -1,17 +1,18 @@
 <div id="haut">
     <nav id="Nav" class="navbar1  navbar-expand-lg navbar-light indigo " style="background-color: white;" >
-        <a class="navbar-brand" href="{{ route('product.home') }}"><img style="width: 80px; heigth:80px;" src="{{asset('asset/img/kw.png')}}" alt=""></a>
+        <a class="navbar-brand" href="{{ route('product.home') }}"><img id="kwhaut"  src="{{asset('asset/img/kw.png')}}" alt=""></a>
+    <div style=" z-index: 9;" id="ttt2">
 
-
-        <div class="md-form " style="margin-bottom: 5%; z-index: 9;" id="loupe">
+         <div class="md-form " style=" z-index: 9;" id="loupe">
             <button style="border: none; background-color : white; " id="loupe"   >
-            <img style="width: 20px; heigth:20px;" src="{{asset('asset/img/loupe.png')}}" alt="">
+            <img style="width: 20px; heigth:20px;" src="{{asset('asset/img/loupe.svg')}}" alt="">
             </button>
         </div>
         <div class="md-form my-0" style="z-index: 9;" id="navpour">
             <input class="form-control" type="text" placeholder="Recherche" id="search" name="q"
                 value="{{ request()->q ?? '' }}">
         </div>
+    </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -34,12 +35,8 @@
 
                          $('#loupe').hide();
                          $('#navpour').show();
-
                          $('#ite8').hide();
                          $('#ite9').hide();
-
-
-
 
                  });
              });
