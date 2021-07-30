@@ -18,7 +18,6 @@ class CartController extends Controller
   public function store(Request $re)
   {
     $url=session()->previousUrl();
-
     $duplicata = Cart::search(function ($cartItem, $rowId) use ($re) {
       return $cartItem->id == $re->item_id;
     });
@@ -32,7 +31,6 @@ class CartController extends Controller
     Session::flash('success', 'Le produit a  été ajouté');
     return Redirect::to($url);
   }
-
 
   public function index()
   {

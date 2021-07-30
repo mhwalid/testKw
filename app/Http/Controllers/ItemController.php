@@ -191,18 +191,17 @@ class ItemController extends Controller
 
         if (!isset($_GET["stock"])) {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
+                $items = $this->getPrice($items);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
 
                 $items = Item::itemNT()->orderBy('SalePriceVatExcluded')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
                 $items = Item::itemNT()->orderBy('SalePriceVatExcluded','desc')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families'));
             }
         }else {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
@@ -210,22 +209,20 @@ class ItemController extends Controller
                 $items = $this->getPrice($items);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-
                 $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
                 $items = $this->getPrice($items);
             }else if ($_GET["trie"] == 'PrixCroissant') {
                 $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded','desc')->paginate(20);
-
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families'));
             }
         }
+        return view('product.home', compact('items', 'Families'));
     }
 
-    }
+    
         
     public function home(){
-        $Families = Family::all()->groupBy('MainIntervener');
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $news = Item::itemA()->take(10)->get();
         $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
         $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
@@ -241,7 +238,7 @@ class ItemController extends Controller
     }
 
     public function email(){
-        Mail::to('mhwalid7@gmail.com')->send(new OrderMail());
+        Mail::to('mhwalid7@gmail.com')->send(new OrderMail('OrderMail'));
         return "walid";
     }
 
@@ -259,7 +256,7 @@ class ItemController extends Controller
         $puissance= Db::connection('mysql')->table('main_carac')->select('puissance')->distinct()->where('family', $Id)->get();
         $frequ_mem= Db::connection('mysql')->table('main_carac')->select('frequ_memoire')->distinct()->where('family', $Id)->get();
         $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
-        $Families = Family::all()->groupBy('MainIntervener');
+        $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
         
         if (!isset($_GET["stock"])) {
@@ -270,12 +267,10 @@ class ItemController extends Controller
                 $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
                 $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
 
             }
         }else {
@@ -286,12 +281,10 @@ class ItemController extends Controller
                 $items = Item::itemNT()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }else if ($_GET["trie"] == 'PrixCroissant') {
                 $items = Item::itemNT()->where('RealStock','>','0')->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
 
                 $items = $this->getPrice($items);
-                return view('product.home', compact('items', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));
             }
         }
         $items = $this->getPrice($items);

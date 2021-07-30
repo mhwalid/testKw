@@ -25,14 +25,13 @@ Route::get('test', function () {
 Route::get('/', 'ItemController@home')->name('product.home');
 Route::get('/boutique', 'ItemController@index')->name('product.index');
 Route::get('/boutique/Family/{Id}', 'ItemController@itembyCaption')->name('itembyCaption');
-Route::get('/boutique/SubFamily/{subFamily}', 'ItemController@itembysubFamily')->name('itembysubFamily');
 Route::get('/boutique/{Id}', 'ItemController@show')->name('product.show');
 Route::post('/boutique/search', 'ItemController@search')->name('search');
 Route::post('/Boutiqu/Family/{Id}', 'ItemController@filters')->name('filter');
 //le panier
 // Route::get('/panier', 'Shop\CartController@index')->middleware('verified')->name('cart.index');
 Route::get('/panier', 'Shop\CartController@index')->name('cart.index')->middleware(['auth','verified','contact']);
-Route::post('/panier/ajouter', 'Shop\CartController@store')->name('cart.store');
+Route::post('/panier/ajouter', 'Shop\CartController@store')->name('cart.store')->middleware('auth');;
 Route::delete('/panier/{rowId}', 'Shop\CartController@destroy')->name('cart.destroy');
 route::patch('/panier/{rowId}', 'Shop\CartController@update')->name('cart.update');
 

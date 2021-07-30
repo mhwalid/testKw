@@ -38,8 +38,8 @@ input[type="email"],
 input[type="password"],
 input[type="date"],
 input[type="tel"],
-select.form-control
- {
+select.form-control {
+
   background: transparent;
   border: none;
   border-bottom: 1px solid #D6D1C1;
@@ -122,6 +122,7 @@ label.buttonFile input[type="file"] {
     color:#D6D1C1;
     margin-left: 30px;
 }
+
 @media screen and (min-width: 0px) and (max-width: 772px) {
     .titrePrinc::before
   {
@@ -182,3 +183,4 @@ label.buttonFile input[type="file"] {
     }
 
  }
+

@@ -1,7 +1,7 @@
 <div id="haut">
     <nav id="Nav" class="navbar1  navbar-expand-lg navbar-light indigo " style="background-color: white;" >
 
-        <a class="navbar-brand" href="{{ route('product.home') }}"><img id="kwhaut"  src="{{asset('asset/img/kw.png')}}" alt=""></a>
+        <a class="navbar-brand" href="{{ route('product.home') }}"><img id="kwhaut"  src="{{asset('asset/img/kw.jpg')}}" alt=""></a>
     <div style=" z-index: 9;" id="ttt2">
 
 

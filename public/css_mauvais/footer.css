@@ -1,0 +1,29 @@
+#footerjaune:hover{
+    color: #FFD600;
+
+
+}
+#footerjaune{
+    color:#ffffff;
+    text-decoration: none;
+}
+#contactecouleur{
+
+    text-decoration: none;
+}
+.fab{
+    color:white;
+    font-size: 20px;
+}
+
+.fa-envelope{
+    color:white;
+    font-size: 20px;
+}
+
+@media screen and (min-width: 0px) and (max-width: 445px) {
+#footerpad{
+    padding-right: 16%;
+    padding-left: 16%;
+}
+}

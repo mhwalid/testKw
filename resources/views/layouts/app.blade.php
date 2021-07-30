@@ -54,7 +54,7 @@
     <body >
         @include('include.navbar')
         <div  class="container-fluid">
-            <main class="mb-2">
+            <main>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
