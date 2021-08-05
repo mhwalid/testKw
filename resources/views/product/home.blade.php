@@ -10,8 +10,74 @@
 @endphp
 
 <div class="container-fluid" id="longueurphotohome">
-    <img id="imgcatégorie"  class="w-100" src="{{asset('asset/img/CM_long.jpg')}}" alt="Certification">
-    <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Carte Mere</h2>
+
+    @if ($family[0] == "")
+        <img id="imgcatégorie"  class="w-100" src="{{asset('asset/banner/boutique.png')}}" alt="Certification">
+        <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Boutique</h2>
+    @else
+        @if ($family[0] == "ACC")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Accessoires</h2>
+        @elseif ($family[0] == "AIO")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">All In One</h2>
+        @elseif ($family[0] == "ALARM")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Pièces Alarmes</h2>
+        @elseif ($family[0] == "ALIM")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Alimentation Interne</h2>
+        @elseif ($family[0] == "BARBO")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Barebones</h2>
+        @elseif ($family[0] == "BATT")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Batteries</h2>
+        @elseif ($family[0] == "BOIT")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Boitiers</h2>
+        @elseif ($family[0] == "CAB")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Câbles</h2>
+        @elseif ($family[0] == "CG")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Cartes Graphiques</h2>
+        @elseif ($family[0] == "CM")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Carte Mere</h2>
+        @elseif ($family[0] == "DALLE")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Dalles</h2>
+        @elseif ($family[0] == "HDD")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Disques Durs Interne</h2>
+        @elseif ($family[0] == "HP")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Haut-parleurs</h2>
+        @elseif ($family[0] == "IMP")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Imprimantes</h2>
+        @elseif ($family[0] == "LEC")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Optiques</h2>
+        @elseif ($family[0] == "LOG")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Logiciels</h2>
+        @elseif ($family[0] == "MEM")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Mémoires</h2>
+        @elseif ($family[0] == "MK")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Clavier-Souris</h2>
+        @elseif ($family[0] == "MON")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Moniteurs</h2>
+        @elseif ($family[0] == "ONDU")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Onduleurs</h2>
+        @elseif ($family[0] == "PORT")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Portables</h2>
+        @elseif ($family[0] == "PROC")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Processeurs</h2>
+        @elseif ($family[0] == "RES")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Réseaux</h2>
+        @elseif ($family[0] == "SDCARD")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Cartes SD</h2>
+        @elseif ($family[0] == "SSD")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Disques SSD</h2>
+        @elseif ($family[0] == "TAB")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Tablettes</h2>
+        @elseif ($family[0] == "TEL")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Pieces téléphones</h2>
+        @elseif ($family[0] == "USBKEY")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Clés usb</h2>
+        @elseif ($family[0] == "VIDEO")
+            <h2 id="dffdf" style="font-size: 20px; margin-top: 25%;" class="news">Pièces Vidéos</h2>
+        @endif
+        <img id="imgcatégorie"  class="w-100" src="{{asset('asset/banner/'.$family[0].'.png')}}" alt="Certification">
+    @endif
+
+
 </div>
 
 {{-- trie alix --}}
@@ -79,14 +145,13 @@
 
 
 @guest
-       
 
-<div class="container"> 
-  <div id="barreprix">
-      <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p>
-  </div>
-</div> 
-  @endguest
+    <div class="container">
+    <div id="barreprix">
+        <p id="coprix"><strong>Connectez-vous pour voir les prix</strong></p>
+    </div>
+    </div>
+@endguest
 
 @if ($re[0] == 'Family')
 <div class="container-fluid">
@@ -134,7 +199,7 @@
                       @endif
                       {{-- 1 --}}
                       @if(count($memoire)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; " id="headingOne1">
                               <h5  class="mb-0">
@@ -158,7 +223,7 @@
                       @endif
                       {{-- 2 --}}
                       @if(count($taille_ecran)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; " id="headingTwo2">
                               <h5  class="mb-0">
@@ -184,7 +249,7 @@
                       @endif
                       {{-- 3 --}}
                       @if(count($ssd)>1)
-                        <li > 
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; " id="headingThree3">
                               <h5  class="mb-0">
@@ -210,7 +275,7 @@
                       @endif
                       {{-- 4 --}}
                       @if(count($os)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent"  id="headingFour4">
                               <h5  class="mb-0">
@@ -236,7 +301,7 @@
                       @endif
                       {{-- 5 --}}
                       @if(count($chipset)>1)
-                        <li>  
+                        <li>
                           <div id="rond1"   class="card my-0" >
                               <div  class="card-header" style="background-color: transparent; " id="headingFive5">
                                 <h5  class="mb-0">
@@ -262,7 +327,7 @@
                       @endif
                       {{-- 6 --}}
                       @if(count($fam_proc)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; " id="headingSix6">
                               <h5  class="mb-0">
@@ -288,7 +353,7 @@
                       @endif
                       {{-- 7 --}}
                       @if(count($sock_proc)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; " id="headingSeven7">
                               <h5  class="mb-0">
@@ -314,7 +379,7 @@
                         @endif
                       {{-- 8 --}}
                       @if(count($gpu)>1)
-                        <li >  
+                        <li >
                           <div id="rond1"   class="card my-0" >
                             <div  class="card-header" style="background-color: transparent; "  id="headingEight8">
                               <h5  class="mb-0">
@@ -432,7 +497,7 @@
   </div>
 </div>
 @endif
-  
+
 <script>
   //    LKIJLIKJL
   $('#moinsinfo2').hide();
@@ -495,7 +560,7 @@
       <div id="tttt">
         <p style="  margin-bottom: 0%; width: max-content; display: flex; justify-content: center; flex-direction: row; align-items: center;"><input id="enStock_mobile" type="checkbox" class="filter_all ram" name="stock" @if (isset($_GET["stock"])) checked @endif value="enStock"> En stock</p>
       </div>
-        
+
       <div style="  display: flex; justify-content: center; flex-direction: row; align-items: center;"  class="list-group-item ">
           <select id="trie_mobile" name="trie" id="trie"  style="width: fit-content;  height: fit-content;  border: none; border-radius: 20px; box-shadow: none; outline: 0;" >
               <option @if (!isset($_GET["trie"]) || $_GET["trie"] == "noTrie") selected @endif class="" value="noTrie">Trier par:</option>
@@ -588,7 +653,7 @@
         <div class="   border-bottom   " >
             <div style="justify-content: space-evenly; align-content: center;" class="   overflow-hidden  d-flex mt-2 " id="test">
                     <div>
-                  
+
                     @if (File::exists('asset/item/images/'.$item->Id.'/Cart1.jpg'))
                 <img style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4" src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" alt=" " class="bd-placeholder-img"  >
               @else
@@ -627,7 +692,7 @@
 
         @endforeach
 
-{{-- 
+{{--
      @foreach ($items as $item)
         <div class="   border-bottom   " >
           <div style="justify-content: space-evenly; align-content: center;" class="   overflow-hidden  d-flex mt-2 " id="test">
@@ -639,7 +704,7 @@
                 src="{{asset('asset/img/img-indispo-80x60.jpg')}}" alt=" "
                 class="bd-placeholder-img">
               @endif
-              
+
               @if ($item->RealStock>0)
                 <p>En stock <img style=" width: 15px; height: 15px;"   src="{{asset('asset/img/en stock.svg')}}"></p>
               @else
@@ -650,7 +715,7 @@
               <p>En stock <img style=" width: 15px; height: 15px;"   src="{{asset('asset/img/en_stock.svg')}}"></p>
             @else
               <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus_en_stock.svg')}}"></p>
-            @endif  
+            @endif
           </div>
           <a id="Catégorie2" href="{{ route('product.show', $item->Id) }}"> <strong class="d-inline-block mb-2 text-primary">  {{ $item->Caption }}</strong> </a>
           @auth
@@ -701,7 +766,7 @@
     else elem.value = "Close Curtain";
 }
 
-  
+
     </script>
 
 {{-- le scripte js de Searchbar et filter  --}}
@@ -736,7 +801,7 @@ function myFunction(y) {
         $('#form_tri_mobile').submit();
     });
 
-    
+
 </script>
 
 @include('include.SearchItem')

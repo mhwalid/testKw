@@ -16,11 +16,11 @@
 
         <ul class="list-unstyled mb-0 text-light">
             <li>
-                <a href="#!" id="footerjaune" >Nouveau client</a>
+                <a href="{{ route('register') }}" id="footerjaune" >Nouveau client</a>
               </li>
 
           <li>
-            <a href="#!"id="footerjaune" >Mon compte</a>
+            <a href="{{ route('contact.index') }}"id="footerjaune" >Mon compte</a>
           </li>
 
         </ul>
@@ -121,18 +121,14 @@
 
      <!--Grid column-->
      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-       <p >C.G.V</p>
-
+       <a target="_blank" id="footerjaune" href="{{ asset('asset/document/kw/Conditions_Generales.pdf')}} ">C.G.V</a>
      </div>
      <!--Grid column-->
 
      <!--Grid column-->
      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
        <p>Mentions légales</p>
-
-
        </ul>
-
      </div>
    </div>
 

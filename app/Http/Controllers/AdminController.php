@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use LdapRecord\Container;
 use App\Ldap\Admin as ldapAdmin;
 use App\Models\Order\Order;
+use App\Models\SubFamily;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use LdapRecord\Connection;
@@ -67,10 +68,10 @@ class AdminController extends Controller
         // basename() peut empêcher les attaques de système de fichiers;
         // la validation/assainissement supplémentaire du nom de fichier peut être approprié
         if ($_POST["positionBanner"] == 'acceuil' ) {
-            move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/acceuil.jpg");
+            move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/acceuil.png");
         }
         elseif ($_POST["positionBanner"] == 'boutique') {
-            move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/allItem.jpg");
+            move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/boutique.png");
         }
         return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
     }
@@ -80,7 +81,7 @@ class AdminController extends Controller
         $tmp_name = $_FILES["banner"]["tmp_name"];
         // basename() peut empêcher les attaques de système de fichiers;
         // la validation/assainissement supplémentaire du nom de fichier peut être approprié
-        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/".$family.".jpg");
+        move_uploaded_file($tmp_name, __DIR__."/../../../".$uploads_dir . "/".$family.".png");
         return redirect()->route('admin.banner')->with('success','La bannière a été modifier');
     }
 
@@ -457,8 +458,6 @@ class AdminController extends Controller
         return redirect()->route('admin.direction.devalidation.facture.show');
     }
 
-
-
     public function connexionSSHtest(String $commande, String $paramImport, String $dataImport)
     {
         // // Notification à l'utilisateur si le serveur termine la connexion
@@ -525,83 +524,104 @@ class AdminController extends Controller
     public function product(request $request)
     {
         $ean=$request->search_ean;
-        $id_item= Db::connection('sqlsrv')->table('Item')
-        ->select('Id')
-        ->where('BarCode', $ean)
-        ->get();
-        $family_id= Db::connection('sqlsrv')->table('Item')
-        ->select('FamilyId')
-        ->where('BarCode', $ean)
-        ->get();
-        $sub_family= Db::connection('sqlsrv')->table('Item')
-        ->select('SubFamilyId')
-        ->where('BarCode', $ean)
-        ->get();
-        return view('admin.product',compact('ean','id_item','family_id','sub_family'));
+        $item = Item::where('BarCode', $ean)->first();
+        $families = Family::get();
+        $sub_families = SubFamily::get();
+        return view('admin.product',compact('ean','item','families','sub_families'));
     }
 
     public function submitdata(request $request)
     {
-        
-
-        $uuid= (string) Str::orderedUuid();
+        $new_user = User::where('compte_actif',0)->count();
+        $ldap_admin = ldapAdmin::where('mail',Auth::user()->email)->first();
 
         // $data=$request->validate([
         //     'iditem' => ['required', 'string','unique:App\Models\Item,Id'],
         // ]);
-            $iditem= Db::connection('sqlsrv')->table('Item')
+        $iditem= Db::connection('sqlsrv')->table('Item')
             ->select('Id')
             ->where('Id', $_POST["iditem"])
             ->count();
 
-           if($iditem==0){
+        $fam = Family::find($_POST["family"]);
+        $sub_fam = SubFamily::find($_POST["subfamily"]);
 
-         Item::create([
-            'Id'=>$_POST["iditem"],
-            'FamilyId'=>$_POST["family"],
-            'BarCode'=>$_POST["ean13"],
-            'SubFamilyId'=>$_POST["subfamily"],
-            'Caption'=>$_POST["title"],
-            'DesComClear'=>$_POST["title"],
-            'UniqueId'=>$uuid,
-        ]);
+        if($iditem==0){
 
-        MainCarac::create([
-            'id_item'=>$_POST["iditem"],
-            'code_bar'=>$_POST["ean13"],
-            'family'=>$_POST["family"],
-            'subfamily'=>$_POST["subfamily"],
-            'description'=>$_POST["descom"],
-            'marque'=>$_POST["fabricant"],
-            'taille_ecran'=>$_POST["taille_ecran"],
-            'resolution_ecran'=>$_POST["resolution_ecran"],
-            'fam_proc'=>$_POST["famille_proc"],
-            'mod_proc'=>$_POST["modele_proc"],
-            'sock_proc'=>$_POST["socket_proc"],
-            'os'=>$_POST["syst_exploit"],
-            'ssd'=>$_POST["ssd"],
-            'stockage'=>$_POST["stockage"],
-            'memoire'=>$_POST["memoire"],
-            'puissance'=>$_POST["puissance"],
-            'frequ_memoire'=>$_POST["freq_memoire"],
-            'cg'=>$_POST["cg"],
-            'chipset'=>$_POST["chipset"],
-            'ram'=>$_POST["ram"],
-            'gpu'=>$_POST["gpu"],
-            'nb_barrette'=>$_POST["nb_barrette"],
-        ]);
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\storage\app\commande_ebp\command_files_product_add.txt"';
+            $first_ligne = "Libellé;Code Famille Articles;Libellé Famille Articles;Descritpion commerciale en clair;Code barre";
+            $param = "\n".$_POST["title"].";".$_POST["family"].";".$fam->Caption.";".$_POST["descom"].";".$_POST["ean13"];
 
-        }else{
-            Item::where('Id',$_POST["iditem"])
-            ->update([
-                'FamilyId'=>$_POST["family"],
-            'BarCode'=>$_POST["ean13"],
-            'SubFamilyId'=>$_POST["subfamily"],
-            'Caption'=>$_POST["title"],
-            'DesComClear'=>$_POST["title"],
-            'UniqueId'=>$uuid,
+            $add_contact = fopen(__DIR__.'/../../../storage/app/commande_ebp/add_product.txt', 'w+');
+            fputs($add_contact,$first_ligne);
+            fputs($add_contact,$param);
+            fclose($add_contact);
+
+            // Item::create([
+            //     'Id'=>$_POST["iditem"],
+            //     'FamilyId'=>$_POST["family"],
+            //     'BarCode'=>$_POST["ean13"],
+            //     'SubFamilyId'=>$_POST["subfamily"],
+            //     'Caption'=>$_POST["title"],
+            //     'DesComClear'=>$_POST["title"],
+            //     'UniqueId'=>$uuid,
+            // ]);
+
+            exec($commande);
+            sleep(1);
+            $new_product = Item::orderBy('sysCreatedDate', 'desc')->first();
+            $iditem = $new_product->Id;
+            MainCarac::create([
+                'id_item'=>$iditem,
+                'code_bar'=>$_POST["ean13"],
+                'family'=>$_POST["family"],
+                'subfamily'=>$_POST["subfamily"],
+                'description'=>$_POST["descom"],
+                'marque'=>$_POST["fabricant"],
+                'taille_ecran'=>$_POST["taille_ecran"],
+                'resolution_ecran'=>$_POST["resolution_ecran"],
+                'fam_proc'=>$_POST["famille_proc"],
+                'mod_proc'=>$_POST["modele_proc"],
+                'sock_proc'=>$_POST["socket_proc"],
+                'os'=>$_POST["syst_exploit"],
+                'ssd'=>$_POST["ssd"],
+                'stockage'=>$_POST["stockage"],
+                'memoire'=>$_POST["memoire"],
+                'puissance'=>$_POST["puissance"],
+                'frequ_memoire'=>$_POST["freq_memoire"],
+                'cg'=>$_POST["cg"],
+                'chipset'=>$_POST["chipset"],
+                'ram'=>$_POST["ram"],
+                'gpu'=>$_POST["gpu"],
+                'nb_barrette'=>$_POST["nb_barrette"],
             ]);
 
+        }else{
+
+            $commande = 'C:\"Program Files"\EBP\Invoicing12.3FRFR30\EBP.Invoicing.Application.exe /Gui=false /BatchFile="C:\laragon\www\testKw\storage\app\commande_ebp\command_files_product_add.txt"';
+            $first_ligne = "Code;Libellé;Code Famille Articles;Libellé Famille Articles;Descritpion commerciale en clair;Code barre";
+            $param = "\n".$_POST["iditem"].";".$_POST["title"].";".$_POST["family"].";".$fam->Caption.";".$_POST["descom"].";".$_POST["ean13"];
+
+            $add_contact = fopen(__DIR__.'/../../../storage/app/commande_ebp/add_product.txt', 'w+');
+            fputs($add_contact,$first_ligne);
+            fputs($add_contact,$param);
+            fclose($add_contact);
+            // dd("test");
+
+            // Item::where('Id',$_POST["iditem"])
+            // ->update([
+            //     'FamilyId'=>$_POST["family"],
+            //     'BarCode'=>$_POST["ean13"],
+            //     'SubFamilyId'=>$_POST["subfamily"],
+            //     'Caption'=>$_POST["title"],
+            //     'DesComClear'=>$_POST["title"],
+            //     'UniqueId'=>$uuid,
+            // ]);
+
+            exec($commande);
+            sleep(1);
+
+            $iditem = $_POST["iditem"];
             MainCarac::where('id_item',$_POST["iditem"])
             ->update([
                 'code_bar'=>$_POST["ean13"],
@@ -627,10 +647,7 @@ class AdminController extends Controller
                 'nb_barrette'=>$_POST["nb_barrette"],
             ]);
         }
-
-
-        // $items = Item::itemA();
-        return view('admin.submitdata',compact('iditem'));
+        return view('admin.submitdata',compact('iditem','new_user','ldap_admin'));
 
     }
 }

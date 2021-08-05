@@ -1,7 +1,7 @@
-<link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
 
 @php
-    include '../config/config.php';
+    // include '../config/config.php';
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         exit();
@@ -10,6 +10,7 @@
         $url = "http://khezla:fr156221$@data.icecat.biz/xml_s3/xml_server3.cgi?ean_upc=".htmlspecialchars(trim($_POST['search_ean'])).";lang=fr;output=productxml";
         libxml_use_internal_errors(true);
         $xml = simplexml_load_file($url);
+
         if ($xml === false) {
             echo "Erreur lors du chargement du XML\n <br>";
             foreach(libxml_get_errors() as $error) {
@@ -85,10 +86,11 @@
                 }
             }
         }
-    }elseif((isset($_POST['search-ean']))&&(!preg_match('/^[0-9]{13}$/', $_POST['search-ean']))){
+    }elseif((isset($_POST['search_ean']))&&(!preg_match('/^[0-9]{13}$/', $_POST['search_ean']))){
         //header(index.php);
         echo "Veuillez saisir un EAN à 13 chiffres";
     }
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +98,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <title><?php if(isset($xml->Product['Title'])){echo $xml->Product['Title'];}?></title>
     <script>
@@ -144,7 +147,6 @@
                     </td>
                 </tr>
                 <tr>
-                    {{-- {{dd($id_item)}} --}}
                     <td>
                         <div class="form-group">
                             <label for="ean13" class="form-label">Code EAN</label>
@@ -154,7 +156,7 @@
                     <td>
                         <div class="form-group">
                             <label for="iditem" class="form-label">ID Item</label>
-                            <input type="text"  class="form-control" required id="iditem" name="iditem" value="{{$id_item[0]->Id}}">
+                            <input type="text"  class="form-control" id="iditem" name="iditem" @if (is_null($item)) value="" @else value="{{$item->Id}}" @endif >
                         </div>
                     </td>
                     <td>
@@ -166,14 +168,12 @@
                     <td>
                     <p>
                         <label for="family">Famille : </label>
-                        <select name="family" require id="family">
-                        <option></option>
-                            <?php
-                                $families_request = sqlsrv_query($connexion_ebp, "Select Id, Caption from ItemFamily");
-                                while($row = sqlsrv_fetch_array($families_request, SQLSRV_FETCH_ASSOC)){
-                                    echo '<option value="'.$row['Id'].'">'.utf8_encode($row['Caption']).'</option>';
-                                }
-                            ?>
+                        <select name="family" require id="family" onchange="disable()">
+                            <option value="null">famille non renseigné</option>
+                            @foreach ($families as $family)
+                                <option value="{{ $family->Id }}" @if(!is_null($item) && $family->Id == $item->FamilyId) selected @endif >{{ $family->Caption}} </option>
+                            @endforeach
+
                         </select>
                     </p>
                 </td>
@@ -181,13 +181,10 @@
                     <p>
                         <label for="subfamily">Sous Famille: </label>
                         <select name="subfamily" id="subfamily">
-                            <option></option>
-                            <?php
-                                $families_request = sqlsrv_query($connexion_ebp, "Select Id, Caption from ItemSubFamily");
-                                while($row = sqlsrv_fetch_array($families_request, SQLSRV_FETCH_ASSOC)){
-                                    echo '<option value="'.$row['Id'].'">'.utf8_encode($row['Caption']).'</option>';
-                                }
-                            ?>
+                            <option value="null">sous-famille non renseigné</option>
+                            @foreach ($sub_families as $sub_family)
+                                <option value="{{ $sub_family->Id }}" @if(!is_null($item) && $sub_family->Id == $item->SubFamilyId) selected @endif >{{ $sub_family->Caption}} </option>
+                            @endforeach
                         </select>
                     </p>
                 </td>
@@ -240,7 +237,7 @@
                     <td>
                         <div class="form-group">
                             <label for="modele_proc" class="form-label">Modèle processeur</label>
-                            <input type="text" class="form-control"  required id="modele_proc" name="modele_proc" value="<?php if(isset($modele_proc)){echo $modele_proc;}echo ''?>">
+                            <input type="text" class="form-control" id="modele_proc" name="modele_proc" value="<?php if(isset($modele_proc)){echo $modele_proc;}echo ''?>">
                         </div>
                     </td>
                     <td>
@@ -325,11 +322,17 @@
                     <div class="form-group">
                             <label for="description" class="form-label">Description Longue</label><br>
                             <div contenteditable="True" class="form-control"  id="description" name="description" style="width:100%;height:auto;margin:3px 0 5px 0">
-                                <?php if(!empty($xml->Product->ReasonsToBuy)){foreach ($xml->Product->ReasonsToBuy as $key => $value) {
-                                    foreach ($value as $valeur) {
-                                        echo '<img width="150" src="'.$valeur["HighPic"].'"><br>'.$valeur['Title'].'<br><p>'.str_replace('\n', '<br/>' , $valeur['Value']).'</p><br>';
+                                <?php
+                                    if(!empty($xml->Product->ReasonsToBuy)){
+                                        foreach ($xml->Product->ReasonsToBuy as $key => $value) {
+                                            foreach ($value as $valeur) {
+                                                echo '<img width="150" src="'.$valeur["HighPic"].'"><br>'.$valeur['Title'].'<br><p>'.str_replace('\n', '<br/>' , $valeur['Value']).'</p><br>';
+                                            }
+                                        }
+                                    }elseif(isset($xml->Product->SummaryDescription->LongSummaryDescription)){
+                                        echo htmlspecialchars($xml->Product->SummaryDescription->LongSummaryDescription);
                                     }
-                                }}elseif(isset($xml->Product->SummaryDescription->LongSummaryDescription)){echo htmlspecialchars($xml->Product->SummaryDescription->LongSummaryDescription);}?>
+                                ?>
                             </div>
                         </div>
                     </td>
@@ -368,11 +371,24 @@
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <input type="submit" value="Enregistrer">
+                        <input id="enregistrer" type="submit" value="Enregistrer">
                     </td>
                 </tr>
             </table>
         </form>
     </div>
 </body>
+
+<script>
+
+    disable()
+
+    function disable() {
+        if ($('#family').val() == "null") {
+            $('#enregistrer').prop('disabled', true)
+        }else{
+            $('#enregistrer').prop('disabled', false)
+        }
+    }
+</script>
 </html>

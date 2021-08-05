@@ -134,8 +134,8 @@
         @endif
         <hr>
         @auth <p class="card-text "> En stock : <em>{{ number_format($item->RealStock, 0) }} </em>pièces</p>@endauth
-            <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
-            @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
+        <p class="card-text mb-auto"> Code Bar : {{ $item->BarCode }}</p>
+        @if (number_format($item->RealStock, 0) > 0 || !is_null($item->arrivage->first()))
             @if (!is_null($item->arrivage->first()))
                 <div class="mt-4">
                     <h5>Arrivage</h5>
@@ -146,7 +146,7 @@
                             <p>Date d'arrivage : {{ date('d-m-Y ', strtotime($arriv->DeliveryDate)) }} </p>
                         @endforeach
                     @else
-                       <em class="text-info"> <p > Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p></em>
+                    <em class="text-info"> <p > Quantité : {{ number_format($item->arrivage->first()->Quantity, 0) }} pièces</p></em>
                         <p >Date d'arrivage : {{ date('d-m-Y ', strtotime($arrivage->DeliveryDate)) }} </p>
                     @endif
                 </div>
@@ -165,11 +165,10 @@
 
             </form>
             @endauth
-            @else
-            <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus en stock.svg')}}"></p>
-
-                @endif
-                <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
+        @else
+            <p>Pas de stock <img style=" width: 15x; height: 15px;"   src="{{asset('asset/img/plus_en_stock.svg')}}"></p>
+        @endif
+        <a href="{{ url('generate-feature', $item->Id) }}" class="btn boutton"><i class="fas fa-download "></i> Téléchargez la fiche produit</a>
       </div>
     </div>
     <div class="container">

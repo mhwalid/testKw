@@ -209,31 +209,33 @@ class ItemController extends Controller
                 $items = $this->getPrice($items);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
+                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded','desc')->paginate(20);
                 $items = $this->getPrice($items);
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+                $items = Item::itemNT()->where('RealStock','>','0')->orderBy('SalePriceVatExcluded')->paginate(20);
                 $items = $this->getPrice($items);
             }
         }
         return view('product.home', compact('items', 'Families'));
     }
 
-    
-        
     public function home(){
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
-        $news = Item::itemA()->take(10)->get();
+        $news = Item::itemNT()->orderByDesc('sysCreatedDate')->limit(5)->get();
         $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
-        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
-         return view('product.index' ,compact('Families','news','promotions','bestsell'));
+        $bestsell=SaleDocumentLine::select('ItemId')->whereNotNull('ItemId')->groupBy('ItemId')->orderByRaw('count(*) DESC')->limit(5)->get();
+        return view('product.index' ,compact('Families','news','promotions','bestsell'));
      }
 
     public function show($id)
     {
         $item = Item::itemA()->find($id);
-        if(Auth::check()){
-       $item = $this->getPriceOneitem($item); }
+        if(Auth::check()){$item = $this->getPriceOneitem($item); }
+        if (is_null($item)) {
+            return redirect()
+                ->route('product.home')
+                ->with('error','le produit auquel vous essayer d\'accèder n\'existe pas ou n\'est pas disponible à la vente');
+        }
         return view('product.show', compact('item'));
     }
 
@@ -258,17 +260,17 @@ class ItemController extends Controller
         $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
         $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
-        
+
         if (!isset($_GET["stock"])) {
             if (!isset($_GET["trie"]) or $_GET["trie"] == "noTrie") {
                 $items = Item::itemA()->where('FamilyId', $Id)->paginate(20);
             }
             else if ($_GET["trie"] == 'PrixDecroissant') {
-                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
+                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
 
                 $items = $this->getPrice($items);
             }else if ($_GET["trie"] == 'PrixCroissant') {
-                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded','desc')->paginate(20);
+                $items = Item::itemNT()->where('FamilyId', $Id)->orderBy('SalePriceVatExcluded')->paginate(20);
 
                 $items = $this->getPrice($items);
 
@@ -365,17 +367,17 @@ class ItemController extends Controller
         $Families = Family::all()->groupBy('MainIntervener');
         $fmarques = $rq->marques;
         $fmemoire = $rq->memoire;
-        $ftaille_ecran = $rq->taille_ecran;  
-        $fssd = $rq->ssd;  
-        $fos = $rq->os;  
-        $ffam_proc = $rq->fam_proc;  
-        $fsock_proc = $rq->sock_proc;  
-        $fgpu = $rq->gpu;  
-        $fchipset = $rq->chipset;  
-        $fpuissance = $rq->puissance;  
-        $ffrequ_mem = $rq->frequ_mem;  
+        $ftaille_ecran = $rq->taille_ecran;
+        $fssd = $rq->ssd;
+        $fos = $rq->os;
+        $ffam_proc = $rq->fam_proc;
+        $fsock_proc = $rq->sock_proc;
+        $fgpu = $rq->gpu;
+        $fchipset = $rq->chipset;
+        $fpuissance = $rq->puissance;
+        $ffrequ_mem = $rq->frequ_mem;
         $fnb_barrette = $rq->nb_barrette;
-        $url= (explode('/', $rq->url)); 
+        $url= (explode('/', $rq->url));
         $MainCarac = DB::Table('main_carac')->where('family', $Id);
         $checked="";
         // return dd($rq->all());
@@ -465,7 +467,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->sock_proc)){
             $MainCarac->where(function ($query) use ($fsock_proc){
                 foreach($fsock_proc as $index =>$value){
@@ -477,7 +479,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->gpu)){
             $MainCarac->where(function ($query) use ($fgpu){
                 foreach($fgpu as $index =>$value){
@@ -489,7 +491,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->chipset)){
             $MainCarac->where(function ($query) use ($fchipset){
                 foreach($fchipset as $index =>$value){
@@ -501,7 +503,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->puissance)){
             $MainCarac->where(function ($query) use ($fpuissance){
                 foreach($fpuissance as $index =>$value){
@@ -513,7 +515,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->frequ_mem)){
             $MainCarac->where(function ($query) use ($ffrequ_mem){
                 foreach($ffrequ_mem as $index =>$value){
@@ -525,7 +527,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }    
+        }
         if(isset($rq->nb_barrette)){
             $MainCarac->where(function ($query) use ($fnb_barrette){
                 foreach($fnb_barrette as $index =>$value){
@@ -537,7 +539,7 @@ class ItemController extends Controller
                 }
                 return  $query;
             });
-        }     
+        }
         $MainCarac= $MainCarac->pluck('id_item');
         $items= Item::itemA()->whereIn('Id', $MainCarac)->paginate(20);
         return view('product.home', compact('items','checked', 'Families','marques','memoire','taille_ecran','ssd','os','chipset','fam_proc','sock_proc','gpu','puissance','frequ_mem','nb_barrette'));

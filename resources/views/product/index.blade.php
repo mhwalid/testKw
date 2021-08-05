@@ -8,33 +8,27 @@
 {{-- Caroussel 1  --}}
     <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner" id="hg">
-        <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/banner/acceuil.jpg')}}" alt="First slide">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{asset('asset/banner/acceuil.png')}}" alt="First slide">
+            </div>
         </div>
-
-        </div>
-
-  </div>
+    </div>
 
 {{-- premier caroussel --}}
 
     <div class="container-fluid">
 
         <p style="margin-top: 20px;" class="news">Les nouveautés</p>
-         <div  id="ty"  class=" owl-two owl-carousel">
-            @foreach ($news as $new)
-        <div class="item itemcar">
-
-
-            @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
-            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-            @else
-            <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
-            @endif
-            <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
-
-        </div>
-
+        <div  id="ty"  class=" owl-two owl-carousel">
+        @foreach ($news as $new)
+            <div class="item itemcar">
+                @if (File::exists('asset/item/images/'.$new->Id.'/Medium1.jpg'))
+                <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$new->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                @else
+                <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                @endif
+                <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
+            </div>
         @endforeach
         </div>
     </div>
@@ -64,16 +58,16 @@
         <p class="news">Nos meilleures ventes</p>
         <div   id="encadrement" class=" owl-two owl-carousel">
             @foreach ($bestsell as $sell)
-            <div id="item3">
-                <div id="item4" class="item">
-                @if (File::exists('asset/item/images/'.$sell->item->Id.'/Medium1.jpg'))
-                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
-                @else
-                <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
-                @endif
-                    <h4 class="card-title col-5 col-sm-6  col-md-9 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+                <div id="item3">
+                    <div id="item4" class="item">
+                    @if (File::exists('asset/item/images/'.$sell->item->Id.'/Medium1.jpg'))
+                    <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/item/images/'.$sell->item->Id.'/Medium1.jpg')}}" alt="Card image cap"></a>
+                    @else
+                    <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
+                    @endif
+                        <h4 class="card-title col-5 col-sm-6  col-md-9 " id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+                    </div>
                 </div>
-            </div>
 
             @endforeach
 
