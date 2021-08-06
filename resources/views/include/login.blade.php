@@ -1,6 +1,6 @@
-
-    <!-- Authentication Links -->
-
+@php
+    $re = explode('/',request()->segment(2));
+@endphp
 <ul class="d-flex col-lg-12 col-md-12 " id="headerlon" >
     @guest
 
@@ -9,6 +9,7 @@
             <a class="navbar-brand" href="{{ route('product.home') }}"><img id="kwhaut1"  src="{{asset('asset/img/kw.jpg')}}" alt=""></a>
             </div>
         </li>
+        @if (!$re[0]=="")
         <div id="ttt">
             <div class="md-form my-0" style="z-index: 9;" id="navpour">
                 <li style="list-style: none;">
@@ -16,6 +17,7 @@
                 </li>
             </div>
         </div>
+        @endif 
 
         <div  id="ite9" class="item"  style="z-index: 9">
             <li   id="loginli" style="list-style: none;" class="nav-item">
@@ -34,13 +36,18 @@
             <a class="navbar-brand" href="{{ route('product.home') }}"><img id="kwhaut1"  src="{{asset('asset/img/kw.jpg')}}" alt=""></a>
             </div>
         </li>
+        @if (!$re[0]=="")
         <div id="ttt">
             <div class="md-form my-0" style="z-index: 9;" id="navpour">
-                <li style="list-style: none;">
+               
+               <li style="list-style: none;">
                 <input class="form-control" type="text" placeholder="Recherche" id="search" name="q" value="{{ request()->q ?? '' }}">
                 </li>
+                
             </div>
         </div>
+        @endif 
+
 
         <div  id="ite9" class="item"  style="z-index: 9">
             <li style="list-style: none"s class="nav-item dropdown">
@@ -51,7 +58,7 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
-                    {{-- <a class="dropdown-item" href="{{ route('Customer.orders') }}">Mes commandes</a> --}}
+                    <a class="dropdown-item" href="{{ route('Customer.index') }}">Mes commandes</a>
                         @if (!is_null(Auth::user()->IdUser) && Auth::user()->contact->IsMainInvoicing == "1")
                             <a class="dropdown-item" href="{{ route('contact.compagny') }} ">{{__('Mon entreprise')}}</a>
                         @endif

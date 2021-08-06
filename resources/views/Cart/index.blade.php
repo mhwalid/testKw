@@ -63,8 +63,16 @@
                                     <tr>
                                         <td scope="row" class="border-0">
                                             <div class="p-2" style="      align-items: center;  display: inline-flex;     column-gap: 15px;">
-                                                <img id="invisiblepanier1" src="{{asset('asset/item/images/'.$item->id.'/Cart1.jpg')}}"
-                                                    alt="" width="70" class="img-fluid rounded shadow-sm">
+                                                
+                                                    @if (File::exists('asset/item/images/'.$item->Id.'/Cart1.jpg'))
+                                                    <img id="invisiblepanier1" style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"
+                                                    src="{{asset('asset/item/images/'.$item->Id.'/Cart1.jpg')}}" alt=" "
+                                                    class="bd-placeholder-img"  >
+                                                  @else
+                                                    <img  id="invisiblepanier1" style="margin-bottom: 8px; width: 80px; height: 60px; "class="img-responsive mr-4"
+                                                    src="{{asset('asset/img/img-indispo-80x60.jpg')}}" alt=" "
+                                                    class="bd-placeholder-img">
+                                                  @endif
                                                 <div id="taillepanier" class=" d-inline-block align-middle">
                                                     <h6 id="taillepanier" class="mb-0"> <a href="{{ route('product.show', $item->id) }}"
                                                             class="text-dark d-inline-block align-middle">{{ $item->name }}</a>

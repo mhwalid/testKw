@@ -1,7 +1,6 @@
-#datalist li:nth-child(n+6) {
-    display:none;
+.list-group-item{
+    border: none;
 }
-
 #FilterBoutton{
     width: 100%;
     display:flex; justify-content:left;
@@ -10,22 +9,14 @@
     width: max-content;
 }
 
-#rond{
-    border: none;
-    background-color: #D6D1C1;
-    color: black;
-    border-radius: 200px;
-     right:19%;
-}
-#rond1{
-    border: none;
-    background-color: #D6D1C1;
-    color: black;
-    border-radius: 200px;
-     right:13%;
-}
+
 
 #heading{
+    background-color: #D6D1C1;
+    border-top-left-radius: 200px;
+
+}
+#heading1{
     background-color: #D6D1C1;
     border-top-left-radius: 200px;
 
@@ -223,9 +214,7 @@
 }
 @media screen and (min-width: 0px) and (max-width: 481px) {
 
-    #longfilter{
-        display:none;
-    }
+  
     #barreprix{
         margin-left: 8%;
     }
@@ -239,10 +228,40 @@
 
 }
 
-@media screen and (min-width: 0px) and (max-width: 600px) {
 
+@media screen and (min-width: 0px) and (max-width: 600px) {
+     #heading1{
+        display: none;
+    } 
     #longfilter{
         display:none;
     }
-}
+    #plusinfo{
+        display: none;
+    }
+    #moinsinfo{
+        display: none;
+    }
+    #rond{
+        border: none;
+        background-color: #D6D1C1;
+        color: black;
+        border-radius: 200px;
+         right:13%;
+    }
+    
 
+}
+@media screen and (min-width: 601px) and (max-width: 2600px) {
+    .datalist li:nth-child(n+6) {
+        display:none;
+    } 
+    #rond{
+        border: none;
+        background-color: #D6D1C1;
+        color: black;
+        border-radius: 200px;
+         right:19%;
+    }
+    
+}

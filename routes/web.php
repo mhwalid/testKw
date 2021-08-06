@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('test', function () {
-
      dd(App\Models\Family::with('subFamily')->whereHas('subFamily', function ($query) {
           $query->where('ItemFamilyId', 'LIKE', '%C%');
      })->get());
@@ -54,7 +53,7 @@ Route::prefix('admin')->middleware('admin:ldap_admin')->group(function(){
     Route::post('/banner/Update/{family}' ,'AdminController@familyBannerUpdate')->name('admin.banner.update.family');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-       Route::get('/ean', 'AdminController@ean')->name('admin.ean');
+     Route::get('/ean', 'AdminController@ean')->name('admin.ean');
      Route::post('/product', 'AdminController@product')->name('admin.product');
      Route::post('/submitdata', 'AdminController@submitdata')->name('admin.submitdata');
     // Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');

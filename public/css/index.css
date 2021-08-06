@@ -50,7 +50,7 @@ span[aria-label="Next"] {
 
   }
 
-   /* The Transformation */
+   / The Transformation /
   .item:hover  {
 
     transform: scale(1.1);
@@ -82,7 +82,7 @@ span[aria-label="Next"] {
 }
 
 #itemcarouss{
-    width: 200px;
+    width: 250px;
     height: 200px;
     padding-top: 10%;
 }
@@ -152,6 +152,10 @@ span[aria-label="Next"] {
         margin-bottom: 50px;
     }
 }
+@media screen and (min-width: 0px) and (max-width: 481px) {
+    #mv{
+        height: 300px;
+    }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
 
@@ -163,7 +167,7 @@ span[aria-label="Next"] {
     }
 
     #itemcarouss{
-        width: 200px;
+        width: 180px;
         height: 200px;
     }
     #imgpart{
@@ -211,27 +215,18 @@ span[aria-label="Next"] {
             padding-top: 12%;
     }
     #mv{
-        width: 635px;
+        
+        height: 300px;
 
 
-        /* ????????????????GAUCHe */
     }
-    /* #encadrement{
-        height: fit-content;
-    }
-    #hg{
-        width:640px;
-    }
-    #carouselExampleControls{
-        width:640px;
-
-    } */
+    
 
 
 
 
     #itemcarouss{
-        width: 150px;
+        width: 180px;
         height: 150px;
     }
     #ecrituretailleindex{
@@ -281,7 +276,7 @@ span[aria-label="Next"] {
         font-size: 14px;
     }
     #itemcarouss{
-        width: 140px;
+        width: 130px;
         height: 150px;
     }
     #par{
@@ -324,3 +319,4 @@ span[aria-label="Next"] {
      display: none;
 
   }
+}

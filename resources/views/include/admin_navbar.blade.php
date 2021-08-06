@@ -10,8 +10,7 @@
         </li>
 
         <li class="nav-item">
-            {{-- ajouter la route nécessaire --}}
-            <a class="nav-link" href="">ajouter un produit</a>
+            <a class="nav-link" href="{{ route('admin.ean') }}">ajouter un produit</a>
         </li>
 
         <li class="nav-item">

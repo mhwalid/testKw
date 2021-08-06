@@ -3,6 +3,8 @@
 @section('content')
 
     <div class="container">
+        <p>Si l'image de la bannière n'a pas changé après une modification essayer de faire Ctrl + F5</p>
+
         <div class="dropdown">
             <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Accès rapide
@@ -20,13 +22,13 @@
                 <input type="hidden" name="positionBanner" value="acceuil">
                 <div class="form-group">
                     <label for="banner">Bannière Accueil</label>
-                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/jpeg" required >
+                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/png" required >
                 </div>
                 <div class="form-group">
                     <input type="submit" value="update">
                 </div>
             </form>
-            <img class="col s12" src="{{asset('asset/banner/acceuil.jpg')}}" alt="">
+            <img class="col s12" src="{{asset('asset/banner/acceuil.png')}}" alt="">
         </div>
 
         <div>
@@ -35,13 +37,13 @@
                 <input type="hidden" name="positionBanner" value="boutique">
                 <div class="form-group">
                     <label for="banner">Bannière boutique</label>
-                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/jpeg" required >
+                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/png" required >
                 </div>
                 <div class="form-group">
                     <input type="submit" value="update">
                 </div>
             </form>
-            <img class="col s12" src="{{asset('asset/banner/allItem.jpg')}}" alt="">
+            <img class="col s12" src="{{asset('asset/banner/boutique.png')}}" alt="">
         </div>
 
         @foreach ($families as $family)
@@ -50,13 +52,13 @@
                 @csrf
                 <div class="form-group">
                     <label for="banner">Bannière {{ $family->Caption }}</label>
-                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/jpeg" required >
+                    <input id="banner" type="file" class="form-control-file" name="banner" accept="image/png" required >
                 </div>
                 <div class="form-group">
                     <input type="submit" value="update">
                 </div>
             </form>
-            <img class="col s12" src="{{asset('asset/banner/'.$family->Id.'.jpg')}}" alt="">
+            <img class="col s12" src="{{asset('asset/banner/'.$family->Id.'.png')}}" alt="">
         </div>
         @endforeach
 

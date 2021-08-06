@@ -9,7 +9,7 @@
     <div   id="carouselExampleControls" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner" id="hg">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="{{asset('asset/banner/acceuil.jpg')}}" alt="First slide">
+            <img class="d-block w-100" src="{{asset('asset/banner/acceuil.png')}}" alt="First slide">
         </div>
 
         </div>
@@ -31,7 +31,7 @@
             @else
             <a href="{{ route('product.show', $new->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
             @endif
-            <h4 class="card-title col-6" style="font-size:12px;">{{ $new->Caption }}</h4>
+            <h4 class="card-title col-10" style="font-size:12px;">{{ $new->Caption }}</h4>
 
         </div>
 
@@ -51,8 +51,7 @@
                 @else
                 <a href="{{ route('product.show', $prom->Id) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
-                    <h4 class="card-title col-5 col-sm-6  col-md-9" id="ecrituretailleindex">{{ $prom->Caption }}</h4>
-
+                    <h4 class="card-title col-10" id="ecrituretailleindex">{{ $prom->Caption }}</h4>
             </div>
             @endforeach
         </div>
@@ -71,10 +70,9 @@
                 @else
                 <a href="{{ route('product.show', $sell->item->Id ) }}"><img id="itemcarouss" class="card-img-top" src="{{asset('asset/img/img-indispo-480.jpg')}}" alt="Card image cap"></a>
                 @endif
-                    <h4 class="card-title col-5 col-sm-6  col-md-9 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
+                    <h4 class="card-title col-10 "id="ecrituretailleindex" >{{ $sell->item->Caption }}</h4>
                 </div>
             </div>
-
             @endforeach
 
         </div>
@@ -89,7 +87,6 @@
 
     <div class="container">
         <div id="parte"  class=" owl-one owl-carousel"  >
-
         <div class="item1">  <img  id="par" class="card-img-top"  src="{{asset('asset/img/aoc4.png')}}"
             alt="Card image cap"></div>
         <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/infosec4.png')}}"
@@ -104,8 +101,6 @@
             alt="Card image cap"></div>
             <div class="item1">  <img id="par" class="card-img-top"  src="{{asset('asset/img/western_digital4.png')}}"
             alt="Card image cap"></div>
-
-
         </div>
     </div>
 
@@ -119,10 +114,6 @@
             <img id="imgpart2"  class="" src="{{asset('asset/img/Certification.svg')}}"
             alt="Certification">
         </div>
-
-
-
-
 @endsection
 
 
@@ -194,19 +185,13 @@ $('.owl-two').owlCarousel({
 })
 
 var owl = $('.owl-two');
-owl.owlCarousel({
-    items:4,
-    loop:true,
-    margin:10,
-    autoplay:true,
-    autoplayTimeout:2000,
-    autoplayHoverPause:true
-});
-
-
+    owl.owlCarousel({
+        items:4,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:2000,
+        autoplayHoverPause:true
+    });
     </script>
-
-
-
-
 @endsection

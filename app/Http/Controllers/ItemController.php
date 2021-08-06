@@ -223,17 +223,22 @@ class ItemController extends Controller
         
     public function home(){
         $Families = Family::all()->sortBy('MainIntervener')->groupBy('MainIntervener');
-        $news = Item::itemA()->take(10)->get();
+        $news = Item::itemNT()->orderByDesc('sysCreatedDate')->limit(5)->get();
         $promotions = Item::itemA()->inRandomOrder()->limit(10)->get();
-        $bestsell=SaleDocumentLine::Sale()->limit(10)->get();
+        $bestsell=SaleDocumentLine::select('ItemId')->whereNotNull('ItemId')->groupBy('ItemId')->orderByRaw('count(*) DESC')->limit(5)->get();
          return view('product.index' ,compact('Families','news','promotions','bestsell'));
-     }
+    }
 
     public function show($id)
     {
         $item = Item::itemA()->find($id);
         if(Auth::check()){
        $item = $this->getPriceOneitem($item); }
+        if (is_null($item)) {
+            return redirect()
+                ->route('product.home')
+                ->with('error','le produit auquel vous essayer d\'accèder n\'existe pas ou n\'est pas disponible à la vente');
+        }
         return view('product.show', compact('item'));
     }
 
@@ -363,7 +368,7 @@ class ItemController extends Controller
         $frequ_mem= Db::connection('mysql')->table('main_carac')->select('frequ_memoire')->distinct()->where('family', $Id)->get();
         $nb_barrette= Db::connection('mysql')->table('main_carac')->select('nb_barrette')->distinct()->where('family', $Id)->get();
         $Families = Family::all()->groupBy('MainIntervener');
-        $fmarques = $rq->marques;
+        $fmarques = $rq->marque;
         $fmemoire = $rq->memoire;
         $ftaille_ecran = $rq->taille_ecran;  
         $fssd = $rq->ssd;  
@@ -381,20 +386,23 @@ class ItemController extends Controller
         // return dd($rq->all());
         $i=0;
         foreach($rq->all() as $index){
-            $i++;
-            if($i >=5){
+           
+            
+            // if($i >=5){
                 if(is_array($index) || is_object($index)){
                     foreach($index as $value){
                         $checked.= $value.";";
-
+                        // return dd($index);
                     }
                    }else{
                     $checked.= $index.";";
                    }
-              }
+            //   }
+            //   $i++;
+              
          }
         // return $test = DB::Table('main_carac')->select('id_item')->where('marque','ASUS')->orwhere('marque','msi')->get();
-        if(isset($rq->marques)){
+        if(isset($rq->marque)){
                 $MainCarac->where(function ($query) use ($fmarques){
                     foreach($fmarques as $index =>$mar){
                          if($index ==0){

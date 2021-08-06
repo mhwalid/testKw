@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 class CustomerContoller extends Controller
 {
         public function index(){
-           $Custmers= Contact::find('E91B0213-EBCE-4CAB-B4C6-A9DE19E38180');
+        //    $Custmers= Contact::find('E91B0213-EBCE-4CAB-B4C6-A9DE19E38180');
            $user = User::find(Auth::user()->id)->Orders()->orderBy('sysCreatedDate', 'DESC')->paginate(10);
             return  view('Customer.index' , compact('user')); 
         }
